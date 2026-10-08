@@ -1,0 +1,18 @@
+.fl-product-image {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  border-radius: var(--fl-radius-md);
+  background: var(--fl-color-surface);
+  object-fit: cover;
+}
+
+.fl-product-image--fallback {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  padding: var(--fl-space-4);
+  color: var(--fl-color-text-muted);
+  font-size: var(--fl-text-sm);
+  text-align: center;
+}

@@ -1,0 +1,42 @@
+---
+title: Carousel
+description: A row of items that pages left and right.
+---
+
+import Example from '../../../components/Example.astro';
+import Ex from '../../../examples/CarouselExample';
+import src from '../../../examples/CarouselExample.tsx?raw';
+
+<Example code={src}>
+  <Ex client:visible />
+</Example>
+
+Built on the browser's own scroll-snap, so swiping, trackpads and Shift-scroll all work. It shows
+1, 2, 3 or 4 items per screen as space allows, sized so that every page ends on a whole item.
+Previous and Next move a whole screen, and the dots show the screens that actually exist.
+
+For keyboard and screen-reader users:
+
+- the carousel is a named region announced as a carousel, and each item is announced as
+  "3 of 6";
+- the track is focusable, so the arrow keys scroll it;
+- the dots have 24px tap targets and mark the current one with `aria-current`;
+- people who prefer reduced motion get instant jumps instead of smooth scrolling.
+
+The paging logic comes from qilin-marketplace, where its bugs were found and fixed in real
+browsers, including on iOS Safari. Tests in flootlets reproduce each of those bugs, so they can't
+quietly come back.
+
+Place the parts anywhere inside `<Carousel>`: the buttons above the track, the dots below, or
+however your design needs.
+
+| Part                                      |                                                                      |
+| ----------------------------------------- | -------------------------------------------------------------------- |
+| `<Carousel label itemCount labels?>`      | The region. `label` names it; `itemCount` is how many items it holds |
+| `<Carousel.Content>`                      | The scrolling track                                                  |
+| `<Carousel.Item index>`                   | One item; `index` from `<For>`                                       |
+| `<Carousel.Previous>` / `<Carousel.Next>` | Buttons; disabled at the ends but still visible                      |
+| `<Carousel.Dots>`                         | Page dots; hidden when everything fits on one screen                 |
+
+`labels` translates the text: `{ previous, next, pages, page: (n) => …, slide: (i, total) => … }`.
+To change how many items fit per screen, set `--fl-carousel-per-page` on `.fl-carousel__track`.

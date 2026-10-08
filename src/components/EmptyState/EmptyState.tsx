@@ -3,6 +3,7 @@
  * cart or a search with no results, with a way forward.
  */
 import { type JSX, Show, splitProps } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 import { cx } from '../../lib/cx';
 
 export interface EmptyStateProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'title'> {
@@ -25,12 +26,6 @@ export function EmptyState(props: EmptyStateProps) {
     'headingLevel',
     'class',
   ]);
-  const Heading = () => {
-    const level = local.headingLevel ?? 2;
-    if (level === 3) return <h3 class="fl-empty__title">{local.title}</h3>;
-    if (level === 4) return <h4 class="fl-empty__title">{local.title}</h4>;
-    return <h2 class="fl-empty__title">{local.title}</h2>;
-  };
   return (
     <div class={cx('fl-empty', local.class)} {...rest}>
       <Show when={local.icon}>
@@ -38,7 +33,9 @@ export function EmptyState(props: EmptyStateProps) {
           {local.icon}
         </div>
       </Show>
-      <Heading />
+      <Dynamic component={`h${local.headingLevel ?? 2}`} class="fl-empty__title">
+        {local.title}
+      </Dynamic>
       <Show when={local.description}>
         <p class="fl-empty__description">{local.description}</p>
       </Show>

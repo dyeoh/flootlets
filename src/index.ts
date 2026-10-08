@@ -4,16 +4,21 @@
  */
 export { Alert, type AlertProps } from './components/Alert/Alert';
 export { Badge, type BadgeProps } from './components/Badge/Badge';
-export { Checkbox, type CheckboxProps } from './components/Checkbox/Checkbox';
-export { Dialog, type DialogProps } from './components/Dialog/Dialog';
-export { EmptyState, type EmptyStateProps } from './components/EmptyState/EmptyState';
-export { type FieldProps } from './components/Field/field';
 export {
   Button,
   type ButtonAsButtonProps,
   type ButtonAsLinkProps,
   type ButtonProps,
 } from './components/Button/Button';
+export {
+  Carousel,
+  type CarouselItemProps,
+  type CarouselProps,
+} from './components/Carousel/Carousel';
+export { Checkbox, type CheckboxProps } from './components/Checkbox/Checkbox';
+export { Dialog, type DialogProps } from './components/Dialog/Dialog';
+export { EmptyState, type EmptyStateProps } from './components/EmptyState/EmptyState';
+export { type FieldProps } from './components/Field/field';
 export {
   Cluster,
   type ClusterProps,
@@ -23,7 +28,19 @@ export {
   type StackProps,
 } from './components/Layout/Layout';
 export { Link, type LinkProps } from './components/Link/Link';
+export { Pagination, type PaginationProps, pageWindow } from './components/Pagination/Pagination';
 export { Price, type PriceProps } from './components/Price/Price';
+export {
+  ProductCard,
+  type ProductCardImageProps,
+  type ProductCardProps,
+  type ProductCardTitleProps,
+} from './components/ProductCard/ProductCard';
+export {
+  type ImageUrls,
+  ProductImage,
+  type ProductImageProps,
+} from './components/ProductImage/ProductImage';
 export {
   QuantityStepper,
   type QuantityStepperProps,
@@ -36,6 +53,7 @@ export {
 export { Select, type SelectOption, type SelectProps } from './components/Select/Select';
 export { Skeleton, type SkeletonProps } from './components/Skeleton/Skeleton';
 export { Spinner, type SpinnerProps } from './components/Spinner/Spinner';
+export { StockBadge, type StockBadgeProps } from './components/StockBadge/StockBadge';
 export {
   TextArea,
   type TextAreaProps,

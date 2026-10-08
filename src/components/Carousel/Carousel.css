@@ -1,0 +1,118 @@
+.fl-carousel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fl-space-3);
+  min-inline-size: 0;
+}
+
+.fl-carousel__track {
+  --fl-carousel-gap: var(--fl-space-3);
+  /* Items per screen; each item's width makes N items + (N-1) gaps fill the
+     track exactly, so pages end on whole items (see the qilin notes). */
+  --fl-carousel-per-page: 1;
+  display: flex;
+  gap: var(--fl-carousel-gap);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.fl-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 40rem) {
+  .fl-carousel__track {
+    --fl-carousel-per-page: 2;
+  }
+}
+
+@media (min-width: 56rem) {
+  .fl-carousel__track {
+    --fl-carousel-per-page: 3;
+  }
+}
+
+@media (min-width: 72rem) {
+  .fl-carousel__track {
+    --fl-carousel-per-page: 4;
+  }
+}
+
+.fl-carousel__item {
+  flex: 0 0
+    calc(
+      (100% - (var(--fl-carousel-per-page) - 1) * var(--fl-carousel-gap)) /
+        var(--fl-carousel-per-page)
+    );
+  min-inline-size: 0;
+  scroll-snap-align: start;
+}
+
+.fl-carousel__arrow {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: var(--fl-control-md);
+  block-size: var(--fl-control-md);
+  border: 1px solid var(--fl-color-border-strong);
+  border-radius: 50%;
+  background: var(--fl-color-surface-raised);
+  color: var(--fl-color-text);
+  box-shadow: var(--fl-shadow-sm);
+}
+
+.fl-carousel__arrow:hover:not(:disabled) {
+  box-shadow: var(--fl-shadow-md);
+}
+
+/* Disabled stays visibly present (a border, mild fade), never invisible. */
+.fl-carousel__arrow:disabled {
+  opacity: 0.6;
+  box-shadow: none;
+}
+
+/* Chevrons point the way the page moves, mirrored for right-to-left pages. */
+.fl-carousel__arrow--previous svg,
+.fl-carousel:dir(rtl) .fl-carousel__arrow svg {
+  transform: scaleX(-1);
+}
+
+.fl-carousel:dir(rtl) .fl-carousel__arrow--previous svg {
+  transform: none;
+}
+
+.fl-carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+}
+
+/* A 24px target around an 8px dot. */
+.fl-carousel__dot {
+  display: grid;
+  place-items: center;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.fl-carousel__dot::before {
+  content: '';
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  border-radius: 50%;
+  background: var(--fl-color-border-strong);
+  transition:
+    inline-size var(--fl-duration-fast) var(--fl-ease),
+    background-color var(--fl-duration-fast) var(--fl-ease);
+}
+
+.fl-carousel__dot[aria-current='true']::before {
+  inline-size: 1.25rem;
+  border-radius: var(--fl-radius-pill);
+  background: var(--fl-color-accent);
+}

@@ -13,22 +13,31 @@ Accessible, themeable [SolidJS](https://www.solidjs.com/) components for shops b
   [Kobalte](https://kobalte.dev/) for interactive pieces; every component is checked with axe.
 - **Light and dark** follow the visitor's system setting, or `data-theme="light|dark"`.
 
-> **Status: early.** Design tokens and the basic components are in; forms, overlays and shop
-> components are next.
+> **Status:** all planned components are in: basics, forms, feedback and overlays, and shop
+> components. Pre-1.0, so props may still change between minor versions.
 
 **Documentation and live examples: https://dyeoh.github.io/flootlets/**
 
 ## Components
 
-| Component                  | What it's for                                                                                                                                               |
-| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Button`                   | Actions; with `href`, a link styled as a button. Variants `primary` (brand red), `secondary`, `outline`, `ghost`, `danger`; `loading` keeps focus and width |
-| `Link`                     | Inline text links; `external` opens a new tab safely and says so                                                                                            |
-| `Price`                    | Money from the gnerkulfloot API (`{ amount, currency }` in minor units), with an optional struck-through `compareAt` price                                  |
-| `Badge`                    | Short labels: `neutral`, `accent`, `success`, `warning`, `danger`                                                                                           |
-| `Spinner`, `Skeleton`      | Loading states                                                                                                                                              |
-| `Stack`, `Cluster`, `Grid` | Layout: column, wrapping row, responsive grid (gaps from the spacing scale)                                                                                 |
-| `VisuallyHidden`           | Text for screen readers only                                                                                                                                |
+| Component                                                   | What it's for                                                                                                                                               |
+| ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Button`                                                    | Actions; with `href`, a link styled as a button. Variants `primary` (brand red), `secondary`, `outline`, `ghost`, `danger`; `loading` keeps focus and width |
+| `Link`                                                      | Inline text links; `external` opens a new tab safely and says so                                                                                            |
+| `Price`                                                     | Money from the gnerkulfloot API (`{ amount, currency }` in minor units), with an optional struck-through `compareAt` price                                  |
+| `Badge`                                                     | Short labels: `neutral`, `accent`, `success`, `warning`, `danger`                                                                                           |
+| `Spinner`, `Skeleton`                                       | Loading states                                                                                                                                              |
+| `Stack`, `Cluster`, `Grid`                                  | Layout: column, wrapping row, responsive grid (gaps from the spacing scale)                                                                                 |
+| `VisuallyHidden`                                            | Text for screen readers only                                                                                                                                |
+| `TextField`, `TextArea`, `Select`, `Checkbox`, `RadioGroup` | Form controls with `label`, `description` and `error` wired for screen readers                                                                              |
+| `QuantityStepper`                                           | Choose a quantity within stock limits; arrow keys and typing work                                                                                           |
+| `Alert`                                                     | Inline messages (errors are announced straight away)                                                                                                        |
+| `toast()` + `Toaster`                                       | Short, temporary messages like "Added to cart"                                                                                                              |
+| `Dialog`                                                    | Modal confirmations with focus trapping and return                                                                                                          |
+| `EmptyState`                                                | An empty cart or no search results, with a way forward                                                                                                      |
+| `ProductCard`, `ProductImage`, `StockBadge`                 | Products in grids and carousels, using the gnerkulfloot API's image URLs                                                                                    |
+| `Carousel`                                                  | A row of items that pages left and right, built on scroll-snap                                                                                              |
+| `Pagination`                                                | Page links (or buttons), numbered or "has more" style                                                                                                       |
 
 Helpers: `formatMoney(money, locale)`, `currencyDigits(currency)`, `cx(...classes)`.
 

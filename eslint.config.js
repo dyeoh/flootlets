@@ -16,4 +16,9 @@ export default [
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     },
   },
+  {
+    // Tests read signals in assertions on purpose, outside any reactive scope.
+    files: ['**/*.test.{ts,tsx}'],
+    rules: { 'solid/reactivity': 'off' },
+  },
 ];

@@ -1,0 +1,32 @@
+---
+title: Pagination
+description: Move between pages of a list.
+---
+
+import Example from '../../../components/Example.astro';
+import Ex from '../../../examples/PaginationExample';
+import src from '../../../examples/PaginationExample.tsx?raw';
+
+<Example code={src}>
+  <Ex client:visible />
+</Example>
+
+Give it `href` and every page is a **link** (`?page=3`). Links work before JavaScript loads, search
+engines can follow them, and screen readers announce them as navigation. Give it `onPageChange`
+instead and they're buttons, for lists that page in place.
+
+With `totalPages` it shows numbers: the current page ±1, the first and last, and ellipses
+between. The gnerkulfloot API returns `has_more` rather than a total count, so with `hasMore` and
+no `totalPages` it shows Previous, "Page N" and Next.
+
+The current page is marked `aria-current="page"` and isn't a link, since there's nowhere to go.
+Previous and Next carry `rel="prev"` / `rel="next"`.
+
+| Prop           | Type                                      |                                            |
+| -------------- | ----------------------------------------- | ------------------------------------------ |
+| `page`         | `number`                                  | Current page, from 1                       |
+| `totalPages`   | `number`                                  | If known                                   |
+| `hasMore`      | `boolean`                                 | Without `totalPages`: is there a next page |
+| `href`         | `(page: number) => string`                | Pages become links                         |
+| `onPageChange` | `(page: number) => void`                  | Pages become buttons                       |
+| `labels`       | `{ nav, previous, next, page: (n) => … }` | Translations                               |

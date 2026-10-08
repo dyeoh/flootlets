@@ -68,6 +68,14 @@ on hover that browsers don't add to buttons by default.
   `class`, and never require a wrapper div for styling.
 - **Money** is `{ amount, currency }` in minor units, the same shape the
   gnerkulfloot API returns. Format it with the shared helper, never by hand.
+- **Never hoist JSX into a shared constant** (`const ICON = <svg>…</svg>`). Solid
+  JSX creates real DOM nodes, so rendering one constant in two places _moves_
+  the node and leaves the first place empty. Make it a component (`<Chevron />`).
+- **Reactive props:** never pick between elements with an early `return` based on
+  a prop (it runs once); use `<Show>`, `<Dynamic>` or JSX expressions.
+- **Browser-only code** (Kobalte parts that can't server-render, `window`, layout
+  reads) runs in `onMount` or behind a mounted signal, so the server render and
+  the first browser render match. See `Toaster`.
 
 ## 3. Accessibility checklist (every component)
 
@@ -90,6 +98,13 @@ on hover that browsers don't add to buttons by default.
   project): every component must render to HTML on the server, as in Astro.
 - The two projects have separate config files so their Solid compiler settings
   never mix.
+- `tests/tokens.test.ts` checks contrast, theme blocks and token use;
+  `tests/exports.test.ts` checks every component is exported from the package
+  entry (a missing export once slipped through unnoticed).
+- Regression tests for browser-only bugs (like the Carousel's) simulate the
+  geometry jsdom lacks. Check such a test fails with the fix removed.
+- `bun run lint` fails on any warning: eslint-plugin-solid's warnings are real
+  reactivity bugs.
 
 ## 5. Documentation site
 

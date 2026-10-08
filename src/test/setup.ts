@@ -36,3 +36,10 @@ if (!Element.prototype.hasPointerCapture) {
   Element.prototype.setPointerCapture = () => {};
   Element.prototype.releasePointerCapture = () => {};
 }
+
+// jsdom has no Element.scrollTo (every real browser does).
+if (!Element.prototype.scrollTo) {
+  Element.prototype.scrollTo = function (this: Element, options?: ScrollToOptions | number) {
+    if (typeof options === 'object' && options.left !== undefined) this.scrollLeft = options.left;
+  } as Element['scrollTo'];
+}

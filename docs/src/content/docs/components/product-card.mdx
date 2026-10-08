@@ -1,0 +1,58 @@
+---
+title: ProductCard, ProductImage & StockBadge
+description: Products in grids and carousels.
+---
+
+import Example from '../../../components/Example.astro';
+import Ex from '../../../examples/ProductCardExample';
+import src from '../../../examples/ProductCardExample.tsx?raw';
+
+<Example code={src}>
+  <Ex client:visible />
+</Example>
+
+**ProductCard** is put together from parts (`Image`, `Badges`, `Title`, `Price`, `Actions`), so
+each shop arranges just what it needs. The whole card is clickable through the title's link, but
+screen readers hear a single link named after the product, not a card full of nested links. Its
+`Actions` stay clickable above that link. The card is presentational: fetch products however your
+app does and pass the data in.
+
+The card's photo has an empty `alt` by default, since the title right next to it already names
+the product and saying it twice is noise for screen-reader users. Product pages should use
+`ProductImage` with a real description instead.
+
+**ProductImage** takes the `urls` from the gnerkulfloot API (a 400px `thumb` and a 1600px
+`large` WebP) and lets the browser pick the smallest that looks sharp. Pass the original
+`width`/`height` from the API, so the space is reserved and the page doesn't jump while it loads.
+Use `priority` for the main photo at the top of a product page; everything else loads lazily.
+
+**StockBadge** turns the API's `in_stock` into "In stock" or "Sold out".
+
+## Mapping API data
+
+The product list (`GET /v1/products`) returns only the thumbnail URL. gnerkulfloot always stores
+both sizes side by side (`…/thumb.webp` and `…/large.webp`), so derive the large one. Don't pass
+the thumbnail as both: the browser would then treat a 400px image as 1600px and show it blurry on
+big screens.
+
+```tsx
+const imageUrls = (thumb: string | null) =>
+  thumb ? { thumb, large: thumb.replace(/thumb\.webp$/, 'large.webp') } : null;
+
+// GET /v1/products → items[]
+<ProductCard>
+  <ProductCard.Image urls={imageUrls(item.thumbnail)} />
+  <ProductCard.Title href={`/products/${item.slug}`}>{item.name}</ProductCard.Title>
+  <ProductCard.Price amount={item.price_from} compareAt={item.compare_at} locale="en-MY" />
+  <StockBadge inStock={item.in_stock} />
+</ProductCard>;
+```
+
+| ProductImage prop | Type                               |                                                               |
+| ----------------- | ---------------------------------- | ------------------------------------------------------------- |
+| `urls`            | `{ thumb: string; large: string }` | From the API                                                  |
+| `alt`             | `string`                           | Required; `""` only when the product is named right beside it |
+| `width`, `height` | `number`                           | The original's size, from the API                             |
+| `priority`        | `boolean`                          | Load now, high priority                                       |
+| `sizes`           | `string`                           | Default suits a responsive grid                               |
+| `fallback`        | JSX                                | Shown if the image fails to load; defaults to the alt text    |
