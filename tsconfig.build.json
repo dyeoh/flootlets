@@ -1,0 +1,17 @@
+{
+  // Emits what the package ships besides the browser bundle:
+  // - dist/source: JSX kept as-is, for the `solid` export condition, so Solid
+  //   apps (and Astro) compile components for their own target (DOM or SSR).
+  // - dist/types: type declarations.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "outDir": "dist/source",
+    "rootDir": "src",
+    "types": []
+  },
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/test"]
+}
