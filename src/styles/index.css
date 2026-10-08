@@ -7,3 +7,11 @@
 
 @import './tokens.css' layer(flootlets.tokens);
 @import './base.css' layer(flootlets.base);
+
+@import '../components/Spinner/Spinner.css' layer(flootlets.components);
+@import '../components/Button/Button.css' layer(flootlets.components);
+@import '../components/Link/Link.css' layer(flootlets.components);
+@import '../components/Badge/Badge.css' layer(flootlets.components);
+@import '../components/Skeleton/Skeleton.css' layer(flootlets.components);
+@import '../components/Price/Price.css' layer(flootlets.components);
+@import '../components/Layout/Layout.css' layer(flootlets.components);

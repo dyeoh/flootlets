@@ -1,0 +1,10 @@
+.fl-link {
+  color: var(--fl-color-accent-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.fl-link:hover {
+  text-decoration-thickness: 2px;
+}

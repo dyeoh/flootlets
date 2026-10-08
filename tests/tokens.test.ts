@@ -105,8 +105,24 @@ function cssFiles(dir: string): string[] {
   });
 }
 
-test('every token used in a stylesheet is defined', () => {
+function sourceFiles(dir: string, ext: string): string[] {
+  return readdirSync(dir).flatMap((entry) => {
+    const path = join(dir, entry);
+    if (statSync(path).isDirectory()) return sourceFiles(path, ext);
+    return path.endsWith(ext) ? [path] : [];
+  });
+}
+
+test('every variable used in a stylesheet is defined', () => {
+  // Tokens, plus component-local variables declared in CSS (--fl-button-bg)
+  // or set inline by a component (--fl-gap on Stack).
   const defined = new Set([...root.keys(), ...darkForced.keys()]);
+  for (const file of cssFiles('src')) {
+    for (const m of readFileSync(file, 'utf8').matchAll(/(--fl-[\w-]+)\s*:/g)) defined.add(m[1]!);
+  }
+  for (const file of sourceFiles('src', '.tsx')) {
+    for (const m of readFileSync(file, 'utf8').matchAll(/'(--fl-[\w-]+)'\s*:/g)) defined.add(m[1]!);
+  }
   for (const file of cssFiles('src')) {
     for (const m of readFileSync(file, 'utf8').matchAll(/var\((--fl-[\w-]+)/g)) {
       expect(defined.has(m[1]!), `${file} uses undefined ${m[1]}`).toBe(true);
@@ -116,7 +132,7 @@ test('every token used in a stylesheet is defined', () => {
 
 test('every component stylesheet is included in the bundle', () => {
   const index = readFileSync('src/styles/index.css', 'utf8');
-  for (const file of cssFiles('src/components').filter(() => true)) {
+  for (const file of cssFiles('src/components')) {
     const relative = `../${file.slice('src/'.length)}`;
     expect(index, `src/styles/index.css must @import '${relative}'`).toContain(`'${relative}'`);
   }

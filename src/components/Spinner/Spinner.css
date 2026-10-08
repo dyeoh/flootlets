@@ -1,0 +1,44 @@
+.fl-spinner {
+  --fl-spinner-size: 1.25rem;
+  display: inline-flex;
+  inline-size: var(--fl-spinner-size);
+  block-size: var(--fl-spinner-size);
+  vertical-align: middle;
+}
+
+.fl-spinner[data-size='sm'] {
+  --fl-spinner-size: 1rem;
+}
+
+.fl-spinner[data-size='lg'] {
+  --fl-spinner-size: 2rem;
+}
+
+.fl-spinner__circle {
+  inline-size: 100%;
+  block-size: 100%;
+  border: 2px solid currentColor;
+  border-inline-end-color: transparent;
+  border-radius: 50%;
+  animation: fl-spin 0.75s linear infinite;
+}
+
+/* A slow pulse instead of spinning for people who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .fl-spinner__circle {
+    border-inline-end-color: currentColor;
+    animation: fl-pulse 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes fl-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes fl-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}

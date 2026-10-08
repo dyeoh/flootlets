@@ -13,8 +13,48 @@ Accessible, themeable [SolidJS](https://www.solidjs.com/) components for shops b
   [Kobalte](https://kobalte.dev/) for interactive pieces; every component is checked with axe.
 - **Light and dark** follow the visitor's system setting, or `data-theme="light|dark"`.
 
-> **Status: early.** The project scaffold is in place; components land next. Documentation
-> will live at https://dyeoh.github.io/flootlets/.
+> **Status: early.** Design tokens and the basic components are in; forms, overlays and shop
+> components are next. Documentation will live at https://dyeoh.github.io/flootlets/.
+
+## Components
+
+| Component                  | What it's for                                                                                                                                               |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Button`                   | Actions; with `href`, a link styled as a button. Variants `primary` (brand red), `secondary`, `outline`, `ghost`, `danger`; `loading` keeps focus and width |
+| `Link`                     | Inline text links; `external` opens a new tab safely and says so                                                                                            |
+| `Price`                    | Money from the gnerkulfloot API (`{ amount, currency }` in minor units), with an optional struck-through `compareAt` price                                  |
+| `Badge`                    | Short labels: `neutral`, `accent`, `success`, `warning`, `danger`                                                                                           |
+| `Spinner`, `Skeleton`      | Loading states                                                                                                                                              |
+| `Stack`, `Cluster`, `Grid` | Layout: column, wrapping row, responsive grid (gaps from the spacing scale)                                                                                 |
+| `VisuallyHidden`           | Text for screen readers only                                                                                                                                |
+
+Helpers: `formatMoney(money, locale)`, `currencyDigits(currency)`, `cx(...classes)`.
+
+```tsx
+import { Button, Price } from 'flootlets';
+
+<Price amount={{ amount: 2500, currency: 'MYR' }} compareAt={{ amount: 3500, currency: 'MYR' }} locale="en-MY" />
+<Button onClick={addToCart}>Add to cart</Button>
+```
+
+Always pass the same `locale` on the server and in the browser, so server-rendered prices
+hydrate without a mismatch.
+
+## Theming
+
+Every value is a CSS variable. Override the semantic tokens in your own CSS:
+
+```css
+:root {
+  --fl-color-accent: #0064ff; /* fills: primary buttons, accent badges */
+  --fl-color-accent-text: #0050cc; /* links and sale prices */
+  --fl-radius-pill: 6px; /* squarer buttons */
+}
+```
+
+Light and dark follow the visitor's system setting. Set `data-theme="light"` or
+`data-theme="dark"` on `<html>` (or any element) to force one. Keep text tokens at 4.5:1
+contrast with their backgrounds; flootlets' own tokens are tested for it.
 
 ## Install
 
