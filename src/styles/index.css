@@ -15,3 +15,8 @@
 @import '../components/Skeleton/Skeleton.css' layer(flootlets.components);
 @import '../components/Price/Price.css' layer(flootlets.components);
 @import '../components/Layout/Layout.css' layer(flootlets.components);
+@import '../components/Field/Field.css' layer(flootlets.components);
+@import '../components/Select/Select.css' layer(flootlets.components);
+@import '../components/Checkbox/Checkbox.css' layer(flootlets.components);
+@import '../components/RadioGroup/RadioGroup.css' layer(flootlets.components);
+@import '../components/QuantityStepper/QuantityStepper.css' layer(flootlets.components);

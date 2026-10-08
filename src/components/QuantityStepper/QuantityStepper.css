@@ -1,0 +1,62 @@
+.fl-stepper__control {
+  display: inline-flex;
+  align-items: stretch;
+  inline-size: fit-content;
+  border: 1px solid var(--fl-color-border-strong);
+  border-radius: var(--fl-radius-pill);
+  background: var(--fl-color-surface-raised);
+}
+
+.fl-stepper__control:focus-within {
+  border-color: var(--fl-color-focus);
+}
+
+.fl-stepper[data-invalid] .fl-stepper__control {
+  border: 2px solid var(--fl-color-danger-text);
+}
+
+.fl-stepper__button {
+  display: grid;
+  place-items: center;
+  inline-size: var(--fl-control-md);
+  block-size: var(--fl-control-md);
+  border: 0;
+  border-radius: var(--fl-radius-pill);
+  background: transparent;
+  color: var(--fl-color-text);
+  font: inherit;
+  font-size: var(--fl-text-xl);
+  line-height: 1;
+}
+
+.fl-stepper__button:hover:not(:disabled) {
+  background: var(--fl-color-surface);
+}
+
+.fl-stepper__button:disabled {
+  color: var(--fl-color-text-muted);
+  opacity: 0.5;
+}
+
+.fl-stepper__input {
+  inline-size: 3.5ch;
+  min-inline-size: 2.5rem;
+  border: 0;
+  background: transparent;
+  color: var(--fl-color-text);
+  font: inherit;
+  font-size: var(--fl-text-base);
+  font-weight: var(--fl-weight-bold);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.fl-stepper__input:focus-visible {
+  outline-offset: -2px;
+}
+
+.fl-stepper[data-size='sm'] .fl-stepper__button {
+  inline-size: var(--fl-control-sm);
+  block-size: var(--fl-control-sm);
+  font-size: var(--fl-text-base);
+}

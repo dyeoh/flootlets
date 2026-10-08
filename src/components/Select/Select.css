@@ -1,0 +1,66 @@
+.fl-select__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fl-space-2);
+  text-align: start;
+}
+
+.fl-select__value[data-placeholder-shown] {
+  color: var(--fl-color-text-muted);
+}
+
+.fl-select__icon {
+  color: var(--fl-color-text-muted);
+  transition: transform var(--fl-duration-fast) var(--fl-ease);
+}
+
+.fl-select__trigger[data-expanded] .fl-select__icon {
+  transform: rotate(180deg);
+}
+
+/* The open list is portalled to <body>, so it can't inherit from the field. */
+.fl-select__content {
+  z-index: var(--fl-z-dropdown);
+  min-inline-size: var(--kb-popper-anchor-width);
+  border: 1px solid var(--fl-color-border);
+  border-radius: var(--fl-radius-md);
+  background: var(--fl-color-surface-raised);
+  color: var(--fl-color-text);
+  font-family: var(--fl-font-body);
+  box-shadow: var(--fl-shadow-lg);
+  transform-origin: var(--kb-select-content-transform-origin);
+}
+
+.fl-select__listbox {
+  max-block-size: 18rem;
+  overflow-y: auto;
+  padding: var(--fl-space-1);
+}
+
+.fl-select__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fl-space-3);
+  min-block-size: var(--fl-control-sm);
+  padding: var(--fl-space-2) var(--fl-space-3);
+  border-radius: var(--fl-radius-sm);
+  outline: none;
+}
+
+.fl-select__item[data-highlighted] {
+  background: var(--fl-color-surface);
+}
+
+.fl-select__item[data-selected] {
+  font-weight: var(--fl-weight-bold);
+}
+
+.fl-select__item[data-disabled] {
+  color: var(--fl-color-text-muted);
+}
+
+.fl-select__check {
+  color: var(--fl-color-accent-text);
+}

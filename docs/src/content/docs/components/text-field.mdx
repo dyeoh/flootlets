@@ -1,0 +1,34 @@
+---
+title: TextField & TextArea
+description: Labelled text inputs with help text and errors.
+---
+
+import Example from '../../../components/Example.astro';
+import Ex from '../../../examples/TextFieldExamples';
+import src from '../../../examples/TextFieldExamples.tsx?raw';
+
+Type an email to see the error appear and clear as you fix it.
+
+<Example code={src}>
+  <Ex client:visible />
+</Example>
+
+Built on Kobalte's TextField, which links the label, the description and the error message to the
+input. When `error` is set the input gets `aria-invalid="true"`, and screen readers read the
+message together with the field. Any other attribute (`type`, `autocomplete`, `inputmode`,
+`placeholder`…) goes to the `<input>`; use `autocomplete` on checkout forms so phones can
+fill them in.
+
+## Props
+
+| Prop                                  | Type                                            |                                                |
+| ------------------------------------- | ----------------------------------------------- | ---------------------------------------------- |
+| `label`                               | `string`                                        | Required. Every input needs a name             |
+| `hideLabel`                           | `boolean`                                       | Hide it visually; screen readers still read it |
+| `description`                         | `string`                                        | Help text under the input                      |
+| `error`                               | `string`                                        | Marks the field invalid and shows the message  |
+| `value` / `defaultValue` / `onChange` | `string` / `string` / `(value: string) => void` | Controlled or not                              |
+| `name`, `required`, `disabled`        |                                                 | For native forms                               |
+| `autoResize`                          | `boolean`                                       | TextArea only: grow with the text              |
+
+Classes: `fl-field`, `fl-field__label`, `fl-field__description`, `fl-field__error`, `fl-input`.

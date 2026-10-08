@@ -68,6 +68,13 @@ bun add flootlets solid-js        # or npm / pnpm
 import 'flootlets/styles.css'; // once, at the root of your app
 ```
 
+## Troubleshooting
+
+**Astro: "Client-only API called on the server side".** Astro must compile Solid libraries for
+the server, and it finds them through your app's dependencies. If a page using a form
+component (Select, QuantityStepper…) fails like this, add Kobalte to your app's own
+dependencies: `bun add @kobalte/core`.
+
 ## Development
 
 You need [Bun](https://bun.sh/) 1.3+.

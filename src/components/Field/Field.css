@@ -1,0 +1,65 @@
+/* Shared by every form component: label, help text, error and the input box. */
+.fl-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fl-space-1);
+  color: var(--fl-color-text);
+}
+
+.fl-field__label {
+  font-size: var(--fl-text-sm);
+  font-weight: var(--fl-weight-medium);
+}
+
+.fl-field[data-required] .fl-field__label:not(.fl-visually-hidden)::after {
+  content: ' *';
+  color: var(--fl-color-danger-text);
+}
+
+.fl-field__description {
+  color: var(--fl-color-text-muted);
+  font-size: var(--fl-text-sm);
+}
+
+.fl-field__error {
+  color: var(--fl-color-danger-text);
+  font-size: var(--fl-text-sm);
+  font-weight: var(--fl-weight-medium);
+}
+
+.fl-input {
+  inline-size: 100%;
+  min-block-size: var(--fl-control-md);
+  padding: var(--fl-space-2) var(--fl-space-3);
+  border: 1px solid var(--fl-color-border-strong);
+  border-radius: var(--fl-radius-md);
+  background: var(--fl-color-surface-raised);
+  color: var(--fl-color-text);
+  font: inherit;
+  font-size: var(--fl-text-base);
+}
+
+.fl-input::placeholder {
+  color: var(--fl-color-text-muted);
+}
+
+.fl-input:focus-visible {
+  outline-offset: 0;
+  border-color: var(--fl-color-focus);
+}
+
+.fl-input[aria-invalid='true'],
+.fl-input[data-invalid] {
+  border-color: var(--fl-color-danger-text);
+  border-width: 2px;
+}
+
+.fl-input:disabled,
+.fl-input[data-disabled] {
+  opacity: 0.55;
+}
+
+textarea.fl-input {
+  min-block-size: 6rem;
+  resize: vertical;
+}

@@ -1,0 +1,34 @@
+---
+title: Select
+description: Pick one option from a list.
+---
+
+import Example from '../../../components/Example.astro';
+import Ex from '../../../examples/SelectExample';
+import src from '../../../examples/SelectExample.tsx?raw';
+
+<Example code={src}>
+  <Ex client:visible />
+</Example>
+
+Built on Kobalte's Select. **Keyboard:** Enter, Space or the arrow keys open it; arrows move;
+typing jumps to matching options; Enter picks; Escape closes. A hidden native `<select>` carries
+the value, so it's submitted with a normal form when you give it a `name`. Disabled options are
+announced as unavailable.
+
+For two to five options that should all be visible, prefer a [RadioGroup](/flootlets/components/choices/).
+
+## Props
+
+| Prop                                                                | Type                                                     |                                                      |
+| ------------------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------- |
+| `label`                                                             | `string`                                                 | Required                                             |
+| `options`                                                           | `{ value: string; label: string; disabled?: boolean }[]` |                                                      |
+| `value` / `defaultValue`                                            | `string`                                                 | The selected option's `value`                        |
+| `onChange`                                                          | `(value: string \| undefined) => void`                   |                                                      |
+| `placeholder`                                                       | `string`                                                 | Shown before anything is chosen. Default "Choose…"   |
+| `description`, `error`, `hideLabel`, `name`, `required`, `disabled` |                                                          | As in [TextField](/flootlets/components/text-field/) |
+
+Classes: `fl-select__trigger`, `fl-select__content` (the open list, rendered at the end of
+`<body>`), `fl-select__item`. Highlighted and selected items have `data-highlighted` and
+`data-selected`.

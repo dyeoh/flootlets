@@ -10,6 +10,6 @@ export default defineProject({
     include: ['src/**/*.test.{ts,tsx}', 'tests/**/*.test.ts'],
     setupFiles: ['./src/test/setup.ts'],
     // solid-js must only be loaded once per test run.
-    deps: { optimizer: { web: { include: ['solid-js'] } } },
+    deps: { optimizer: { client: { include: ['solid-js'] } } },
   },
 });

@@ -1,0 +1,39 @@
+---
+title: Checkbox & RadioGroup
+description: Yes/no choices, and picking one of a few visible options.
+---
+
+import Example from '../../../components/Example.astro';
+import Ex from '../../../examples/ChoiceExamples';
+import src from '../../../examples/ChoiceExamples.tsx?raw';
+
+<Example code={src}>
+  <Ex client:visible />
+</Example>
+
+Both use real (visually hidden) native inputs underneath, so they work with forms and screen
+readers exactly like native controls, and both are built on Kobalte.
+
+- **Checkbox:** clicking the label toggles it. With `error`, it's marked invalid and the message is
+  read with it.
+- **RadioGroup:** a labelled group. Tab moves into the group, then the arrow keys move between
+  options, as screen-reader users expect. Each option can have its own `description`.
+
+## Checkbox props
+
+| Prop                                                   | Type                                                 |                                      |
+| ------------------------------------------------------ | ---------------------------------------------------- | ------------------------------------ |
+| `label`                                                | `string`                                             | Required                             |
+| `checked` / `defaultChecked` / `onChange`              | `boolean` / `boolean` / `(checked: boolean) => void` |                                      |
+| `value`                                                | `string`                                             | Submitted when checked. Default "on" |
+| `description`, `error`, `name`, `required`, `disabled` |                                                      |                                      |
+
+## RadioGroup props
+
+| Prop                                                                | Type                                            |                           |
+| ------------------------------------------------------------------- | ----------------------------------------------- | ------------------------- |
+| `label`                                                             | `string`                                        | Required. Names the group |
+| `options`                                                           | `{ value; label; description?; disabled? }[]`   |                           |
+| `value` / `defaultValue` / `onChange`                               | `string` / `string` / `(value: string) => void` |                           |
+| `orientation`                                                       | `'vertical' \| 'horizontal'`                    | Default vertical          |
+| `description`, `error`, `hideLabel`, `name`, `required`, `disabled` |                                                 |                           |

@@ -1,0 +1,32 @@
+---
+title: QuantityStepper
+description: Choose how many, within the stock available.
+---
+
+import Example from '../../../components/Example.astro';
+import Ex from '../../../examples/StepperExample';
+import src from '../../../examples/StepperExample.tsx?raw';
+
+<Example code={src}>
+  <Ex client:visible />
+</Example>
+
+Built on Kobalte's NumberField. The number is a **spinbutton**: arrow keys step it, Page Up/Down
+step further, Home/End jump to the limits, and you can type a number. The − and + buttons switch
+off at `min` and `max`. When − or + is pressed, the new quantity is announced to screen readers
+(focus is on the button then, so the field's own announcement wouldn't be heard).
+
+`min` defaults to **1**: taking an item out of the cart should be a separate, clearly labelled
+"Remove" button, not a quantity of 0. Set `max` to the stock left; the gnerkulfloot API still
+checks stock when the order is placed.
+
+## Props
+
+| Prop                                                   | Type                                            |                                                                                  |
+| ------------------------------------------------------ | ----------------------------------------------- | -------------------------------------------------------------------------------- |
+| `label`                                                | `string`                                        | Required, e.g. "Quantity". Use `hideLabel` in a compact cart row                 |
+| `value` / `defaultValue` / `onChange`                  | `number` / `number` / `(value: number) => void` |                                                                                  |
+| `min`, `max`, `step`                                   | `number`                                        | Defaults 1, none, 1                                                              |
+| `size`                                                 | `'sm' \| 'md'`                                  |                                                                                  |
+| `labels`                                               | `{ decrement?: string; increment?: string }`    | Button labels for translation. Default "Decrease quantity" / "Increase quantity" |
+| `description`, `error`, `name`, `required`, `disabled` |                                                 |                                                                                  |
