@@ -1,0 +1,24 @@
+---
+title: EmptyState
+description: What to show when there's nothing to show yet.
+---
+
+import Example from '../../../components/Example.astro';
+import Ex from '../../../examples/EmptyStateExample';
+import src from '../../../examples/EmptyStateExample.tsx?raw';
+
+<Example code={src}>
+  <Ex />
+</Example>
+
+For an empty cart, a search with no results or an order history with no orders: say what's
+going on and offer a way forward. The icon is decorative and hidden from screen readers. Set
+`headingLevel` so the title fits your page's heading outline.
+
+| Prop           | Type          |                                   |
+| -------------- | ------------- | --------------------------------- |
+| `title`        | JSX           | Required                          |
+| `description`  | JSX           |                                   |
+| `icon`         | JSX           | Decorative                        |
+| `action`       | JSX           | e.g. a "Continue shopping" button |
+| `headingLevel` | `2 \| 3 \| 4` | Default 2                         |

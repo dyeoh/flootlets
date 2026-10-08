@@ -1,0 +1,27 @@
+---
+title: Alert
+description: Inline messages, like an out-of-stock error from checkout.
+---
+
+import Example from '../../../components/Example.astro';
+import Ex from '../../../examples/AlertExamples';
+import src from '../../../examples/AlertExamples.tsx?raw';
+
+<Example code={src}>
+  <Ex client:visible />
+</Example>
+
+Use an Alert for messages tied to the page or a form that the shopper may need to act on. A
+`danger` alert is a `role="alert"`, announced straight away; the other tones are
+`role="status"`, announced when the screen reader is free. With `onDismiss` it gets a labelled
+close button.
+
+The gnerkulfloot API's checkout errors carry a `code` (`out_of_stock`, `shipping_unavailable`…).
+Map those to friendly text in an Alert near the place it applies.
+
+| Prop           | Type                                           | Default                  |
+| -------------- | ---------------------------------------------- | ------------------------ |
+| `tone`         | `'info' \| 'success' \| 'warning' \| 'danger'` | `'info'`                 |
+| `title`        | JSX                                            |                          |
+| `onDismiss`    | `() => void`                                   | Shows the dismiss button |
+| `dismissLabel` | `string`                                       | `'Dismiss'`              |

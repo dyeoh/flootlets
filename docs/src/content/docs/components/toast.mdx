@@ -1,0 +1,46 @@
+---
+title: Toast
+description: Short, temporary messages like "Added to cart".
+---
+
+import Example from '../../../components/Example.astro';
+import Ex from '../../../examples/ToastExample';
+import src from '../../../examples/ToastExample.tsx?raw';
+
+<Example code={src}>
+  <Ex client:visible />
+</Example>
+
+Render **one** `<Toaster />` in your app (in Astro, as an island: `<Toaster client:load />`), then
+call `toast({ title })` from anywhere. Toasts appear bottom-right, stack up to three at a time,
+pause while hovered or focused, and can be swiped or closed. The toaster is a live region, so
+each toast is announced.
+
+Toasts disappear, so never put anything there the shopper must act on or read twice. Use an
+[Alert](/flootlets/components/alert/) for errors that block checkout.
+
+The toaster only mounts in the browser, after the page loads: toasts can't happen before then,
+and it keeps the server-rendered page identical to the first browser render.
+
+## API
+
+```ts
+const id = toast({ title: 'Saving…', persistent: true });
+toast.dismiss(id);
+toast.clear();
+```
+
+| `toast()` option | Type                                           |                           |
+| ---------------- | ---------------------------------------------- | ------------------------- |
+| `title`          | `string`                                       | Required                  |
+| `description`    | `string`                                       |                           |
+| `tone`           | `'info' \| 'success' \| 'warning' \| 'danger'` |                           |
+| `duration`       | `number` (ms)                                  | Defaults to the Toaster's |
+| `persistent`     | `boolean`                                      | Stay until closed         |
+| `closeLabel`     | `string`                                       | Default "Close"           |
+
+| `<Toaster>` prop | Type          | Default           |
+| ---------------- | ------------- | ----------------- |
+| `duration`       | `number` (ms) | `5000`            |
+| `limit`          | `number`      | `3`               |
+| `label`          | `string`      | `'Notifications'` |

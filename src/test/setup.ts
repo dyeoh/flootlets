@@ -29,3 +29,10 @@ if (!window.ResizeObserver) {
     disconnect() {}
   };
 }
+
+// jsdom has no pointer capture; Kobalte's swipe and press handling call it.
+if (!Element.prototype.hasPointerCapture) {
+  Element.prototype.hasPointerCapture = () => false;
+  Element.prototype.setPointerCapture = () => {};
+  Element.prototype.releasePointerCapture = () => {};
+}
