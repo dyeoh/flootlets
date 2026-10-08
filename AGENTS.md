@@ -63,7 +63,9 @@ on hover that browsers don't add to buttons by default.
   `Button.css` and `Button.test.tsx`. Export it from `src/index.ts`, and add
   its CSS to `src/styles/index.css` with `layer(flootlets.components)`.
 - **Class names** are `fl-<component>` and `fl-<component>__<part>`.
-- **Tokens** are `--fl-<group>-<name>`: `--fl-color-text`, `--fl-space-3`, `--fl-radius-md`.
+- **Theme variables** use shadcn/ui's names (`--primary`, `--muted-foreground`, `--radius`), in
+  `src/styles/theme.css`. The remaining `--fl-*` scales and aliases in `legacy.css` are
+  transitional: don't use them in new code.
 - **Props:** forward unknown props to the root element (`splitProps`), accept
   `class`, and never require a wrapper div for styling.
 - **Money** is `{ amount, currency }` in minor units, the same shape the
@@ -86,7 +88,7 @@ on hover that browsers don't add to buttons by default.
 - Changes that happen without a page load (added to cart, errors) are announced
   through a live region.
 - Colour contrast meets WCAG AA (4.5:1 for text, 3:1 for large text and UI) in
-  light **and** dark; the contrast test enforces this for token pairs.
+  light **and** dark; the contrast test enforces this for theme pairs.
 - Motion respects `prefers-reduced-motion`.
 - Tests: an axe check of the default render, plus keyboard interaction tests for
   anything interactive.
@@ -98,7 +100,8 @@ on hover that browsers don't add to buttons by default.
   project): every component must render to HTML on the server, as in Astro.
 - The two projects have separate config files so their Solid compiler settings
   never mix.
-- `tests/tokens.test.ts` checks contrast, theme blocks and token use;
+- `tests/theme.test.ts` checks contrast, theme blocks and the Tailwind mapping (`bun run
+check:theme <file>` runs the contrast check on any theme);
   `tests/exports.test.ts` checks every component is exported from the package
   entry (a missing export once slipped through unnoticed).
 - Regression tests for browser-only bugs (like the Carousel's) simulate the
@@ -122,7 +125,7 @@ on hover that browsers don't add to buttons by default.
 - **Dev vs build:** `astro dev` aliases `flootlets` to `src/` for live editing; `astro build`
   aliases it to `dist/` (the code the package ships), so every docs build is an end-to-end check
   that Astro can compile and server-render the published components.
-- Starlight's theme picker sets `data-theme` on `<html>`, which the tokens already follow.
+- Starlight's theme picker sets `data-theme` on `<html>`, which the theme already follows.
 
 ## 6. Doc style
 
@@ -144,7 +147,7 @@ write it by hand. A `commit-msg` hook (commitlint) rejects anything else.
 ```
 
 - **Types:** `feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`.
-- **Scopes:** `tokens`, `base`, `build`, `docs`, `ci`, or the component (`button`, `price`, `dialog`…).
+- **Scopes:** `theme`, `base`, `build`, `docs`, `ci`, or the component (`button`, `price`, `dialog`…).
 - **Breaking changes** (renamed tokens, props or classes) get `!` after the
   type/scope and a `BREAKING CHANGE:` footer.
 

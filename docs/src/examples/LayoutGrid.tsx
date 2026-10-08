@@ -12,7 +12,7 @@ export default function LayoutGrid() {
             gap={1}
             style={{
               padding: '1rem',
-              border: '1px solid var(--fl-color-border)',
+              border: '1px solid var(--border)',
               'border-radius': '10px',
             }}
           >

@@ -3,15 +3,16 @@
 Accessible, themeable [SolidJS](https://www.solidjs.com/) components for shops built on
 [gnerkulfloot](https://github.com/dyeoh/gnerkulfloot). Little bits of gnerkulfloot.
 
-- **Plain CSS with design tokens.** Every colour, size and radius is a CSS custom property
-  (`--fl-…`), so theming means overriding variables, with no build step and no Tailwind.
+- **shadcn theme variables.** Colours and radius use shadcn/ui's names (`--primary`,
+  `--muted-foreground`, `--radius`…), so restyling means overriding a few variables, and any
+  shadcn or tweakcn theme drops in.
 - **Never fights your styles.** All flootlets CSS lives in `@layer flootlets.*`, so your own
   CSS wins automatically, whatever its specificity.
 - **Server-rendered first.** Works in [Astro](https://astro.build/) and other Solid SSR setups:
   static components ship no JavaScript, and interactive ones hydrate as islands.
 - **Accessible by default.** Keyboard support, focus management and ARIA come from
   [Kobalte](https://kobalte.dev/) for interactive pieces; every component is checked with axe.
-- **Light and dark** follow the visitor's system setting, or `data-theme="light|dark"`.
+- **Light and dark** follow the visitor's system setting, or `.dark` / `data-theme="dark"`.
 
 > **Status:** all planned components are in: basics, forms, feedback and overlays, and shop
 > components. Pre-1.0, so props may still change between minor versions.
@@ -53,19 +54,28 @@ hydrate without a mismatch.
 
 ## Theming
 
-Every value is a CSS variable. Override the semantic tokens in your own CSS:
+Colours and radius are shadcn/ui theme variables. With Tailwind, import the theme after it, so
+`bg-primary` and friends follow it too:
+
+```css
+@import 'tailwindcss';
+@import 'flootlets/theme.css';
+```
+
+Override variables in your own CSS, or paste in any shadcn or tweakcn theme:
 
 ```css
 :root {
-  --fl-color-accent: #0064ff; /* fills: primary buttons, accent badges */
-  --fl-color-accent-text: #0050cc; /* links and sale prices */
-  --fl-radius-pill: 6px; /* squarer buttons */
+  --primary: #0064ff; /* buttons, links, sale prices */
+  --ring: #0064ff;
+  --radius: 0.375rem; /* squarer corners */
 }
 ```
 
-Light and dark follow the visitor's system setting. Set `data-theme="light"` or
-`data-theme="dark"` on `<html>` (or any element) to force one. Keep text tokens at 4.5:1
-contrast with their backgrounds; flootlets' own tokens are tested for it.
+Light and dark follow the visitor's system setting. Put `class="dark"` or `data-theme="dark"`
+(or `light`) on `<html>`, or any element, to force one. Keep colours used as text at 4.5:1
+contrast with their backgrounds; `bun run check:theme theme.css` checks every pair, and
+flootlets' own theme is tested for it.
 
 ## Install
 

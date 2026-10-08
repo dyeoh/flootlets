@@ -30,7 +30,7 @@ export default defineConfig({
           items: [
             { label: 'Getting started', slug: 'index' },
             { label: 'Theming', slug: 'theming' },
-            { label: 'Design tokens', slug: 'tokens' },
+            { label: 'Theme variables', slug: 'tokens' },
             { label: 'Accessibility', slug: 'accessibility' },
           ],
         },

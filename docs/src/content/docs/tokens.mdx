@@ -1,26 +1,30 @@
 ---
-title: Design tokens
-description: Every colour token in both themes, with its contrast.
+title: Theme variables
+description: Every theme variable in both themes, with its contrast.
 ---
 
 import TokenSwatches from '../../components/TokenSwatches.astro';
+import { radius } from '../../lib/tokens';
 
-The palette is ink black, a brush red and paper white. Red is used as a **fill** in both themes
-(white on brush red is 8.35:1). Red **text** on the dark background uses a lighter red, because
-brush red on ink is only 2.4:1, far below the 4.5:1 that text needs.
+flootlets uses [shadcn/ui's theme variables](https://ui.shadcn.com/docs/theming), plus
+`--success` and `--warning` in the same pattern. Each colour has a `-foreground` for text on
+top of it.
 
-This page reads `tokens.css` directly, so it always shows the current values.
+The palette is ink black, a brush red and paper white. Red is used as a **fill** in both themes:
+white on brush red is 8.35:1. On the dark background, brush red text would be only 2.4:1, far
+below the 4.5:1 that text needs, so dark mode uses a lighter red with ink text, which works both
+as a fill and as text.
+
+This page reads `theme.css` directly, so it always shows the current values.
 
 <TokenSwatches />
 
-## Other scales
+## Radius
 
-| Group    | Tokens                                                                                                     |
-| -------- | ---------------------------------------------------------------------------------------------------------- |
-| Spacing  | `--fl-space-0` … `--fl-space-16` (0.25rem steps: `--fl-space-4` is 1rem)                                   |
-| Radius   | `--fl-radius-sm` (5px), `-md` (10px), `-lg` (20px), `-pill`                                                |
-| Type     | `--fl-text-xs` … `--fl-text-5xl`, `--fl-font-body`, `--fl-font-heading`, `--fl-weight-*`, `--fl-leading-*` |
-| Controls | `--fl-control-sm` (2rem), `-md` (2.75rem, a comfortable touch target), `-lg`                               |
-| Motion   | `--fl-duration-fast` / `-normal` / `-slow` (all 0 with reduced motion), `--fl-ease`                        |
-| Shadows  | `--fl-shadow-sm` / `-md` / `-lg` (stronger in dark mode)                                                   |
-| Layers   | `--fl-z-dropdown`, `--fl-z-overlay`, `--fl-z-toast`                                                        |
+`--radius` is <code>{radius}</code>. As in shadcn, Tailwind's radii are derived from it:
+`rounded-lg` is `--radius`, `rounded-md` and `rounded-sm` are 2px and 4px smaller, and
+`rounded-xl` is 4px larger.
+
+## Everything else
+
+Spacing, type, shadows and motion use Tailwind's own scales.

@@ -5,8 +5,8 @@
  */
 @layer flootlets.reset, flootlets.tokens, flootlets.base, flootlets.components;
 
-@import './tokens.css' layer(flootlets.tokens);
-@import './base.css' layer(flootlets.base);
+@import './theme.css' layer(flootlets.tokens);
+@import './legacy.css' layer(flootlets.base);
 
 @import '../components/Spinner/Spinner.css' layer(flootlets.components);
 @import '../components/Button/Button.css' layer(flootlets.components);

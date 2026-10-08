@@ -9,10 +9,10 @@
   align-items: center;
   gap: 1rem;
   padding: 2rem 1.5rem;
-  border: 1px solid var(--fl-color-border);
+  border: 1px solid var(--border);
   border-radius: 10px;
-  background: var(--fl-color-bg);
-  color: var(--fl-color-text);
+  background: var(--background);
+  color: var(--foreground);
   font-family: var(--fl-font-body);
 }
 

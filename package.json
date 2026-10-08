@@ -22,7 +22,8 @@
       "solid": "./dist/source/index.js",
       "default": "./dist/browser/index.js"
     },
-    "./styles.css": "./dist/flootlets.css"
+    "./styles.css": "./dist/flootlets.css",
+    "./theme.css": "./dist/theme.css"
   },
   "types": "./dist/types/index.d.ts",
   "workspaces": [
@@ -39,7 +40,8 @@
     "prepare": "simple-git-hooks",
     "docs:dev": "bun run --cwd docs dev",
     "docs:build": "bun run build && bun run --cwd docs build",
-    "check:exports": "bun scripts/check-exports.ts"
+    "check:exports": "bun scripts/check-exports.ts",
+    "check:theme": "bun scripts/check-theme.ts"
   },
   "peerDependencies": {
     "solid-js": "^1.9.0"
@@ -51,6 +53,7 @@
     "@commitlint/cli": "^21.2.3",
     "@commitlint/config-conventional": "^21.2.3",
     "@solidjs/testing-library": "^0.8.10",
+    "@tailwindcss/node": "^4.3.3",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/user-event": "^14.6.7",
     "@typescript-eslint/eslint-plugin": "^8.71.1",
@@ -64,6 +67,7 @@
     "prettier": "^3.9.9",
     "simple-git-hooks": "^2.14.0",
     "solid-js": "^1.9.17",
+    "tailwindcss": "^4.3.3",
     "typescript": "5.9.3",
     "vite": "^8",
     "vite-plugin-solid": "^2.11",

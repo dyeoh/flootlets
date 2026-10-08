@@ -1,7 +1,8 @@
 // Bundles src/styles/index.css into dist/flootlets.css by inlining its
 // `@import "…" layer(…);` lines, so apps load one file instead of a chain of
 // requests. Imports keep their layer by being wrapped in `@layer name { … }`.
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+// Also ships src/styles/theme.css as is: apps run it through their own Tailwind.
+import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
 const IMPORT = /^@import\s+["']([^"']+)["'](?:\s+layer\(([\w.-]+)\))?\s*;\s*$/gm;
@@ -20,5 +21,6 @@ export function bundle(file: string, seen = new Set<string>()): string {
 if (import.meta.main) {
   mkdirSync('dist', { recursive: true });
   writeFileSync('dist/flootlets.css', bundle('src/styles/index.css'));
-  console.log('wrote dist/flootlets.css');
+  copyFileSync('src/styles/theme.css', 'dist/theme.css');
+  console.log('wrote dist/flootlets.css and dist/theme.css');
 }

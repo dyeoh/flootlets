@@ -1,56 +1,84 @@
 ---
 title: Theming
-description: Restyle flootlets by overriding CSS variables, and control light and dark.
+description: Restyle flootlets with shadcn theme variables, paste in any shadcn theme, and control light and dark.
 ---
 
-Every colour, size, radius and duration in flootlets is a CSS custom property. Components only
-use the **semantic** tokens (like `--fl-color-accent`), so changing a handful of variables
-restyles everything.
+flootlets' colours and radius are [shadcn/ui theme variables](https://ui.shadcn.com/docs/theming)
+(`--primary`, `--muted-foreground`, `--radius`…), plus `--success` and `--warning`. Change a
+handful of them and everything follows. See [Theme variables](/flootlets/tokens/) for the full
+list.
 
-## Override tokens
+## With Tailwind
 
-Put overrides in your own CSS. It doesn't need to be more specific: flootlets' rules live in
-cascade layers, and styles outside a layer always win.
+Import the theme after Tailwind. It maps every variable into Tailwind, so `bg-primary` or
+`text-muted-foreground` in your own markup follow the theme too:
+
+```css
+@import 'tailwindcss';
+@import 'flootlets/theme.css';
+```
+
+## Override variables
+
+Put overrides in your own CSS. Order doesn't matter: flootlets' variables live in Tailwind's
+`base` layer, and styles outside a layer always win.
 
 ```css
 :root {
-  --fl-color-accent: #0064ff; /* fills: primary buttons, accent badges */
-  --fl-color-accent-hover: #0050cc;
-  --fl-color-accent-text: #0050cc; /* links, sale prices */
-  --fl-color-focus: #0064ff;
-  --fl-radius-pill: 6px; /* squarer buttons */
-  --fl-font-body: 'Inter', system-ui, sans-serif;
+  --primary: #0064ff; /* buttons, links, sale prices, focus */
+  --primary-foreground: #ffffff;
+  --ring: #0064ff;
+  --radius: 0.375rem; /* squarer corners */
+}
+.dark {
+  --primary: #6fa8ff;
+  --primary-foreground: #050706;
 }
 ```
 
-Keep text tokens readable: at least **4.5:1** contrast with the backgrounds they sit on
-(3:1 for focus rings and input borders). flootlets' own tokens are tested for this in both
-themes; see [Design tokens](/flootlets/tokens/).
+`--primary` is used both as a fill (with `--primary-foreground` on it) and as text on the page,
+so it needs at least **4.5:1** contrast against both. The same goes for `--destructive`,
+`--success` and `--warning`. Focus rings (`--ring`) and input borders (`--input`) need 3:1.
+
+## Use a shadcn or tweakcn theme
+
+Any theme from [shadcn/ui](https://ui.shadcn.com/themes) or [tweakcn](https://tweakcn.com/)
+works: paste its `:root` and `.dark` blocks into your CSS. If it has no `--success` and
+`--warning`, add them. Then check it, from a clone of the flootlets repo:
+
+```sh
+bun run check:theme path/to/my-theme.css
+```
+
+It reads hex, `rgb()`, `hsl()`, `oklch()` and shadcn v3's bare `H S% L%` values, composites
+translucent colours over the background, and reports every pair below WCAG AA in light and dark.
 
 ## Light and dark
 
 By default flootlets follows the visitor's system setting (`prefers-color-scheme`). To force a
-theme, set `data-theme` on `<html>`, or on any element to theme just that part of the page:
+theme, put `class="dark"` or `class="light"` (shadcn's and next-themes' convention), or
+`data-theme="dark"` / `data-theme="light"`, on `<html>` or on any element to theme just that part
+of the page:
 
 ```html
-<html data-theme="dark">
+<html class="dark">
   …
-  <section data-theme="light">A light panel on a dark page.</section>
+  <section class="light">A light panel on a dark page.</section>
 </html>
 ```
 
-This site's theme picker does exactly that: it sets `data-theme` on `<html>`, and the examples
-follow.
+This site's theme picker sets `data-theme` on `<html>`, and the examples follow.
 
-To change a colour for dark mode only, override it inside the dark selectors:
+Tailwind's `dark:` variant follows the same rules: `.dark`, `data-theme="dark"`, or the system
+setting when neither theme is forced.
+
+A pasted shadcn theme only switches with the `.dark` class. To keep following the system setting,
+repeat its dark block for it:
 
 ```css
-[data-theme='dark'] {
-  --fl-color-accent-text: #ff7a8a;
-}
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --fl-color-accent-text: #ff7a8a;
+  :root:not(.light, [data-theme='light']) {
+    /* the same variables as .dark */
   }
 }
 ```
@@ -63,7 +91,7 @@ own variables:
 
 ```css
 .fl-button[data-variant='primary'] {
-  --fl-button-bg: var(--fl-color-text);
+  --fl-button-bg: var(--foreground);
   text-transform: uppercase;
 }
 ```

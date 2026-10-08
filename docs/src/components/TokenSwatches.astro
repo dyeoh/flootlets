@@ -1,18 +1,21 @@
 ---
-import { bg, colorTokens, contrast, palette } from '../lib/tokens';
+import { bg, colorTokens, contrast } from '../lib/tokens';
 
-const isHex = (v: string) => /^#[0-9a-f]{6}$/i.test(v);
-const ratio = (fg: string, back: string) => (isHex(fg) && isHex(back) ? `${contrast(fg, back).toFixed(1)}:1` : '');
+const ratio = (fg: string, back: string) => {
+  const r = contrast(fg, back);
+  return r === undefined ? '' : `${r.toFixed(1)}:1`;
+};
 ---
 
-<h2 id="semantic-colours">Semantic colours</h2>
+<h2 id="colours">Colours</h2>
 <p>
-  Components only use these. The ratio is each colour's contrast against the page background
-  (<code>--fl-color-bg</code>) in that theme.
+  The ratio is each colour's contrast against the page background (<code>--background</code>) in
+  that theme. In Tailwind, each variable is a colour: <code>--primary</code> is
+  <code>bg-primary</code>, <code>text-primary</code>, <code>border-primary</code>.
 </p>
 <table>
   <thead>
-    <tr><th>Token</th><th>Light</th><th>Dark</th></tr>
+    <tr><th>Variable</th><th>Light</th><th>Dark</th></tr>
   </thead>
   <tbody>
     {
@@ -26,24 +29,6 @@ const ratio = (fg: string, back: string) => (isHex(fg) && isHex(back) ? `${contr
           <td>
             <span class="fl-docs-swatch" style={`background:${t.dark}`} />
             <code>{t.dark}</code> <small>{ratio(t.dark, bg.dark)}</small>
-          </td>
-        </tr>
-      ))
-    }
-  </tbody>
-</table>
-
-<h2 id="palette">Palette</h2>
-<p>The raw colours the semantic tokens point at. Use the semantic tokens in your own CSS where you can.</p>
-<table>
-  <tbody>
-    {
-      palette.map((p) => (
-        <tr>
-          <td><code>{p.name}</code></td>
-          <td>
-            <span class="fl-docs-swatch" style={`background:${p.value}`} />
-            <code>{p.value}</code>
           </td>
         </tr>
       ))

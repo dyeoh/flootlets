@@ -4,7 +4,8 @@ import { bundle } from '../scripts/build-css';
 
 test('bundles imports into their layers', () => {
   const css = bundle('src/styles/index.css');
-  expect(css).not.toContain('@import');
-  expect(css).toMatch(/@layer flootlets\.tokens \{[\s\S]*--fl-color-text/);
-  expect(css).toMatch(/@layer flootlets\.base \{[\s\S]*cursor: pointer/);
+  expect(css).not.toMatch(/^@import/m);
+  expect(css).toMatch(/@layer flootlets\.tokens \{[\s\S]*--primary:/);
+  expect(css).toMatch(/@layer flootlets\.tokens \{[\s\S]*cursor: pointer/);
+  expect(css).toMatch(/@layer flootlets\.base \{[\s\S]*--fl-color-text: var\(--foreground\)/);
 });
