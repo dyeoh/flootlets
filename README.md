@@ -3,11 +3,11 @@
 Accessible, themeable [SolidJS](https://www.solidjs.com/) components for shops built on
 [gnerkulfloot](https://github.com/dyeoh/gnerkulfloot). Little bits of gnerkulfloot.
 
-- **shadcn theme variables.** Colours and radius use shadcn/ui's names (`--primary`,
-  `--muted-foreground`, `--radius`…), so restyling means overriding a few variables, and any
-  shadcn or tweakcn theme drops in.
-- **Never fights your styles.** All flootlets CSS lives in `@layer flootlets.*`, so your own
-  CSS wins automatically, whatever its specificity.
+- **Tailwind CSS v4 and shadcn/ui conventions.** Components are styled with Tailwind classes
+  (`cva` + `cn()`), shadcn's variant names and its theme variables (`--primary`,
+  `--muted-foreground`, `--radius`…), so any shadcn or tweakcn theme drops in.
+- **Your classes win.** The `class` you pass is merged last with tailwind-merge, so
+  `class="rounded-full"` replaces the component's radius instead of fighting it.
 - **Server-rendered first.** Works in [Astro](https://astro.build/) and other Solid SSR setups:
   static components ship no JavaScript, and interactive ones hydrate as islands.
 - **Accessible by default.** Keyboard support, focus management and ARIA come from
@@ -54,15 +54,7 @@ hydrate without a mismatch.
 
 ## Theming
 
-Colours and radius are shadcn/ui theme variables. With Tailwind, import the theme after it, so
-`bg-primary` and friends follow it too:
-
-```css
-@import 'tailwindcss';
-@import 'flootlets/theme.css';
-```
-
-Override variables in your own CSS, or paste in any shadcn or tweakcn theme:
+Colours and radius are shadcn/ui theme variables; the defaults are shadcn's neutral theme. Override variables in your own CSS, or paste in any shadcn or tweakcn theme:
 
 ```css
 :root {
@@ -79,12 +71,19 @@ flootlets' own theme is tested for it.
 
 ## Install
 
+flootlets needs Tailwind CSS v4 in your app.
+
 ```sh
 bun add flootlets solid-js        # or npm / pnpm
 ```
 
-```tsx
-import 'flootlets/styles.css'; // once, at the root of your app
+In your main CSS file, after Tailwind, import the theme and let Tailwind see the components'
+classes (the `@source` path is relative to this file):
+
+```css
+@import 'tailwindcss';
+@import 'flootlets/theme.css';
+@source '../node_modules/flootlets/dist';
 ```
 
 ## Troubleshooting
@@ -103,7 +102,7 @@ bun install          # also installs the commit-msg hook
 bun run test         # component tests in jsdom + server-rendering tests
 bun run lint         # eslint + prettier
 bun run typecheck
-bun run build        # dist/: browser bundle, JSX source for Solid apps, types, flootlets.css
+bun run build        # dist/: browser bundle, JSX source for Solid apps, types, theme.css
 bun run commit       # write a commit message interactively (commitizen)
 bun run docs:dev     # the docs site at http://localhost:4321/flootlets/, using live source
 bun run docs:build   # builds the library, then the docs from what the package ships

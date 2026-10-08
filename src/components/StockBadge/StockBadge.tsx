@@ -5,7 +5,7 @@
 import { splitProps } from 'solid-js';
 import { Badge, type BadgeProps } from '../Badge/Badge';
 
-export interface StockBadgeProps extends Omit<BadgeProps, 'tone' | 'children'> {
+export interface StockBadgeProps extends Omit<BadgeProps, 'variant' | 'children'> {
   inStock: boolean;
   /** Text for each state, for translation. */
   labels?: { inStock?: string; soldOut?: string };
@@ -14,7 +14,7 @@ export interface StockBadgeProps extends Omit<BadgeProps, 'tone' | 'children'> {
 export function StockBadge(props: StockBadgeProps) {
   const [local, rest] = splitProps(props, ['inStock', 'labels']);
   return (
-    <Badge tone={local.inStock ? 'success' : 'danger'} {...rest}>
+    <Badge variant={local.inStock ? 'success' : 'destructive'} {...rest}>
       {local.inStock
         ? (local.labels?.inStock ?? 'In stock')
         : (local.labels?.soldOut ?? 'Sold out')}

@@ -5,17 +5,10 @@ const items = ['Kuih Lapis', 'Tudung Bawal', 'Baju Kurung', 'Kerepek Pisang'];
 
 export default function LayoutGrid() {
   return (
-    <Grid minItemWidth="9rem" gap={3} style={{ 'inline-size': '100%' }}>
+    <Grid minItemWidth="9rem" gap={3} class="w-full">
       <For each={items}>
         {(name, i) => (
-          <Stack
-            gap={1}
-            style={{
-              padding: '1rem',
-              border: '1px solid var(--border)',
-              'border-radius': '10px',
-            }}
-          >
+          <Stack gap={1} class="rounded-lg border p-4">
             <strong>{name}</strong>
             <Cluster gap={2}>
               <Price
@@ -24,7 +17,7 @@ export default function LayoutGrid() {
                 size="sm"
               />
               <Show when={i() === 0}>
-                <Badge tone="accent">New</Badge>
+                <Badge>New</Badge>
               </Show>
             </Cluster>
           </Stack>

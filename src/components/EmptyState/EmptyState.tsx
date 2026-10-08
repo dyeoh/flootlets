@@ -4,7 +4,7 @@
  */
 import { type JSX, Show, splitProps } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
-import { cx } from '../../lib/cx';
+import { cn } from '../../lib/utils';
 
 export interface EmptyStateProps extends Omit<JSX.HTMLAttributes<HTMLDivElement>, 'title'> {
   title: JSX.Element;
@@ -27,20 +27,31 @@ export function EmptyState(props: EmptyStateProps) {
     'class',
   ]);
   return (
-    <div class={cx('fl-empty', local.class)} {...rest}>
+    <div
+      data-slot="empty-state"
+      class={cn(
+        'flex flex-col items-center gap-2 px-6 py-12 text-center text-balance text-foreground',
+        local.class,
+      )}
+      {...rest}
+    >
       <Show when={local.icon}>
-        <div class="fl-empty__icon" aria-hidden="true">
+        <div
+          data-slot="empty-state-icon"
+          class="mb-2 text-5xl leading-none text-muted-foreground [&_svg:not([class*='size-'])]:size-12"
+          aria-hidden="true"
+        >
           {local.icon}
         </div>
       </Show>
-      <Dynamic component={`h${local.headingLevel ?? 2}`} class="fl-empty__title">
+      <Dynamic component={`h${local.headingLevel ?? 2}`} class="m-0 text-xl font-semibold">
         {local.title}
       </Dynamic>
       <Show when={local.description}>
-        <p class="fl-empty__description">{local.description}</p>
+        <p class="m-0 max-w-[36ch] text-muted-foreground">{local.description}</p>
       </Show>
       <Show when={local.action}>
-        <div class="fl-empty__action">{local.action}</div>
+        <div class="mt-4">{local.action}</div>
       </Show>
     </div>
   );

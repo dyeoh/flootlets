@@ -25,7 +25,7 @@ describe('server rendering', () => {
           </Button>
           <Button loading>Paying</Button>
         </Cluster>
-        <Badge tone="accent">New</Badge>
+        <Badge>New</Badge>
         <Link href="https://example.com" external>
           Supplier
         </Link>
@@ -54,6 +54,6 @@ describe('server rendering', () => {
       />
     ));
     expect(html).toContain('RM 25.00');
-    expect(html).toMatch(/<s [^>]*class="fl-price__was"/);
+    expect(html).toMatch(/<s [^>]*data-slot="price-was"/);
   });
 });

@@ -4,11 +4,7 @@ import { placeholder, products } from './placeholder';
 
 export default function CarouselExample() {
   return (
-    <Carousel
-      label="Recommended for you"
-      itemCount={products.length}
-      style={{ 'inline-size': '100%' }}
-    >
+    <Carousel label="Recommended for you" itemCount={products.length} class="w-full">
       <Cluster justify="between">
         <strong>Recommended for you</strong>
         <Cluster gap={2}>

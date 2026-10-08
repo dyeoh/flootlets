@@ -4,8 +4,8 @@ This guide is for anyone changing flootlets, human or AI agent: why it's built
 this way, the conventions, and the checklist every component has to pass. For
 _using_ flootlets, read [README.md](README.md).
 
-Short version: **plain CSS in layers, tokens for every value, server-render
-first, and accessibility isn't optional.**
+Short version: **Tailwind and shadcn/ui conventions, theme variables for every
+colour, server-render first, and accessibility isn't optional.**
 
 ---
 
@@ -24,55 +24,76 @@ components render to plain HTML on the server and hydrate only where needed.
 
 Solid compiles JSX differently for the browser and for server rendering, so a
 library that only ships browser-compiled JS breaks SSR. flootlets ships three
-things (see `package.json` exports):
+four things (see `package.json` exports):
 
 | Output                  | Made by                    | Used by                                                                                    |
 | ----------------------- | -------------------------- | ------------------------------------------------------------------------------------------ |
 | `dist/source/`          | `tsc` with `jsx: preserve` | Solid apps and Astro (the `solid` export condition), which compile it for their own target |
 | `dist/browser/index.js` | Vite library build         | apps without Solid tooling                                                                 |
 | `dist/types/`           | `tsc`                      | everyone (TypeScript)                                                                      |
-| `dist/flootlets.css`    | `scripts/build-css.ts`     | everyone: `import 'flootlets/styles.css'`                                                  |
+| `dist/theme.css`        | copied from `src/styles/`  | everyone: `@import 'flootlets/theme.css'` after Tailwind                                   |
 
-`solid-js` and `@kobalte/core` are never bundled: apps provide one copy each.
+Dependencies (`solid-js`, `@kobalte/core`, `class-variance-authority`, `clsx`,
+`tailwind-merge`) are never bundled: apps provide one copy each. Tailwind itself
+runs in the app, which points `@source` at `node_modules/flootlets/dist` so the
+components' classes are generated.
 TypeScript is pinned to 5.9: TypeScript 7 (the native rewrite) has no JS API yet,
 which the build tooling relies on.
 
-### CSS: tokens and cascade layers
+### Styling: Tailwind v4 with shadcn/ui's conventions
 
-- Every value comes from a token (`var(--fl-…)`). No raw colours or magic
-  numbers in component CSS.
-- Everything is inside `@layer flootlets.*` (order: `reset`, `tokens`, `base`,
-  `components`). App styles outside any layer always win, so apps override
-  without `!important` or specificity tricks.
-- Selectors use `:where()` where possible to keep specificity at zero.
-- Variants and state are data attributes (`data-variant="primary"`,
-  `data-loading`), not class combinations.
+Hand-written CSS per component was reinventing what shadcn/ui already does
+well, so components follow it: anyone who knows shadcn can restyle flootlets.
+
+- **Classes live in the component**, built with `cva` (variants) and `cn()`
+  (clsx + tailwind-merge, in `src/lib/utils.ts`). The caller's `class` is
+  merged last, so it overrides anything. There are no component stylesheets.
+- **Variant and size names are shadcn's** (`default`, `destructive`, `outline`,
+  `secondary`, `ghost`, `link`; `default`, `sm`, `lg`, `icon`), plus `success`
+  and `warning` where a status is needed. Each cva config is exported
+  (`buttonVariants`), as in shadcn.
+- **Colours are only theme variables** (`bg-primary`, `text-muted-foreground`),
+  never Tailwind palette colours (`bg-red-600`) or raw values, so themes work.
+  `src/styles/theme.css` defines them and maps them into Tailwind with
+  `@theme inline`; dark mode is `.dark`, `data-theme="dark"`, or the system.
+- **State styles use Tailwind's variants** on Kobalte's and our data attributes
+  (`data-highlighted:`, `data-expanded:`, `aria-invalid:`, `in-data-loading:`),
+  and every part carries a `data-slot` (shadcn v4) for CSS targeting.
+- **Focus is our global outline** (`:focus-visible` in theme.css, 2px solid
+  `--ring`), not shadcn's translucent ring, which is below 3:1. Don't add
+  `outline-none` to focusable elements.
+- **Write class names whole.** Tailwind finds classes by scanning source text,
+  so `bg-${variant}` never works; `tests/classes.test.ts` fails on any class
+  that generates no CSS.
 
 ### Accessibility primitives
 
 Interactive components with real keyboard and focus behaviour (select, dialog,
 checkbox, radio, toast) are built on Kobalte, which is headless: it provides
 behaviour and ARIA, and we provide every style, including the pointer cursor
-on hover that browsers don't add to buttons by default.
+on hover that browsers don't add to buttons by default (in theme.css).
 
 ---
 
 ## 2. Conventions
 
-- **One folder per component:** `src/components/Button/` holds `Button.tsx`,
-  `Button.css` and `Button.test.tsx`. Export it from `src/index.ts`, and add
-  its CSS to `src/styles/index.css` with `layer(flootlets.components)`.
-- **Class names** are `fl-<component>` and `fl-<component>__<part>`.
-- **Theme variables** use shadcn/ui's names (`--primary`, `--muted-foreground`, `--radius`), in
-  `src/styles/theme.css`. The remaining `--fl-*` scales and aliases in `legacy.css` are
-  transitional: don't use them in new code.
+- **One folder per component:** `src/components/Button/` holds `Button.tsx`
+  (component and its `buttonVariants`) and `Button.test.tsx`. Export both from
+  `src/index.ts`.
+- **Parts** carry `data-slot="<component>"` / `"<component>-<part>"`; variants and
+  state are data attributes (`data-variant`, `data-size`, `data-loading`).
+- **Theme variables** use shadcn/ui's names (`--primary`, `--muted-foreground`,
+  `--radius`), in `src/styles/theme.css`. The values are shadcn's neutral theme,
+  nudged where it misses WCAG AA; restyling for a real shop happens there.
+- **Icons** are the components in `src/lib/icons.tsx` (lucide's shapes), sized
+  with `size-*` or the parent's `[&_svg]` rules.
 - **Props:** forward unknown props to the root element (`splitProps`), accept
   `class`, and never require a wrapper div for styling.
 - **Money** is `{ amount, currency }` in minor units, the same shape the
   gnerkulfloot API returns. Format it with the shared helper, never by hand.
 - **Never hoist JSX into a shared constant** (`const ICON = <svg>…</svg>`). Solid
   JSX creates real DOM nodes, so rendering one constant in two places _moves_
-  the node and leaves the first place empty. Make it a component (`<Chevron />`).
+  the node and leaves the first place empty. Make it a component (`<CheckIcon />`).
 - **Reactive props:** never pick between elements with an early `return` based on
   a prop (it runs once); use `<Show>`, `<Dynamic>` or JSX expressions.
 - **Browser-only code** (Kobalte parts that can't server-render, `window`, layout
@@ -100,10 +121,12 @@ on hover that browsers don't add to buttons by default.
   project): every component must render to HTML on the server, as in Astro.
 - The two projects have separate config files so their Solid compiler settings
   never mix.
-- `tests/theme.test.ts` checks contrast, theme blocks and the Tailwind mapping (`bun run
-check:theme <file>` runs the contrast check on any theme);
-  `tests/exports.test.ts` checks every component is exported from the package
-  entry (a missing export once slipped through unnoticed).
+- `tests/theme.test.ts` checks contrast, theme blocks and the Tailwind mapping
+  (`bun run check:theme <file>` runs the contrast check on any theme);
+  `tests/classes.test.ts` compiles every class the components use and fails on
+  any Tailwind doesn't know; `tests/exports.test.ts` checks every component is
+  exported from the package entry (a missing export once slipped through
+  unnoticed).
 - Regression tests for browser-only bugs (like the Carousel's) simulate the
   geometry jsdom lacks. Check such a test fails with the fix removed.
 - `bun run lint` fails on any warning: eslint-plugin-solid's warnings are real
@@ -115,8 +138,8 @@ check:theme <file>` runs the contrast check on any theme);
 (https://dyeoh.github.io/flootlets/) by `.github/workflows/docs.yml` on every push to `main`.
 
 - **Every component gets a page** in `docs/src/content/docs/components/`, in the same commit as
-  the component: live examples, props, accessibility notes and its classes, data attributes and
-  variables.
+  the component: live examples, props, accessibility notes and its variants, `data-slot` parts and
+  data attributes.
 - **Examples are real Solid files** in `docs/src/examples/`. A page imports each one twice: once
   to render it, once with `?raw` to show its code. The code on the page is always the code that
   runs.
@@ -125,6 +148,8 @@ check:theme <file>` runs the contrast check on any theme);
 - **Dev vs build:** `astro dev` aliases `flootlets` to `src/` for live editing; `astro build`
   aliases it to `dist/` (the code the package ships), so every docs build is an end-to-end check
   that Astro can compile and server-render the published components.
+- **Tailwind** comes in through Starlight's Tailwind integration (`docs/src/styles/tailwind.css`),
+  plus Tailwind's preflight in the lowest layer, since the components expect it.
 - Starlight's theme picker sets `data-theme` on `<html>`, which the theme already follows.
 
 ## 6. Doc style

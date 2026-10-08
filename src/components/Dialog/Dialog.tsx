@@ -5,11 +5,24 @@
  * doesn't scroll, and it's labelled by its title.
  */
 import * as KDialog from '@kobalte/core/dialog';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { type JSX, Show, splitProps } from 'solid-js';
-import { cx } from '../../lib/cx';
+import { closeButtonClass } from '../../lib/classes';
+import { XIcon } from '../../lib/icons';
+import { cn } from '../../lib/utils';
 import { Button, type ButtonAsButtonProps } from '../Button/Button';
 
-export interface DialogProps {
+export const dialogVariants = cva(
+  'pointer-events-auto grid max-h-[calc(100dvh-2rem)] w-full gap-4 overflow-auto rounded-lg border bg-background p-6 text-foreground shadow-lg data-expanded:animate-pop-in motion-reduce:animate-none',
+  {
+    variants: {
+      size: { sm: 'max-w-sm', default: 'max-w-lg', lg: 'max-w-3xl' },
+    },
+    defaultVariants: { size: 'default' },
+  },
+);
+
+export interface DialogProps extends VariantProps<typeof dialogVariants> {
   /** The dialog's heading; also its accessible name. */
   title: string;
   description?: JSX.Element;
@@ -20,11 +33,10 @@ export interface DialogProps {
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   /**
-   * A button that opens the dialog, e.g. { children: 'Remove', variant: 'danger' }.
+   * A button that opens the dialog, e.g. { children: 'Remove', variant: 'destructive' }.
    * Leave it out to open the dialog yourself with `open`.
    */
   trigger?: Omit<ButtonAsButtonProps, 'onClick'>;
-  size?: 'sm' | 'md' | 'lg';
   /** Close button label, for translation. */
   closeLabel?: string;
   class?: string;
@@ -54,28 +66,42 @@ export function Dialog(props: DialogProps) {
         {(trigger) => <KDialog.Trigger as={Button} {...trigger()} />}
       </Show>
       <KDialog.Portal>
-        <KDialog.Overlay class="fl-dialog__overlay" />
-        <div class="fl-dialog__positioner">
-          <KDialog.Content class={cx('fl-dialog', local.class)} data-size={local.size ?? 'md'}>
-            <header class="fl-dialog__header">
-              <KDialog.Title class="fl-dialog__title">{local.title}</KDialog.Title>
+        <KDialog.Overlay
+          data-slot="dialog-overlay"
+          class="fixed inset-0 z-50 bg-black/50 data-expanded:animate-fade-in motion-reduce:animate-none"
+        />
+        <div class="pointer-events-none fixed inset-0 z-50 grid place-items-center p-4">
+          <KDialog.Content
+            data-slot="dialog"
+            data-size={local.size ?? 'default'}
+            class={cn(dialogVariants({ size: local.size }), local.class)}
+          >
+            <header class="flex items-start justify-between gap-4">
+              <KDialog.Title class="m-0 text-lg leading-tight font-semibold">
+                {local.title}
+              </KDialog.Title>
               <KDialog.CloseButton
-                class="fl-dialog__close"
+                class={closeButtonClass}
                 aria-label={local.closeLabel ?? 'Close'}
               >
-                <span aria-hidden="true">×</span>
+                <XIcon />
               </KDialog.CloseButton>
             </header>
             <Show when={local.description}>
-              <KDialog.Description class="fl-dialog__description">
+              <KDialog.Description class="-mt-2 text-sm text-muted-foreground">
                 {local.description}
               </KDialog.Description>
             </Show>
             <Show when={local.children}>
-              <div class="fl-dialog__body">{local.children}</div>
+              <div data-slot="dialog-body">{local.children}</div>
             </Show>
             <Show when={local.footer}>
-              <footer class="fl-dialog__footer">{local.footer}</footer>
+              <footer
+                data-slot="dialog-footer"
+                class="flex flex-col-reverse gap-2 sm:flex-row sm:flex-wrap sm:justify-end"
+              >
+                {local.footer}
+              </footer>
             </Show>
           </KDialog.Content>
         </div>

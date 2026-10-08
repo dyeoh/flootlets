@@ -34,12 +34,12 @@ break hydration. The default is `"en"`.
 | `amount`    | `{ amount: number; currency: string }`    | required                        | Minor units                           |
 | `compareAt` | `Money \| null`                           |                                 | Original price, struck through        |
 | `locale`    | `string`                                  | `'en'`                          | e.g. `'en-MY'`, `'ms-MY'`, `'ja-JP'`  |
-| `size`      | `'sm' \| 'md' \| 'lg'`                    | `'md'`                          |                                       |
+| `size`      | `'sm' \| 'default' \| 'lg'`               | `'default'`                     |                                       |
 | `labels`    | `{ current?: string; original?: string }` | `Sale price` / `Original price` | Screen-reader labels, for translation |
 
 Need the text without the component? `formatMoney(money, locale)` returns the same string.
 
 ## Styling
 
-Classes: `fl-price`, `fl-price__current`, `fl-price__was`. A sale sets `data-sale`, which turns
-the current price `--primary`.
+Parts: `data-slot="price"`, `price-current`, `price-was`. A sale sets `data-sale`, which turns
+the current price `text-destructive`.

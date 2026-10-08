@@ -5,8 +5,17 @@
  */
 import * as KSelect from '@kobalte/core/select';
 import { Show, splitProps } from 'solid-js';
-import { cx } from '../../lib/cx';
-import { type FieldProps, labelClass, validationState } from '../Field/field';
+import { CheckIcon, ChevronDownIcon } from '../../lib/icons';
+import { cn } from '../../lib/utils';
+import {
+  descriptionClass,
+  errorClass,
+  fieldClass,
+  type FieldProps,
+  inputClass,
+  labelClass,
+  validationState,
+} from '../Field/field';
 
 export interface SelectOption {
   value: string;
@@ -42,7 +51,8 @@ export function Select(props: SelectProps) {
   const find = (value: string | undefined) => local.options.find((o) => o.value === value);
   return (
     <KSelect.Root<SelectOption>
-      class={cx('fl-field', 'fl-select', local.class)}
+      data-slot="select"
+      class={cn(fieldClass, local.class)}
       data-required={local.required ? '' : undefined}
       options={local.options}
       optionValue="value"
@@ -57,31 +67,35 @@ export function Select(props: SelectProps) {
       disabled={local.disabled}
       validationState={validationState(local.error)}
       itemComponent={(item) => (
-        <KSelect.Item item={item.item} class="fl-select__item">
+        <KSelect.Item
+          item={item.item}
+          class="relative flex w-full items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-none select-none data-disabled:pointer-events-none data-disabled:opacity-50 data-highlighted:bg-accent data-highlighted:text-accent-foreground"
+        >
           <KSelect.ItemLabel>{item.item.rawValue.label}</KSelect.ItemLabel>
-          <KSelect.ItemIndicator class="fl-select__check" aria-hidden="true">
-            ✓
+          <KSelect.ItemIndicator class="absolute right-2 flex size-3.5 items-center justify-center">
+            <CheckIcon class="size-4" />
           </KSelect.ItemIndicator>
         </KSelect.Item>
       )}
     >
       <KSelect.HiddenSelect />
       <KSelect.Label class={labelClass(local.hideLabel)}>{local.label}</KSelect.Label>
-      <KSelect.Trigger class="fl-input fl-select__trigger">
-        <KSelect.Value<SelectOption> class="fl-select__value">
+      <KSelect.Trigger class={inputClass('items-center justify-between gap-2 py-2 text-start')}>
+        <KSelect.Value<SelectOption> class="truncate data-placeholder-shown:text-muted-foreground">
           {(state) => state.selectedOption()?.label}
         </KSelect.Value>
-        <KSelect.Icon class="fl-select__icon" aria-hidden="true">
-          ▾
+        <KSelect.Icon class="text-muted-foreground transition-transform in-data-expanded:rotate-180 motion-reduce:transition-none">
+          <ChevronDownIcon class="size-4 opacity-50" />
         </KSelect.Icon>
       </KSelect.Trigger>
       <Show when={local.description}>
-        <KSelect.Description class="fl-field__description">{local.description}</KSelect.Description>
+        <KSelect.Description class={descriptionClass}>{local.description}</KSelect.Description>
       </Show>
-      <KSelect.ErrorMessage class="fl-field__error">{local.error}</KSelect.ErrorMessage>
+      <KSelect.ErrorMessage class={errorClass}>{local.error}</KSelect.ErrorMessage>
       <KSelect.Portal>
-        <KSelect.Content class="fl-select__content">
-          <KSelect.Listbox class="fl-select__listbox" />
+        {/* Portalled to <body>, so it sets its own colours rather than inheriting the field's. */}
+        <KSelect.Content class="relative z-50 min-w-(--kb-popper-anchor-width) origin-(--kb-select-content-transform-origin) overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-expanded:animate-fade-in motion-reduce:animate-none">
+          <KSelect.Listbox class="max-h-72 overflow-y-auto p-1" />
         </KSelect.Content>
       </KSelect.Portal>
     </KSelect.Root>

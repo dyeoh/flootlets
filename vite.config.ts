@@ -1,8 +1,14 @@
 import { defineConfig } from 'vite';
 import solid from 'vite-plugin-solid';
 
-// Solid and Kobalte are never bundled: apps provide their own single copy.
-const external = [/^solid-js(\/.*)?$/, /^@kobalte\/core(\/.*)?$/];
+// Dependencies are never bundled: apps provide their own single copy.
+const external = [
+  /^solid-js(\/.*)?$/,
+  /^@kobalte\/core(\/.*)?$/,
+  'class-variance-authority',
+  'clsx',
+  'tailwind-merge',
+];
 
 export default defineConfig({
   plugins: [solid()],

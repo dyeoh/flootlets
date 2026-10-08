@@ -54,8 +54,8 @@ describe('StockBadge', () => {
         <StockBadge inStock={false} labels={{ soldOut: 'Habis dijual' }} />
       </>
     ));
-    expect(screen.getByText('In stock')).toHaveAttribute('data-tone', 'success');
-    expect(screen.getByText('Habis dijual')).toHaveAttribute('data-tone', 'danger');
+    expect(screen.getByText('In stock')).toHaveAttribute('data-variant', 'success');
+    expect(screen.getByText('Habis dijual')).toHaveAttribute('data-variant', 'destructive');
   });
 });
 
@@ -101,7 +101,7 @@ describe('ProductCard', () => {
         <ProductCard.Title href="/p">No photo</ProductCard.Title>
       </ProductCard>
     ));
-    expect(container.querySelector('.fl-product-image--fallback')).toHaveAttribute(
+    expect(container.querySelector('[data-slot=product-image-fallback]')).toHaveAttribute(
       'aria-hidden',
       'true',
     );
@@ -133,7 +133,8 @@ describe('Pagination', () => {
     const current = screen.getByText('5');
     expect(current).toHaveAttribute('aria-current', 'page');
     expect(current.tagName).toBe('SPAN'); // not a link to the page you're on
-    expect(nav.textContent).toContain('…');
+    // Gaps in the numbering, shown as an ellipsis and hidden from screen readers.
+    expect(nav.querySelectorAll('li[aria-hidden="true"]')).toHaveLength(2);
   });
 
   test('ends: no previous on page 1, no next on the last page', () => {
@@ -218,7 +219,7 @@ describe('Carousel', () => {
   );
   const dots = () => screen.getAllByRole('button', { name: /Go to page/ });
   const currentDot = () => dots().findIndex((d) => d.getAttribute('aria-current') === 'true') + 1;
-  const track = () => document.querySelector('.fl-carousel__track') as HTMLElement;
+  const track = () => document.querySelector('[data-slot=carousel-content]') as HTMLElement;
 
   afterEach(() => vi.unstubAllGlobals());
 

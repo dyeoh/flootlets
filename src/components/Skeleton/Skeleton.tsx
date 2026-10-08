@@ -2,23 +2,38 @@
  * Skeleton: a placeholder shape while content loads. Hidden from screen
  * readers; mark the loading region with aria-busy instead.
  */
+import { cva, type VariantProps } from 'class-variance-authority';
 import { type JSX, splitProps } from 'solid-js';
-import { cx } from '../../lib/cx';
+import { cn } from '../../lib/utils';
 
-export interface SkeletonProps extends JSX.HTMLAttributes<HTMLSpanElement> {
+export const skeletonVariants = cva(
+  'block w-full animate-pulse bg-accent motion-reduce:animate-none',
+  {
+    variants: {
+      shape: {
+        rect: 'h-4 rounded-md',
+        text: 'my-[0.35em] h-[0.8em] rounded-sm',
+        circle: 'aspect-square rounded-full',
+      },
+    },
+    defaultVariants: { shape: 'rect' },
+  },
+);
+
+export interface SkeletonProps
+  extends JSX.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof skeletonVariants> {
   /** Any CSS length. Defaults to the full width. */
   width?: string;
   /** Any CSS length. Defaults to one line of text. */
   height?: string;
-  shape?: 'rect' | 'text' | 'circle';
 }
 
 export function Skeleton(props: SkeletonProps) {
   const [local, rest] = splitProps(props, ['width', 'height', 'shape', 'class', 'style']);
   return (
     <span
-      class={cx('fl-skeleton', local.class)}
-      data-shape={local.shape ?? 'rect'}
+      data-slot="skeleton"
+      class={cn(skeletonVariants({ shape: local.shape }), local.class)}
       aria-hidden="true"
       style={{
         'inline-size': local.width,

@@ -2,6 +2,7 @@
 import { fileURLToPath } from 'node:url';
 import solid from '@astrojs/solid-js';
 import starlight from '@astrojs/starlight';
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
 const repo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
@@ -11,8 +12,8 @@ const repo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 // proves Astro can compile and server-render the published components.
 const dev = process.argv.includes('dev');
 const library = dev
-  ? { entry: repo('src/index.ts'), styles: repo('src/styles/index.css') }
-  : { entry: repo('dist/source/index.js'), styles: repo('dist/flootlets.css') };
+  ? { entry: repo('src/index.ts'), theme: repo('src/styles/theme.css') }
+  : { entry: repo('dist/source/index.js'), theme: repo('dist/theme.css') };
 
 export default defineConfig({
   site: 'https://dyeoh.github.io',
@@ -23,7 +24,7 @@ export default defineConfig({
       description: 'Accessible, themeable SolidJS components for gnerkulfloot shops.',
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/dyeoh/flootlets' }],
       editLink: { baseUrl: 'https://github.com/dyeoh/flootlets/edit/main/docs/' },
-      customCss: [library.styles, './src/styles/docs.css'],
+      customCss: ['./src/styles/tailwind.css', './src/styles/docs.css'],
       sidebar: [
         {
           label: 'Start here',
@@ -40,10 +41,11 @@ export default defineConfig({
     solid(),
   ],
   vite: {
+    plugins: [tailwindcss()],
     resolve: {
       alias: [
         { find: /^flootlets$/, replacement: library.entry },
-        { find: /^flootlets\/styles\.css$/, replacement: library.styles },
+        { find: /^flootlets\/theme\.css$/, replacement: library.theme },
       ],
     },
   },

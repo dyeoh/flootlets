@@ -1,14 +1,16 @@
 /**
- * flootlets: accessible, themeable SolidJS components for gnerkulfloot shops.
- * Import components from here and the stylesheet once from "flootlets/styles.css".
+ * flootlets: accessible, themeable SolidJS components for gnerkulfloot shops,
+ * styled with Tailwind CSS v4 and shadcn/ui's conventions. Import components
+ * from here, and "flootlets/theme.css" once after Tailwind in your CSS.
  */
-export { Alert, type AlertProps } from './components/Alert/Alert';
-export { Badge, type BadgeProps } from './components/Badge/Badge';
+export { Alert, type AlertProps, alertVariants } from './components/Alert/Alert';
+export { Badge, type BadgeProps, badgeVariants } from './components/Badge/Badge';
 export {
   Button,
   type ButtonAsButtonProps,
   type ButtonAsLinkProps,
   type ButtonProps,
+  buttonVariants,
 } from './components/Button/Button';
 export {
   Carousel,
@@ -16,20 +18,22 @@ export {
   type CarouselProps,
 } from './components/Carousel/Carousel';
 export { Checkbox, type CheckboxProps } from './components/Checkbox/Checkbox';
-export { Dialog, type DialogProps } from './components/Dialog/Dialog';
+export { Dialog, type DialogProps, dialogVariants } from './components/Dialog/Dialog';
 export { EmptyState, type EmptyStateProps } from './components/EmptyState/EmptyState';
 export { type FieldProps } from './components/Field/field';
 export {
   Cluster,
   type ClusterProps,
+  clusterVariants,
   Grid,
   type GridProps,
   Stack,
   type StackProps,
+  stackVariants,
 } from './components/Layout/Layout';
 export { Link, type LinkProps } from './components/Link/Link';
 export { Pagination, type PaginationProps, pageWindow } from './components/Pagination/Pagination';
-export { Price, type PriceProps } from './components/Price/Price';
+export { Price, type PriceProps, priceVariants } from './components/Price/Price';
 export {
   ProductCard,
   type ProductCardImageProps,
@@ -51,8 +55,8 @@ export {
   type RadioOption,
 } from './components/RadioGroup/RadioGroup';
 export { Select, type SelectOption, type SelectProps } from './components/Select/Select';
-export { Skeleton, type SkeletonProps } from './components/Skeleton/Skeleton';
-export { Spinner, type SpinnerProps } from './components/Spinner/Spinner';
+export { Skeleton, type SkeletonProps, skeletonVariants } from './components/Skeleton/Skeleton';
+export { Spinner, type SpinnerProps, spinnerVariants } from './components/Spinner/Spinner';
 export { StockBadge, type StockBadgeProps } from './components/StockBadge/StockBadge';
 export {
   TextArea,
@@ -60,11 +64,18 @@ export {
   TextField,
   type TextFieldProps,
 } from './components/TextField/TextField';
-export { toast, Toaster, type ToasterProps, type ToastOptions } from './components/Toast/Toast';
+export {
+  toast,
+  Toaster,
+  type ToasterProps,
+  type ToastOptions,
+  toastVariants,
+} from './components/Toast/Toast';
 export {
   VisuallyHidden,
   type VisuallyHiddenProps,
 } from './components/VisuallyHidden/VisuallyHidden';
-export { cx } from './lib/cx';
+
 export { currencyDigits, formatMoney, type Money } from './lib/money';
 export { type Space } from './lib/space';
+export { cn } from './lib/utils';

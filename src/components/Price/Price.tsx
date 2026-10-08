@@ -5,17 +5,26 @@
  * Pass the same `locale` everywhere the price renders (server and browser);
  * see formatMoney.
  */
+import { cva, type VariantProps } from 'class-variance-authority';
 import { type JSX, Show, splitProps } from 'solid-js';
-import { cx } from '../../lib/cx';
+import { cn } from '../../lib/utils';
 import { formatMoney, type Money } from '../../lib/money';
 
-export interface PriceProps extends JSX.HTMLAttributes<HTMLSpanElement> {
+/** The current price; a sale turns it the destructive colour. */
+export const priceVariants = cva('font-semibold in-data-sale:text-destructive', {
+  variants: {
+    size: { sm: 'text-sm', default: 'text-base', lg: 'text-2xl' },
+  },
+  defaultVariants: { size: 'default' },
+});
+
+export interface PriceProps
+  extends JSX.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof priceVariants> {
   amount: Money;
   /** The original price, shown struck through when higher than `amount`. */
   compareAt?: Money | null;
   /** BCP 47 locale, e.g. "en-MY". Defaults to "en". */
   locale?: string;
-  size?: 'sm' | 'md' | 'lg';
   /** Screen-reader labels, for translation. */
   labels?: { current?: string; original?: string };
 }
@@ -36,25 +45,27 @@ export function Price(props: PriceProps) {
   };
   return (
     <span
-      class={cx('fl-price', local.class)}
-      data-size={local.size ?? 'md'}
+      data-slot="price"
+      class={cn('inline-flex flex-wrap items-baseline gap-2 tabular-nums', local.class)}
       data-sale={was() ? '' : undefined}
       {...rest}
     >
       {/* Spaces between the parts are separate text nodes: screen readers and
           accessible-name computation keep those, but may trim spaces inside a span. */}
       <Show when={was()}>
-        <span class="fl-visually-hidden">{local.labels?.current ?? 'Sale price'}</span>{' '}
+        <span class="sr-only">{local.labels?.current ?? 'Sale price'}</span>{' '}
       </Show>
-      <span class="fl-price__current">{formatMoney(local.amount, local.locale)}</span>
+      <span data-slot="price-current" class={priceVariants({ size: local.size })}>
+        {formatMoney(local.amount, local.locale)}
+      </span>
       <Show when={was()}>
         {(original) => (
           <>
             {' '}
-            <span class="fl-visually-hidden">
-              {local.labels?.original ?? 'Original price'}
-            </span>{' '}
-            <s class="fl-price__was">{formatMoney(original(), local.locale)}</s>
+            <span class="sr-only">{local.labels?.original ?? 'Original price'}</span>{' '}
+            <s data-slot="price-was" class="text-sm text-muted-foreground">
+              {formatMoney(original(), local.locale)}
+            </s>
           </>
         )}
       </Show>

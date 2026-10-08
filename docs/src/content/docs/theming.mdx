@@ -85,13 +85,27 @@ repeat its dark block for it:
 
 ## Restyle one component
 
-Components have stable class names (`fl-button`, `fl-price__was`) and expose their state as data
-attributes (`data-variant`, `data-size`, `data-loading`). Target those, or set the component's
-own variables:
+Pass Tailwind classes in `class`. They're merged last with tailwind-merge, so they replace the
+component's own classes rather than fighting them:
+
+```tsx
+<Button class="h-12 rounded-full uppercase">Checkout</Button>
+```
+
+Every component also exports its class recipe (`buttonVariants`, `badgeVariants`…), made with
+class-variance-authority as in shadcn/ui, for styling other elements the same way:
+
+```tsx
+<a class={buttonVariants({ variant: 'outline' })} href="/cart">
+  View cart
+</a>
+```
+
+To restyle every instance from CSS, target the `data-slot` attribute each part carries, plus its
+state attributes (`data-variant`, `data-size`, `data-loading`):
 
 ```css
-.fl-button[data-variant='primary'] {
-  --fl-button-bg: var(--foreground);
+[data-slot='button'][data-variant='default'] {
   text-transform: uppercase;
 }
 ```

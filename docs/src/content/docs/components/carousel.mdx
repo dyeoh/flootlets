@@ -39,4 +39,6 @@ however your design needs.
 | `<Carousel.Dots>`                         | Page dots; hidden when everything fits on one screen                 |
 
 `labels` translates the text: `{ previous, next, pages, page: (n) => …, slide: (i, total) => … }`.
-To change how many items fit per screen, set `--fl-carousel-per-page` on `.fl-carousel__track`.
+To change how many items fit per screen, set `--per-page` on `<Carousel.Content>`, at each
+breakpoint the default uses: `class="[--per-page:2] sm:[--per-page:3] min-[56rem]:[--per-page:4]
+min-[72rem]:[--per-page:6]"`. `--gap` sets the space between items.

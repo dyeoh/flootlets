@@ -8,7 +8,7 @@ export default function TextFieldExamples() {
       ? undefined
       : 'Enter an email address, like siti@example.com';
   return (
-    <Stack gap={5} style={{ 'inline-size': 'min(100%, 24rem)' }}>
+    <Stack gap={5} class="w-full max-w-96">
       <TextField label="Full name" autocomplete="name" required />
       <TextField
         label="Email"

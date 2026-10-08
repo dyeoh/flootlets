@@ -1,9 +1,9 @@
 /*
- * Link: an inline text link in the accent colour. `external` opens in a new
+ * Link: an inline text link in the primary colour. `external` opens in a new
  * tab safely and tells screen-reader users it will.
  */
 import { type JSX, Show, splitProps } from 'solid-js';
-import { cx } from '../../lib/cx';
+import { cn } from '../../lib/utils';
 
 export interface LinkProps extends JSX.AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string;
@@ -15,7 +15,11 @@ export function Link(props: LinkProps) {
   const [local, rest] = splitProps(props, ['external', 'class', 'children']);
   return (
     <a
-      class={cx('fl-link', local.class)}
+      data-slot="link"
+      class={cn(
+        'text-primary underline decoration-1 underline-offset-[0.18em] hover:decoration-2',
+        local.class,
+      )}
       target={local.external ? '_blank' : undefined}
       rel={local.external ? 'noopener noreferrer' : undefined}
       {...rest}
@@ -23,7 +27,7 @@ export function Link(props: LinkProps) {
       {local.children}
       <Show when={local.external}>
         {/* The space is its own text node: names computed from text trim each element. */}{' '}
-        <span class="fl-visually-hidden">(opens in a new tab)</span>
+        <span class="sr-only">(opens in a new tab)</span>
       </Show>
     </a>
   );

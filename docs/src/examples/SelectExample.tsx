@@ -11,7 +11,7 @@ const sizes = [
 export default function SelectExample() {
   const [size, setSize] = createSignal<string>();
   return (
-    <Stack gap={2} style={{ 'inline-size': 'min(100%, 18rem)' }}>
+    <Stack gap={2} class="w-full max-w-72">
       <Select
         label="Size"
         options={sizes}

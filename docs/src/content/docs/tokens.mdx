@@ -10,10 +10,14 @@ flootlets uses [shadcn/ui's theme variables](https://ui.shadcn.com/docs/theming)
 `--success` and `--warning` in the same pattern. Each colour has a `-foreground` for text on
 top of it.
 
-The palette is ink black, a brush red and paper white. Red is used as a **fill** in both themes:
-white on brush red is 8.35:1. On the dark background, brush red text would be only 2.4:1, far
-below the 4.5:1 that text needs, so dark mode uses a lighter red with ink text, which works both
-as a fill and as text.
+The values are shadcn/ui's **neutral** theme, a placeholder until a shop brings its own. A few are
+adjusted just enough to meet WCAG AA, which shadcn's defaults miss:
+
+- `--input` has more contrast in both themes, so input borders reach 3:1 against the page
+  (shadcn's is 1.3:1 in light, 1.5:1 in dark);
+- `--ring` is darker in light mode, so the focus ring reaches 3:1;
+- `--muted-foreground` and `--destructive` are a touch darker in light mode, so they stay at
+  4.5:1 as text on `--muted`.
 
 This page reads `theme.css` directly, so it always shows the current values.
 

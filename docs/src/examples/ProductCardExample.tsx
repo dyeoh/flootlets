@@ -5,7 +5,7 @@ import { placeholder, products } from './placeholder';
 export default function ProductCardExample() {
   return (
     <>
-      <Grid minItemWidth="12rem" style={{ 'inline-size': '100%' }}>
+      <Grid minItemWidth="12rem" class="w-full">
         <For each={products.slice(0, 3)}>
           {(p) => (
             <ProductCard>
@@ -13,7 +13,7 @@ export default function ProductCardExample() {
               <ProductCard.Badges>
                 <StockBadge inStock={p.inStock} />
                 <Show when={p.compareAt}>
-                  <Badge tone="accent">Sale</Badge>
+                  <Badge>Sale</Badge>
                 </Show>
               </ProductCard.Badges>
               <ProductCard.Title href={`#${p.slug}`}>{p.name}</ProductCard.Title>
@@ -27,7 +27,7 @@ export default function ProductCardExample() {
                   size="sm"
                   disabled={!p.inStock}
                   onClick={() =>
-                    toast({ title: 'Added to cart', description: p.name, tone: 'success' })
+                    toast({ title: 'Added to cart', description: p.name, variant: 'success' })
                   }
                 >
                   {p.inStock ? 'Add to cart' : 'Sold out'}

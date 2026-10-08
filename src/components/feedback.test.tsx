@@ -14,10 +14,10 @@ describe('Alert', () => {
   test('errors interrupt, other messages wait their turn', () => {
     render(() => (
       <>
-        <Alert tone="danger" title="Out of stock">
+        <Alert variant="destructive" title="Out of stock">
           Only 1 left.
         </Alert>
-        <Alert tone="success">Saved.</Alert>
+        <Alert variant="success">Saved.</Alert>
       </>
     ));
     expect(screen.getByRole('alert')).toHaveTextContent('Out of stock');
@@ -38,7 +38,7 @@ describe('Dialog', () => {
       <Dialog
         title="Remove Kuih Lapis?"
         description="It will be taken out of your cart."
-        trigger={{ children: 'Remove', variant: 'danger' }}
+        trigger={{ children: 'Remove', variant: 'destructive' }}
         footer={<Button>Keep it</Button>}
       />
     ));
@@ -82,7 +82,7 @@ describe('Toast', () => {
 
   test('shows in the announced notifications region and can be closed', async () => {
     render(() => <Toaster />);
-    toast({ title: 'Added to cart', description: 'Kuih Lapis × 2', tone: 'success' });
+    toast({ title: 'Added to cart', description: 'Kuih Lapis × 2', variant: 'success' });
     const region = screen.getByRole('region', { name: /Notifications/ });
     const message = await screen.findByText('Added to cart');
     expect(region.contains(message)).toBe(true);
@@ -121,7 +121,10 @@ describe('EmptyState', () => {
       'href',
       '/shop',
     );
-    expect(container.querySelector('.fl-empty__icon')).toHaveAttribute('aria-hidden', 'true');
+    expect(container.querySelector('[data-slot=empty-state-icon]')).toHaveAttribute(
+      'aria-hidden',
+      'true',
+    );
     await expectNoAxeViolations(container);
   });
 });

@@ -12,7 +12,8 @@ import src from '../../../examples/LayoutGrid.tsx?raw';
 - **Grid:** as many columns as fit, each at least `minItemWidth` (default `14rem`). It adapts to
   its container, not to fixed screen sizes, so the same grid works in a sidebar or full width.
 
-`gap` is a step on the spacing scale (`0`–`16`), not pixels: `gap={4}` is `--fl-space-4` (1rem).
+`gap` is a step on Tailwind's spacing scale (`0`–`16`), not pixels: `gap={4}` is the same as
+`gap-4` (1rem). A `gap-*` class in `class` overrides it.
 
 <Example code={src}>
   <LayoutGrid />

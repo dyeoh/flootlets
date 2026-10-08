@@ -7,7 +7,7 @@ export default function DialogExample() {
     <Dialog
       title="Remove Kuih Lapis?"
       description="It will be taken out of your cart. You can add it again later."
-      trigger={{ children: 'Remove from cart', variant: 'danger' }}
+      trigger={{ children: 'Remove from cart', variant: 'destructive' }}
       open={open()}
       onOpenChange={setOpen}
       size="sm"

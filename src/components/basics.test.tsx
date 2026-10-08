@@ -10,9 +10,11 @@ import { Spinner } from './Spinner/Spinner';
 import { VisuallyHidden } from './VisuallyHidden/VisuallyHidden';
 
 describe('Badge', () => {
-  test('has a tone and keeps its text', () => {
-    render(() => <Badge tone="danger">Sold out</Badge>);
-    expect(screen.getByText('Sold out')).toHaveAttribute('data-tone', 'danger');
+  test('has a variant and keeps its text', () => {
+    render(() => <Badge variant="destructive">Sold out</Badge>);
+    const badge = screen.getByText('Sold out');
+    expect(badge).toHaveAttribute('data-variant', 'destructive');
+    expect(badge).toHaveClass('bg-destructive', 'text-destructive-foreground');
   });
 });
 
@@ -64,18 +66,22 @@ describe('VisuallyHidden', () => {
 });
 
 describe('Layout', () => {
-  test('gaps come from the spacing scale', () => {
+  test('gaps come from the spacing scale, and a gap class overrides them', () => {
     const { container } = render(() => (
       <>
         <Stack gap={6}>a</Stack>
         <Cluster>b</Cluster>
         <Grid minItemWidth="12rem">c</Grid>
+        <Stack class="gap-8">d</Stack>
       </>
     ));
-    const [stack, cluster, grid] = Array.from(container.children) as HTMLElement[];
-    expect(stack!.style.getPropertyValue('--fl-gap')).toBe('var(--fl-space-6)');
-    expect(cluster!.style.getPropertyValue('--fl-gap')).toBe('var(--fl-space-2)');
-    expect(grid!.style.getPropertyValue('--fl-grid-min')).toBe('12rem');
+    const [stack, cluster, grid, custom] = Array.from(container.children) as HTMLElement[];
+    expect(stack!.style.getPropertyValue('--gap')).toBe('calc(var(--spacing) * 6)');
+    expect(stack).toHaveClass('gap-(--gap)');
+    expect(cluster!.style.getPropertyValue('--gap')).toBe('calc(var(--spacing) * 2)');
+    expect(grid!.style.getPropertyValue('--min-item-width')).toBe('12rem');
+    expect(custom).toHaveClass('gap-8');
+    expect(custom).not.toHaveClass('gap-(--gap)');
   });
 });
 
@@ -83,8 +89,8 @@ test('basics have no accessibility violations', async () => {
   const { container } = render(() => (
     <Stack>
       <Cluster>
-        <Badge tone="accent">New</Badge>
-        <Badge tone="success">In stock</Badge>
+        <Badge>New</Badge>
+        <Badge variant="success">In stock</Badge>
       </Cluster>
       <Link href="/about">About</Link>
       <Spinner />

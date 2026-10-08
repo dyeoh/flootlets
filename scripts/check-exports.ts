@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const cases: [label: string, conditions: string[], specifier: string, expected: string][] = [
   ['Solid apps / Astro (solid condition)', ['solid'], 'flootlets', 'dist/source/index.js'],
   ['other bundlers (default)', [], 'flootlets', 'dist/browser/index.js'],
-  ['stylesheet', [], 'flootlets/styles.css', 'dist/flootlets.css'],
+  ['theme (after Tailwind)', [], 'flootlets/theme.css', 'dist/theme.css'],
 ];
 
 let failed = false;

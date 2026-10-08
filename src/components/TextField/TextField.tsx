@@ -4,8 +4,16 @@
  */
 import * as KTextField from '@kobalte/core/text-field';
 import { type ComponentProps, type JSX, Show, splitProps } from 'solid-js';
-import { cx } from '../../lib/cx';
-import { type FieldProps, labelClass, validationState } from '../Field/field';
+import { cn } from '../../lib/utils';
+import {
+  descriptionClass,
+  errorClass,
+  fieldClass,
+  type FieldProps,
+  inputClass,
+  labelClass,
+  validationState,
+} from '../Field/field';
 
 const FIELD_KEYS = [
   'label',
@@ -38,7 +46,8 @@ export function TextField(props: TextFieldProps) {
   const [local, input] = splitProps(props, FIELD_KEYS);
   return (
     <KTextField.Root
-      class={cx('fl-field', local.class)}
+      data-slot="text-field"
+      class={cn(fieldClass, local.class)}
       data-required={local.required ? '' : undefined}
       value={local.value}
       defaultValue={local.defaultValue}
@@ -50,13 +59,16 @@ export function TextField(props: TextFieldProps) {
     >
       <KTextField.Label class={labelClass(local.hideLabel)}>{local.label}</KTextField.Label>
       {/* Solid types event targets precisely; Kobalte's polymorphic parts use Element. */}
-      <KTextField.Input class="fl-input" {...(input as ComponentProps<typeof KTextField.Input>)} />
+      <KTextField.Input
+        class={inputClass()}
+        {...(input as ComponentProps<typeof KTextField.Input>)}
+      />
       <Show when={local.description}>
-        <KTextField.Description class="fl-field__description">
+        <KTextField.Description class={descriptionClass}>
           {local.description}
         </KTextField.Description>
       </Show>
-      <KTextField.ErrorMessage class="fl-field__error">{local.error}</KTextField.ErrorMessage>
+      <KTextField.ErrorMessage class={errorClass}>{local.error}</KTextField.ErrorMessage>
     </KTextField.Root>
   );
 }
@@ -75,7 +87,8 @@ export function TextArea(props: TextAreaProps) {
   const [local, textarea] = splitProps(props, [...FIELD_KEYS, 'autoResize']);
   return (
     <KTextField.Root
-      class={cx('fl-field', local.class)}
+      data-slot="text-area"
+      class={cn(fieldClass, local.class)}
       data-required={local.required ? '' : undefined}
       value={local.value}
       defaultValue={local.defaultValue}
@@ -87,16 +100,16 @@ export function TextArea(props: TextAreaProps) {
     >
       <KTextField.Label class={labelClass(local.hideLabel)}>{local.label}</KTextField.Label>
       <KTextField.TextArea
-        class="fl-input"
+        class={inputClass('h-auto min-h-24 resize-y py-2')}
         autoResize={local.autoResize}
         {...(textarea as ComponentProps<typeof KTextField.TextArea>)}
       />
       <Show when={local.description}>
-        <KTextField.Description class="fl-field__description">
+        <KTextField.Description class={descriptionClass}>
           {local.description}
         </KTextField.Description>
       </Show>
-      <KTextField.ErrorMessage class="fl-field__error">{local.error}</KTextField.ErrorMessage>
+      <KTextField.ErrorMessage class={errorClass}>{local.error}</KTextField.ErrorMessage>
     </KTextField.Root>
   );
 }

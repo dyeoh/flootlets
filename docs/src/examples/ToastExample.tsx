@@ -7,7 +7,7 @@ export default function ToastExample() {
       <Cluster>
         <Button
           onClick={() =>
-            toast({ title: 'Added to cart', description: 'Kuih Lapis × 2', tone: 'success' })
+            toast({ title: 'Added to cart', description: 'Kuih Lapis × 2', variant: 'success' })
           }
         >
           Add to cart
@@ -18,7 +18,7 @@ export default function ToastExample() {
             toast({
               title: 'Could not update your cart',
               description: 'Please try again.',
-              tone: 'danger',
+              variant: 'destructive',
             })
           }
         >

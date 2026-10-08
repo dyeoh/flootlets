@@ -1,0 +1,16 @@
+/*
+ * Tailwind for the docs site, set up as Starlight recommends, plus what a
+ * flootlets app adds: Tailwind's preflight (the components expect it; it sits
+ * in the lowest layer, under Starlight's own reset), the flootlets theme, and
+ * an @source line so Tailwind sees the library's classes.
+ */
+@layer base, starlight, theme, components, utilities;
+
+@import 'tailwindcss/preflight.css' layer(base);
+@import '@astrojs/starlight-tailwind';
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+/* Resolved to src/ in `astro dev` and dist/ in `astro build` (see astro.config.mjs). */
+@import 'flootlets/theme.css';
+@source '../../../src';

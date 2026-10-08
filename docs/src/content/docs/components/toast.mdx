@@ -30,14 +30,14 @@ toast.dismiss(id);
 toast.clear();
 ```
 
-| `toast()` option | Type                                           |                           |
-| ---------------- | ---------------------------------------------- | ------------------------- |
-| `title`          | `string`                                       | Required                  |
-| `description`    | `string`                                       |                           |
-| `tone`           | `'info' \| 'success' \| 'warning' \| 'danger'` |                           |
-| `duration`       | `number` (ms)                                  | Defaults to the Toaster's |
-| `persistent`     | `boolean`                                      | Stay until closed         |
-| `closeLabel`     | `string`                                       | Default "Close"           |
+| `toast()` option | Type                                                   |                           |
+| ---------------- | ------------------------------------------------------ | ------------------------- |
+| `title`          | `string`                                               | Required                  |
+| `description`    | `string`                                               |                           |
+| `variant`        | `'default' \| 'destructive' \| 'success' \| 'warning'` | Default `'default'`       |
+| `duration`       | `number` (ms)                                          | Defaults to the Toaster's |
+| `persistent`     | `boolean`                                              | Stay until closed         |
+| `closeLabel`     | `string`                                               | Default "Close"           |
 
 | `<Toaster>` prop | Type          | Default           |
 | ---------------- | ------------- | ----------------- |

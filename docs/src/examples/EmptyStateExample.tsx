@@ -7,7 +7,7 @@ export default function EmptyStateExample() {
       title="Your cart is empty"
       description="Have a look around the shop and add something you like."
       action={<Button href="#shop">Continue shopping</Button>}
-      style={{ 'inline-size': '100%' }}
+      class="w-full"
     />
   );
 }

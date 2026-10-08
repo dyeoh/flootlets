@@ -1,5 +1,6 @@
 /*
- * flootlets theme, in shadcn/ui's variable names. Import it after Tailwind:
+ * flootlets theme: shadcn/ui's neutral theme, in its variable names. Import it
+ * after Tailwind:
  *
  *   @import 'tailwindcss';
  *   @import 'flootlets/theme.css';
@@ -14,7 +15,9 @@
  *     (Starlight's picker) on <html>, or on any element, forces one
  *
  * The two dark blocks below must stay identical; tests/theme.test.ts checks it,
- * and checks every text/background pair against WCAG AA in both themes.
+ * and checks every text/background pair against WCAG AA in both themes. Where
+ * shadcn's neutral falls short of AA, the value is darkened or lightened just
+ * enough: muted-foreground, destructive, input and ring in light, input in dark.
  */
 
 @custom-variant dark {
@@ -29,95 +32,93 @@
 }
 
 @layer base {
-  /* ── Light theme (default): ink on paper, brush red ─────────────────── */
+  /* ── Light theme (default) ──────────────────────────────────────────── */
   :root,
   .light,
   [data-theme='light'] {
     color-scheme: light;
     --radius: 0.625rem;
-    --background: #ffffff;
-    --foreground: #050706;
-    --card: #ffffff;
-    --card-foreground: #050706;
-    --popover: #ffffff;
-    --popover-foreground: #050706;
-    --primary: #971c2a;
-    --primary-foreground: #ffffff;
-    --secondary: #ececec;
-    --secondary-foreground: #050706;
-    --muted: #f6f6f6;
-    --muted-foreground: #5c5c5c;
-    --accent: #ececec;
-    --accent-foreground: #050706;
-    --destructive: #831826;
-    --destructive-foreground: #ffffff;
-    --success: #12703a;
-    --success-foreground: #ffffff;
-    --warning: #8a4b06;
-    --warning-foreground: #ffffff;
-    --border: #d9d9d9;
-    --input: #767676;
-    --ring: #971c2a;
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.54 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.56 0.245 27.325);
+    --destructive-foreground: oklch(0.985 0 0);
+    --success: oklch(0.527 0.154 150.069);
+    --success-foreground: oklch(0.985 0 0);
+    --warning: oklch(0.555 0.163 48.998);
+    --warning-foreground: oklch(0.985 0 0);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.64 0 0);
+    --ring: oklch(0.64 0 0);
   }
 
   /* ── Dark theme, forced with .dark or data-theme="dark" ─────────────── */
-  /* Red fills switch to a lighter red with ink text, so the same colour
-     also reads as text on the dark background (brush red on ink is 2.4:1). */
   .dark,
   [data-theme='dark'] {
     color-scheme: dark;
-    --background: #050706;
-    --foreground: #ffffff;
-    --card: #151716;
-    --card-foreground: #ffffff;
-    --popover: #151716;
-    --popover-foreground: #ffffff;
-    --primary: #df5363;
-    --primary-foreground: #050706;
-    --secondary: #262727;
-    --secondary-foreground: #ffffff;
-    --muted: #0c0e0d;
-    --muted-foreground: #8a8a8a;
-    --accent: #262727;
-    --accent-foreground: #ffffff;
-    --destructive: #f2a7b0;
-    --destructive-foreground: #050706;
-    --success: #5ccf86;
-    --success-foreground: #050706;
-    --warning: #f5b54a;
-    --warning-foreground: #050706;
-    --border: #262727;
-    --input: #8a8a8a;
-    --ring: #df5363;
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --destructive-foreground: oklch(0.145 0 0);
+    --success: oklch(0.792 0.209 151.711);
+    --success-foreground: oklch(0.145 0 0);
+    --warning: oklch(0.828 0.189 84.429);
+    --warning-foreground: oklch(0.145 0 0);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(0.55 0 0);
+    --ring: oklch(0.556 0 0);
   }
 
   /* ── Dark theme, from the system setting ────────────────────────────── */
   @media (prefers-color-scheme: dark) {
     :root:not(.light, [data-theme='light']) {
       color-scheme: dark;
-      --background: #050706;
-      --foreground: #ffffff;
-      --card: #151716;
-      --card-foreground: #ffffff;
-      --popover: #151716;
-      --popover-foreground: #ffffff;
-      --primary: #df5363;
-      --primary-foreground: #050706;
-      --secondary: #262727;
-      --secondary-foreground: #ffffff;
-      --muted: #0c0e0d;
-      --muted-foreground: #8a8a8a;
-      --accent: #262727;
-      --accent-foreground: #ffffff;
-      --destructive: #f2a7b0;
-      --destructive-foreground: #050706;
-      --success: #5ccf86;
-      --success-foreground: #050706;
-      --warning: #f5b54a;
-      --warning-foreground: #050706;
-      --border: #262727;
-      --input: #8a8a8a;
-      --ring: #df5363;
+      --background: oklch(0.145 0 0);
+      --foreground: oklch(0.985 0 0);
+      --card: oklch(0.205 0 0);
+      --card-foreground: oklch(0.985 0 0);
+      --popover: oklch(0.205 0 0);
+      --popover-foreground: oklch(0.985 0 0);
+      --primary: oklch(0.922 0 0);
+      --primary-foreground: oklch(0.205 0 0);
+      --secondary: oklch(0.269 0 0);
+      --secondary-foreground: oklch(0.985 0 0);
+      --muted: oklch(0.269 0 0);
+      --muted-foreground: oklch(0.708 0 0);
+      --accent: oklch(0.269 0 0);
+      --accent-foreground: oklch(0.985 0 0);
+      --destructive: oklch(0.704 0.191 22.216);
+      --destructive-foreground: oklch(0.145 0 0);
+      --success: oklch(0.792 0.209 151.711);
+      --success-foreground: oklch(0.145 0 0);
+      --warning: oklch(0.828 0.189 84.429);
+      --warning-foreground: oklch(0.145 0 0);
+      --border: oklch(1 0 0 / 10%);
+      --input: oklch(0.55 0 0);
+      --ring: oklch(0.556 0 0);
     }
   }
 }
@@ -151,10 +152,50 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Enter and exit animations for overlays; components skip them with motion-reduce. */
+  --animate-fade-in: fade-in 200ms cubic-bezier(0.2, 0, 0, 1);
+  --animate-fade-out: fade-out 120ms ease-in forwards;
+  --animate-pop-in: pop-in 200ms cubic-bezier(0.2, 0, 0, 1);
+  --animate-slide-out-right: slide-out-right 120ms ease-out forwards;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.5rem) scale(0.98);
+    }
+  }
+  @keyframes slide-out-right {
+    to {
+      transform: translateX(100%);
+    }
+  }
 }
 
-/* Plain CSS rather than @apply, so these rules also work without Tailwind. */
 @layer base {
+  /* As in shadcn: borders default to the theme's border colour, the page to its colours. */
+  *,
+  ::before,
+  ::after,
+  ::backdrop {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
   /*
    * Browsers show the default arrow over <button> and ARIA widgets. Kobalte is
    * headless and adds no styles, so we add the pointer for everything clickable.
@@ -182,7 +223,11 @@
     cursor: not-allowed;
   }
 
-  /* One visible focus ring for every component, shown only for keyboard focus. */
+  /*
+   * One visible focus ring for every component, shown only for keyboard focus.
+   * A solid outline rather than shadcn's translucent ring-ring/50, which falls
+   * below the 3:1 contrast a focus indicator needs.
+   */
   :where(:focus-visible) {
     outline: 2px solid var(--ring);
     outline-offset: 2px;

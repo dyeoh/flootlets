@@ -10,9 +10,12 @@
   "dependencies": {
     "@astrojs/solid-js": "^7.0.2",
     "@astrojs/starlight": "^0.42.5",
+    "@astrojs/starlight-tailwind": "^5.0.0",
     "@kobalte/core": "^0.13",
+    "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.7",
-    "solid-js": "^1.9.17"
+    "solid-js": "^1.9.17",
+    "tailwindcss": "^4.3.3"
   },
   "//": "@kobalte/core is listed so Astro compiles it for the server; flootlets itself comes in by alias (see astro.config.mjs)."
 }

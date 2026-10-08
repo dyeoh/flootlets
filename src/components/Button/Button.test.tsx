@@ -74,14 +74,23 @@ describe('Button', () => {
 
   test('variants, sizes and extra classes', () => {
     render(() => (
-      <Button variant="danger" size="sm" class="mine">
+      <Button variant="destructive" size="sm" class="mine">
         Remove
       </Button>
     ));
     const button = screen.getByRole('button');
-    expect(button).toHaveAttribute('data-variant', 'danger');
+    expect(button).toHaveAttribute('data-slot', 'button');
+    expect(button).toHaveAttribute('data-variant', 'destructive');
     expect(button).toHaveAttribute('data-size', 'sm');
-    expect(button).toHaveClass('fl-button', 'mine');
+    expect(button).toHaveClass('bg-destructive', 'h-8', 'mine');
+  });
+
+  test("the class prop wins over the variant's classes", () => {
+    render(() => <Button class="h-12 bg-success">Buy</Button>);
+    const button = screen.getByRole('button');
+    expect(button).toHaveClass('h-12', 'bg-success');
+    expect(button).not.toHaveClass('h-9');
+    expect(button).not.toHaveClass('bg-primary');
   });
 
   test('has no accessibility violations', async () => {

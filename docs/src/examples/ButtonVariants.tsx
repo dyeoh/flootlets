@@ -7,7 +7,8 @@ export default function ButtonVariants() {
       <Button variant="secondary">Save for later</Button>
       <Button variant="outline">View details</Button>
       <Button variant="ghost">Cancel</Button>
-      <Button variant="danger">Remove</Button>
+      <Button variant="destructive">Remove</Button>
+      <Button variant="link">Size guide</Button>
     </>
   );
 }

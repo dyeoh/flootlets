@@ -5,7 +5,7 @@
  * the page doesn't jump while it loads; a broken image shows a placeholder.
  */
 import { createSignal, type JSX, Show, splitProps } from 'solid-js';
-import { cx } from '../../lib/cx';
+import { cn } from '../../lib/utils';
 
 /** The `urls` object on images in gnerkulfloot API responses. */
 export interface ImageUrls {
@@ -32,6 +32,11 @@ export interface ProductImageProps extends Omit<
   /** Text shown if the image can't load. Defaults to the alt text. */
   fallback?: JSX.Element;
 }
+
+/** The image box; also the empty placeholder ProductCard shows when a product has no photo. */
+export const productImageClass = 'block h-auto w-full rounded-md bg-muted object-cover';
+export const productImageFallbackClass =
+  'grid aspect-square place-items-center p-4 text-center text-sm text-muted-foreground';
 
 const THUMB_MAX = 400;
 const LARGE_MAX = 1600;
@@ -61,7 +66,8 @@ export function ProductImage(props: ProductImageProps) {
       when={!failed()}
       fallback={
         <span
-          class={cx('fl-product-image', 'fl-product-image--fallback', local.class)}
+          data-slot="product-image-fallback"
+          class={cn(productImageClass, productImageFallbackClass, local.class)}
           role={local.alt ? 'img' : undefined}
           aria-label={local.alt || undefined}
           aria-hidden={local.alt ? undefined : 'true'}
@@ -72,7 +78,8 @@ export function ProductImage(props: ProductImageProps) {
       }
     >
       <img
-        class={cx('fl-product-image', local.class)}
+        data-slot="product-image"
+        class={cn(productImageClass, local.class)}
         src={local.urls.large}
         srcset={`${local.urls.thumb} ${variantWidth(THUMB_MAX, local.width, local.height)}w, ${local.urls.large} ${variantWidth(LARGE_MAX, local.width, local.height)}w`}
         sizes={local.sizes ?? '(min-width: 64rem) 25vw, (min-width: 40rem) 50vw, 100vw'}

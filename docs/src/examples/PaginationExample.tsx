@@ -4,7 +4,7 @@ import { Pagination, Stack } from 'flootlets';
 export default function PaginationExample() {
   const [page, setPage] = createSignal(5);
   return (
-    <Stack gap={4} align="center" style={{ 'inline-size': '100%' }}>
+    <Stack gap={4} align="center" class="w-full">
       {/* Links, as on a server-rendered product listing. */}
       <Pagination page={5} totalPages={12} href={(p) => `?page=${p}`} />
       {/* The gnerkulfloot API gives has_more instead of a total. */}

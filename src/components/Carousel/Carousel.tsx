@@ -28,7 +28,9 @@ import {
   splitProps,
   useContext,
 } from 'solid-js';
-import { cx } from '../../lib/cx';
+import { ChevronLeftIcon, ChevronRightIcon } from '../../lib/icons';
+import { cn } from '../../lib/utils';
+import { buttonVariants } from '../Button/Button';
 
 interface CarouselLabels {
   previous: string;
@@ -213,7 +215,8 @@ function Root(props: CarouselProps) {
   return (
     <CarouselContext.Provider value={context}>
       <section
-        class={cx('fl-carousel', local.class)}
+        data-slot="carousel"
+        class={cn('flex min-w-0 flex-col gap-3', local.class)}
         aria-roledescription="carousel"
         aria-label={local.label}
         {...rest}
@@ -227,9 +230,19 @@ function Root(props: CarouselProps) {
 function Content(props: JSX.HTMLAttributes<HTMLDivElement>) {
   const { contentRef } = useCarousel();
   const [local, rest] = splitProps(props, ['class']);
-  // Focusable so keyboard users can scroll it with the arrow keys.
+  // Focusable so keyboard users can scroll it with the arrow keys. --per-page
+  // is how many items fit on a screen; --gap the space between them.
   return (
-    <div ref={contentRef} class={cx('fl-carousel__track', local.class)} tabindex="0" {...rest} />
+    <div
+      ref={contentRef}
+      data-slot="carousel-content"
+      class={cn(
+        'flex snap-x snap-mandatory gap-(--gap) overflow-x-auto overscroll-x-contain [scrollbar-width:none] [--gap:calc(var(--spacing)*3)] [--per-page:1] sm:[--per-page:2] min-[56rem]:[--per-page:3] min-[72rem]:[--per-page:4] [&::-webkit-scrollbar]:hidden',
+        local.class,
+      )}
+      tabindex="0"
+      {...rest}
+    />
   );
 }
 
@@ -248,7 +261,13 @@ function Item(props: CarouselItemProps) {
         // Removing an item shrinks scrollWidth without resizing the track.
         onCleanup(remeasure);
       }}
-      class={cx('fl-carousel__item', local.class)}
+      data-slot="carousel-item"
+      // N items plus N-1 gaps fill the track exactly, so pages end on whole
+      // items (see the qilin notes).
+      class={cn(
+        'min-w-0 shrink-0 grow-0 basis-[calc((100%_-_(var(--per-page)_-_1)_*_var(--gap))_/_var(--per-page))] snap-start',
+        local.class,
+      )}
       role="group"
       aria-roledescription="slide"
       aria-label={labels().slide(local.index + 1, itemCount())}
@@ -257,26 +276,12 @@ function Item(props: CarouselItemProps) {
   );
 }
 
-// A component, never a shared JSX constant: Solid JSX creates real DOM nodes,
-// so one hoisted <svg> rendered in two buttons would be moved, not copied,
-// leaving the first button empty.
-function Chevron() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width="18"
-      height="18"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-    >
-      <path d="m9 18 6-6-6-6" />
-    </svg>
-  );
-}
+// Round outline buttons; disabled stays visibly present (border, mild fade).
+// Chevrons point the way the page moves, mirrored for right-to-left pages.
+const arrowClass = cn(
+  buttonVariants({ variant: 'outline', size: 'icon' }),
+  'rounded-full [&_svg]:rtl:-scale-x-100',
+);
 
 function Previous(props: JSX.ButtonHTMLAttributes<HTMLButtonElement>) {
   const { scrollPrev, canScrollPrev, labels } = useCarousel();
@@ -284,13 +289,14 @@ function Previous(props: JSX.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       type="button"
-      class={cx('fl-carousel__arrow', 'fl-carousel__arrow--previous', local.class)}
+      data-slot="carousel-previous"
+      class={cn(arrowClass, local.class)}
       aria-label={labels().previous}
       disabled={!canScrollPrev()}
       onClick={() => scrollPrev()}
       {...rest}
     >
-      <Chevron />
+      <ChevronLeftIcon />
     </button>
   );
 }
@@ -301,13 +307,14 @@ function Next(props: JSX.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       type="button"
-      class={cx('fl-carousel__arrow', local.class)}
+      data-slot="carousel-next"
+      class={cn(arrowClass, local.class)}
       aria-label={labels().next}
       disabled={!canScrollNext()}
       onClick={() => scrollNext()}
       {...rest}
     >
-      <Chevron />
+      <ChevronRightIcon />
     </button>
   );
 }
@@ -318,7 +325,8 @@ function Dots(props: JSX.HTMLAttributes<HTMLDivElement>) {
   return (
     <Show when={pageCount() > 1}>
       <div
-        class={cx('fl-carousel__dots', local.class)}
+        data-slot="carousel-dots"
+        class={cn('flex justify-center', local.class)}
         role="group"
         aria-label={labels().pages}
         {...rest}
@@ -327,7 +335,8 @@ function Dots(props: JSX.HTMLAttributes<HTMLDivElement>) {
           {(page) => (
             <button
               type="button"
-              class="fl-carousel__dot"
+              // A 24px target around an 8px dot; the current page's dot is a wider pill.
+              class="grid size-6 place-items-center before:size-2 before:rounded-full before:bg-input before:transition-[width,background-color] aria-[current=true]:before:w-5 aria-[current=true]:before:bg-primary motion-reduce:before:transition-none"
               aria-label={labels().page(page + 1)}
               aria-current={selectedPage() === page ? 'true' : undefined}
               onClick={() => scrollToPage(page)}

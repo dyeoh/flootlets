@@ -15,8 +15,8 @@ import linksSrc from '../../../examples/ButtonLinks.tsx?raw';
 
 ## Variants
 
-`primary` is the brand red fill: use it for the one main action on a page. `danger` is outlined,
-so it never looks like the primary action.
+The variants and sizes are shadcn/ui's. Use `default` for the one main action on a page,
+`destructive` for actions that delete or remove, and `link` for a button that reads as a link.
 
 <Example code={variantsSrc}>
   <ButtonVariants />
@@ -48,19 +48,21 @@ announce it as a link. A disabled link button drops its `href` but stays focusab
 
 ## Props
 
-| Prop        | Type                                                           | Default     |                                                   |
-| ----------- | -------------------------------------------------------------- | ----------- | ------------------------------------------------- |
-| `variant`   | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'danger'` | `'primary'` |                                                   |
-| `size`      | `'sm' \| 'md' \| 'lg'`                                         | `'md'`      | `md` is 44px tall, a comfortable touch target     |
-| `loading`   | `boolean`                                                      | `false`     | Busy state; see above                             |
-| `fullWidth` | `boolean`                                                      | `false`     | Fill the container's width                        |
-| `href`      | `string`                                                       |             | Render a link instead of a button                 |
-| `type`      | `'button' \| 'submit' \| 'reset'`                              | `'button'`  | Set `'submit'` explicitly for form submit buttons |
+| Prop        | Type                                                                          | Default     |                                                   |
+| ----------- | ----------------------------------------------------------------------------- | ----------- | ------------------------------------------------- |
+| `variant`   | `'default' \| 'destructive' \| 'outline' \| 'secondary' \| 'ghost' \| 'link'` | `'default'` |                                                   |
+| `size`      | `'default' \| 'sm' \| 'lg' \| 'icon'`                                         | `'default'` | `icon` is square; give it an `aria-label`         |
+| `loading`   | `boolean`                                                                     | `false`     | Busy state; see above                             |
+| `fullWidth` | `boolean`                                                                     | `false`     | Fill the container's width                        |
+| `href`      | `string`                                                                      |             | Render a link instead of a button                 |
+| `type`      | `'button' \| 'submit' \| 'reset'`                                             | `'button'`  | Set `'submit'` explicitly for form submit buttons |
 
 Any other attribute (`onClick`, `aria-*`, `class`…) is passed to the element.
 
 ## Styling
 
-Classes: `fl-button`, `fl-button__label`, `fl-button__spinner`. State: `data-variant`,
-`data-size`, `data-loading`, `data-full-width`. Variables: `--fl-button-bg`,
-`--fl-button-bg-hover`, `--fl-button-fg`, `--fl-button-border`, `--fl-button-height`.
+Pass Tailwind classes in `class`; they're merged last with tailwind-merge, so
+`class="h-12 rounded-full"` replaces the size's height and radius rather than fighting it.
+`buttonVariants({ variant, size })` gives the same classes for other elements.
+
+State: `data-slot="button"`, `data-variant`, `data-size`, `data-loading`.

@@ -8,9 +8,16 @@
  * Numbered when `totalPages` is known (current ±1, first and last, with
  * ellipses; logic from qilin/mercury). The gnerkulfloot API returns `has_more`
  * instead of a total, so without `totalPages` it shows Previous / Page N / Next.
+ * Styled from buttonVariants, as shadcn/ui's Pagination: ghost links, the
+ * current page outlined.
  */
 import { For, type JSX, Show, splitProps } from 'solid-js';
-import { cx } from '../../lib/cx';
+import { ChevronLeftIcon, ChevronRightIcon, EllipsisIcon } from '../../lib/icons';
+import { cn } from '../../lib/utils';
+import { buttonVariants } from '../Button/Button';
+
+const pageClass = 'w-auto min-w-9 px-2 tabular-nums';
+const edgeClass = 'gap-1 px-2.5';
 
 /**
  * The page numbers to show around `current`: current ±1, widened at the ends
@@ -89,7 +96,7 @@ export function Pagination(props: PaginationProps) {
       fallback={
         <button
           type="button"
-          class={cx('fl-pagination__link', p.class)}
+          class={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), p.class)}
           aria-label={p.label}
           onClick={() => local.onPageChange?.(p.page)}
         >
@@ -99,7 +106,7 @@ export function Pagination(props: PaginationProps) {
     >
       {(href) => (
         <a
-          class={cx('fl-pagination__link', p.class)}
+          class={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), p.class)}
           href={href()(p.page)}
           aria-label={p.label}
           rel={p.rel}
@@ -110,34 +117,55 @@ export function Pagination(props: PaginationProps) {
     </Show>
   );
 
-  const Edge = (p: { page: number; enabled: boolean; text: string; rel: string }) => (
-    <li>
-      <Show
-        when={p.enabled}
-        fallback={
-          <span class="fl-pagination__link fl-pagination__edge" aria-disabled="true">
-            {p.text}
-          </span>
-        }
-      >
-        <PageLink page={p.page} rel={p.rel} class="fl-pagination__edge">
-          {p.text}
-        </PageLink>
-      </Show>
-    </li>
-  );
+  // Chevrons point the way the page moves, mirrored for right-to-left pages.
+  const Edge = (p: { page: number; enabled: boolean; text: string; rel: 'prev' | 'next' }) => {
+    const content = () => (
+      <>
+        <Show when={p.rel === 'prev'}>
+          <ChevronLeftIcon class="rtl:-scale-x-100" />
+        </Show>
+        {p.text}
+        <Show when={p.rel === 'next'}>
+          <ChevronRightIcon class="rtl:-scale-x-100" />
+        </Show>
+      </>
+    );
+    return (
+      <li>
+        <Show
+          when={p.enabled}
+          fallback={
+            <span
+              class={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), edgeClass, 'w-auto')}
+              aria-disabled="true"
+            >
+              {content()}
+            </span>
+          }
+        >
+          <PageLink page={p.page} rel={p.rel} class={cn(edgeClass, 'w-auto')}>
+            {content()}
+          </PageLink>
+        </Show>
+      </li>
+    );
+  };
 
   const Numbered = (p: { page: number }) => (
     <li>
       <Show
         when={p.page !== local.page}
         fallback={
-          <span class="fl-pagination__link" aria-current="page" aria-label={labels().page(p.page)}>
+          <span
+            class={cn(buttonVariants({ variant: 'outline', size: 'icon' }), pageClass)}
+            aria-current="page"
+            aria-label={labels().page(p.page)}
+          >
             {p.page}
           </span>
         }
       >
-        <PageLink page={p.page} label={labels().page(p.page)}>
+        <PageLink page={p.page} label={labels().page(p.page)} class={pageClass}>
           {p.page}
         </PageLink>
       </Show>
@@ -145,21 +173,29 @@ export function Pagination(props: PaginationProps) {
   );
 
   const Ellipsis = () => (
-    <li class="fl-pagination__ellipsis" aria-hidden="true">
-      …
+    <li class="flex size-9 items-center justify-center text-muted-foreground" aria-hidden="true">
+      <EllipsisIcon class="size-4" />
     </li>
   );
 
   return (
     <Show when={visible()}>
-      <nav class={cx('fl-pagination', local.class)} aria-label={labels().nav} {...rest}>
-        <ul class="fl-pagination__list">
+      <nav
+        data-slot="pagination"
+        class={cn('mx-auto flex w-full justify-center', local.class)}
+        aria-label={labels().nav}
+        {...rest}
+      >
+        <ul class="m-0 flex list-none flex-wrap items-center gap-1 p-0">
           <Edge page={local.page - 1} enabled={hasPrev()} text={labels().previous} rel="prev" />
           <Show
             when={total() !== undefined}
             fallback={
               <li>
-                <span class="fl-pagination__link" aria-current="page">
+                <span
+                  class={buttonVariants({ variant: 'outline', size: 'default' })}
+                  aria-current="page"
+                >
                   {labels().page(local.page)}
                 </span>
               </li>

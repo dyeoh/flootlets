@@ -22,7 +22,6 @@
       "solid": "./dist/source/index.js",
       "default": "./dist/browser/index.js"
     },
-    "./styles.css": "./dist/flootlets.css",
     "./theme.css": "./dist/theme.css"
   },
   "types": "./dist/types/index.d.ts",
@@ -30,7 +29,7 @@
     "docs"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && vite build && bun scripts/build-css.ts",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && vite build && cp src/styles/theme.css dist/theme.css",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
@@ -44,10 +43,14 @@
     "check:theme": "bun scripts/check-theme.ts"
   },
   "peerDependencies": {
-    "solid-js": "^1.9.0"
+    "solid-js": "^1.9.0",
+    "tailwindcss": "^4.1.0"
   },
   "dependencies": {
-    "@kobalte/core": "^0.13"
+    "@kobalte/core": "^0.13",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.3",

@@ -1,8 +1,8 @@
 // Guards the theme: every colour pair is readable (WCAG AA) in light and dark,
 // the theme blocks stay in sync, Tailwind sees every variable, and the colour
 // parser behind `bun run check:theme` reads the formats shadcn themes use.
-import { readdirSync, readFileSync, statSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { compile } from '@tailwindcss/node';
 import { describe, expect, test } from 'vitest';
 import {
@@ -41,7 +41,17 @@ test('light and dark define the same colours', () => {
 });
 
 test('every colour variable is mapped into Tailwind', () => {
-  const mapped = collect(rules(themeCss), ['@theme inline']);
+  // The @theme block also holds @keyframes, so read its declarations by brace depth.
+  const start = themeCss.indexOf('{', themeCss.indexOf('@theme inline')) + 1;
+  let end = start;
+  for (let depth = 1; depth > 0; end++)
+    depth += themeCss[end] === '{' ? 1 : themeCss[end] === '}' ? -1 : 0;
+  const mapped = new Map(
+    [...themeCss.slice(start, end).matchAll(/(--color-[\w-]+)\s*:\s*([^;]+);/g)].map((m) => [
+      m[1]!,
+      m[2]!,
+    ]),
+  );
   for (const name of darkForced.keys()) {
     expect(
       mapped.get(`--color-${name.slice(2)}`),
@@ -118,37 +128,4 @@ describe('colour parsing', () => {
       expect(result!.ratio).toBeGreaterThan(15);
     }
   });
-});
-
-function files(dir: string, ext: string): string[] {
-  return readdirSync(dir).flatMap((entry) => {
-    const path = join(dir, entry);
-    if (statSync(path).isDirectory()) return files(path, ext);
-    return path.endsWith(ext) ? [path] : [];
-  });
-}
-
-test('every --fl variable used in a stylesheet is defined', () => {
-  // The transitional scales and aliases, plus component-local variables
-  // declared in CSS (--fl-button-bg) or set inline by a component (--fl-gap).
-  const defined = new Set<string>();
-  for (const file of files('src', '.css')) {
-    for (const m of readFileSync(file, 'utf8').matchAll(/(--fl-[\w-]+)\s*:/g)) defined.add(m[1]!);
-  }
-  for (const file of files('src', '.tsx')) {
-    for (const m of readFileSync(file, 'utf8').matchAll(/'(--fl-[\w-]+)'\s*:/g)) defined.add(m[1]!);
-  }
-  for (const file of files('src', '.css')) {
-    for (const m of readFileSync(file, 'utf8').matchAll(/var\((--fl-[\w-]+)/g)) {
-      expect(defined.has(m[1]!), `${file} uses undefined ${m[1]}`).toBe(true);
-    }
-  }
-});
-
-test('every component stylesheet is included in the bundle', () => {
-  const index = readFileSync('src/styles/index.css', 'utf8');
-  for (const file of files('src/components', '.css')) {
-    const relative = `../${file.slice('src/'.length)}`;
-    expect(index, `src/styles/index.css must @import '${relative}'`).toContain(`'${relative}'`);
-  }
 });

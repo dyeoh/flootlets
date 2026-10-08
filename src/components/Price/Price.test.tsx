@@ -23,7 +23,7 @@ describe('Price', () => {
     ));
     // Exact text: toHaveTextContent would normalise the no-break space away.
     expect(container.querySelector('s')?.textContent).toBe(`RM${NBSP}35.00`);
-    expect(container.querySelector('.fl-price')).toHaveAttribute('data-sale');
+    expect(container.querySelector('[data-slot=price]')).toHaveAttribute('data-sale');
     // Read aloud as: "Sale price RM 25.00 Original price RM 35.00".
     expect(container.textContent?.replace(/[ \n]+/g, ' ')).toBe(
       `Sale price RM${NBSP}25.00 Original price RM${NBSP}35.00`,

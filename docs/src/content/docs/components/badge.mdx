@@ -4,18 +4,19 @@ description: Short labels like New, Sale or Sold out.
 ---
 
 import Example from '../../../components/Example.astro';
-import BadgeTones from '../../../examples/BadgeTones';
-import src from '../../../examples/BadgeTones.tsx?raw';
+import BadgeVariants from '../../../examples/BadgeVariants';
+import src from '../../../examples/BadgeVariants.tsx?raw';
 
 <Example code={src}>
-  <BadgeTones />
+  <BadgeVariants />
 </Example>
 
 The text always carries the meaning ("Sold out"); colour only reinforces it, so the badge still
 works for colour-blind visitors and in monochrome.
 
-| Prop   | Type                                                          | Default     |
-| ------ | ------------------------------------------------------------- | ----------- |
-| `tone` | `'neutral' \| 'accent' \| 'success' \| 'warning' \| 'danger'` | `'neutral'` |
+| Prop      | Type                                                                               | Default     |
+| --------- | ---------------------------------------------------------------------------------- | ----------- |
+| `variant` | `'default' \| 'secondary' \| 'destructive' \| 'outline' \| 'success' \| 'warning'` | `'default'` |
 
-Class: `fl-badge`; state: `data-tone`.
+The first four are shadcn/ui's Badge variants; `success` and `warning` follow the same pattern.
+Classes: `badgeVariants({ variant })`, so a link can look like a badge. State: `data-variant`.

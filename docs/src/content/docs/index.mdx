@@ -6,24 +6,33 @@ description: Install flootlets and render your first components, in Solid or Ast
 flootlets is a small library of accessible, themeable [SolidJS](https://www.solidjs.com/)
 components for shops built on [gnerkulfloot](https://github.com/dyeoh/gnerkulfloot).
 
-- **Plain CSS and design tokens.** Restyle anything by overriding CSS variables. No Tailwind,
-  no CSS-in-JS, no build step for styles.
-- **Never fights your CSS.** Every flootlets rule sits in a `@layer flootlets.*` cascade
-  layer, so your own styles win whatever their specificity.
+- **Tailwind CSS v4 and shadcn/ui conventions.** Components are styled with Tailwind classes,
+  shadcn's variant names and theme variables, so any shadcn theme works and anything can be
+  restyled with a `class`.
+- **Your classes win.** The `class` you pass is merged last with tailwind-merge, so
+  `class="rounded-full"` replaces the component's radius instead of fighting it.
 - **Server-rendered first.** Works in Astro: static components ship no JavaScript.
 - **Accessible by default**, and checked with axe in tests.
 
 ## Install
 
+flootlets needs Tailwind CSS v4 in your app (in Astro: `npx astro add tailwind`).
+
 ```sh
 bun add flootlets solid-js     # or: npm install / pnpm add
 ```
 
-Import the stylesheet once, at the root of your app or layout:
+In your main CSS file, import the flootlets theme after Tailwind, and point Tailwind at the
+package so it generates the classes the components use:
 
-```ts
-import 'flootlets/styles.css';
+```css
+@import 'tailwindcss';
+@import 'flootlets/theme.css';
+@source '../node_modules/flootlets/dist';
 ```
+
+The `@source` path is relative to that CSS file; adjust it to reach your `node_modules`. See
+[Theming](/flootlets/theming/) to change the colours.
 
 ## Use it in Solid
 
@@ -47,14 +56,14 @@ Add the Solid integration (`npx astro add solid`). flootlets ships its JSX sourc
 
 ```astro
 ---
-import 'flootlets/styles.css';
+import '../styles/global.css'; // the CSS file from Install
 import { Price, Badge } from 'flootlets';
 import AddToCart from '../components/AddToCart';
 ---
 
 <!-- Static: rendered to HTML, no JavaScript sent. -->
 <Price amount={{ amount: 2920, currency: 'MYR' }} locale="en-MY" />
-<Badge tone="success">In stock</Badge>
+<Badge variant="success">In stock</Badge>
 
 <!-- Interactive: hydrated in the browser as an island. -->
 <AddToCart client:visible />
