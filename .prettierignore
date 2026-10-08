@@ -2,3 +2,4 @@ dist
 docs/dist
 docs/.astro
 bun.lock
+*.astro

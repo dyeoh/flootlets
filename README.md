@@ -14,7 +14,9 @@ Accessible, themeable [SolidJS](https://www.solidjs.com/) components for shops b
 - **Light and dark** follow the visitor's system setting, or `data-theme="light|dark"`.
 
 > **Status: early.** Design tokens and the basic components are in; forms, overlays and shop
-> components are next. Documentation will live at https://dyeoh.github.io/flootlets/.
+> components are next.
+
+**Documentation and live examples: https://dyeoh.github.io/flootlets/**
 
 ## Components
 
@@ -77,6 +79,8 @@ bun run lint         # eslint + prettier
 bun run typecheck
 bun run build        # dist/: browser bundle, JSX source for Solid apps, types, flootlets.css
 bun run commit       # write a commit message interactively (commitizen)
+bun run docs:dev     # the docs site at http://localhost:4321/flootlets/, using live source
+bun run docs:build   # builds the library, then the docs from what the package ships
 ```
 
 Read [AGENTS.md](AGENTS.md) before changing code: it covers the design decisions,

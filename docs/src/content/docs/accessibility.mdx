@@ -1,0 +1,28 @@
+---
+title: Accessibility
+description: What flootlets does for accessibility, and what's still up to you.
+---
+
+Every component is built and tested against the same checklist.
+
+## What flootlets handles
+
+- **Keyboard:** everything works without a mouse, and keyboard focus is always visible.
+- **Names:** controls have accessible names; hidden labels (like "Original price" or "opens in
+  a new tab") are included for screen readers.
+- **Buttons don't submit forms by accident:** `Button` is `type="button"` unless you say
+  otherwise.
+- **Loading:** a loading button stays focused, says it's busy (`aria-busy`) and ignores clicks.
+- **Contrast:** every text and background token pair meets WCAG AA (4.5:1) in light and dark,
+  enforced by a test.
+- **Motion:** animations stop or soften when the visitor prefers reduced motion.
+- **Pointer cursor** on everything clickable, including Kobalte's headless widgets.
+- **Server rendering:** pages work and read correctly before JavaScript loads.
+
+## What's up to you
+
+- **Write meaningful text:** button labels that say what happens ("Add to cart", not "Click
+  here"), and alt text that describes product photos.
+- **Icon-only buttons** need a label: wrap one in [`VisuallyHidden`](/flootlets/components/visually-hidden/).
+- **Keep your overrides readable:** if you change colour tokens, keep text at 4.5:1 contrast.
+- **Use the same locale** for prices on the server and in the browser.

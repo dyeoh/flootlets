@@ -1,0 +1,66 @@
+---
+title: Button
+description: Actions, and links that look like buttons.
+---
+
+import Example from '../../../components/Example.astro';
+import ButtonVariants from '../../../examples/ButtonVariants';
+import variantsSrc from '../../../examples/ButtonVariants.tsx?raw';
+import ButtonSizes from '../../../examples/ButtonSizes';
+import sizesSrc from '../../../examples/ButtonSizes.tsx?raw';
+import ButtonLoading from '../../../examples/ButtonLoading';
+import loadingSrc from '../../../examples/ButtonLoading.tsx?raw';
+import ButtonLinks from '../../../examples/ButtonLinks';
+import linksSrc from '../../../examples/ButtonLinks.tsx?raw';
+
+## Variants
+
+`primary` is the brand red fill: use it for the one main action on a page. `danger` is outlined,
+so it never looks like the primary action.
+
+<Example code={variantsSrc}>
+  <ButtonVariants />
+</Example>
+
+## Sizes
+
+<Example code={sizesSrc}>
+  <ButtonSizes />
+</Example>
+
+## Loading
+
+While `loading`, the button keeps its focus and width, shows a spinner, sets `aria-busy` and
+ignores clicks, so a double tap can't pay twice.
+
+<Example code={loadingSrc}>
+  <ButtonLoading client:visible />
+</Example>
+
+## Links that look like buttons
+
+With `href`, Button renders a real `<a>`: it navigates without JavaScript and screen readers
+announce it as a link. A disabled link button drops its `href` but stays focusable.
+
+<Example code={linksSrc}>
+  <ButtonLinks />
+</Example>
+
+## Props
+
+| Prop        | Type                                                           | Default     |                                                   |
+| ----------- | -------------------------------------------------------------- | ----------- | ------------------------------------------------- |
+| `variant`   | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'danger'` | `'primary'` |                                                   |
+| `size`      | `'sm' \| 'md' \| 'lg'`                                         | `'md'`      | `md` is 44px tall, a comfortable touch target     |
+| `loading`   | `boolean`                                                      | `false`     | Busy state; see above                             |
+| `fullWidth` | `boolean`                                                      | `false`     | Fill the container's width                        |
+| `href`      | `string`                                                       |             | Render a link instead of a button                 |
+| `type`      | `'button' \| 'submit' \| 'reset'`                              | `'button'`  | Set `'submit'` explicitly for form submit buttons |
+
+Any other attribute (`onClick`, `aria-*`, `class`…) is passed to the element.
+
+## Styling
+
+Classes: `fl-button`, `fl-button__label`, `fl-button__spinner`. State: `data-variant`,
+`data-size`, `data-loading`, `data-full-width`. Variables: `--fl-button-bg`,
+`--fl-button-bg-hover`, `--fl-button-fg`, `--fl-button-border`, `--fl-button-height`.

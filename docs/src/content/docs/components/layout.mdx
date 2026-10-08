@@ -1,0 +1,19 @@
+---
+title: Stack, Cluster & Grid
+description: Layout helpers with gaps from the spacing scale.
+---
+
+import Example from '../../../components/Example.astro';
+import LayoutGrid from '../../../examples/LayoutGrid';
+import src from '../../../examples/LayoutGrid.tsx?raw';
+
+- **Stack:** children in a column. `gap` (default 4), `align`.
+- **Cluster:** a row that wraps, for buttons and badges. `gap` (default 2), `justify`, `align`.
+- **Grid:** as many columns as fit, each at least `minItemWidth` (default `14rem`). It adapts to
+  its container, not to fixed screen sizes, so the same grid works in a sidebar or full width.
+
+`gap` is a step on the spacing scale (`0`–`16`), not pixels: `gap={4}` is `--fl-space-4` (1rem).
+
+<Example code={src}>
+  <LayoutGrid />
+</Example>

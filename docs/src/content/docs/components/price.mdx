@@ -1,0 +1,45 @@
+---
+title: Price
+description: Money from the gnerkulfloot API, with sale prices.
+---
+
+import Example from '../../../components/Example.astro';
+import PriceExamples from '../../../examples/PriceExamples';
+import src from '../../../examples/PriceExamples.tsx?raw';
+
+Price takes money as the gnerkulfloot API sends it, `{ amount, currency }` with `amount` in the
+currency's smallest unit, and formats it with the browser's built-in `Intl.NumberFormat`. Each
+currency gets its own number of decimals: 2 for MYR, none for JPY, 3 for BHD.
+
+<Example code={src}>
+  <PriceExamples />
+</Example>
+
+## Sales
+
+Pass `compareAt` with the original price. It's shown struck through, and only when it's really
+higher and in the same currency. Screen readers hear "Sale price RM 25.00, Original price
+RM 35.00" rather than two unexplained numbers.
+
+## Locale
+
+Always pass `locale`, and the same one on the server and in the browser. If it came from the
+environment, a server in one locale and a visitor in another would render different text and
+break hydration. The default is `"en"`.
+
+## Props
+
+| Prop        | Type                                      | Default                         |                                       |
+| ----------- | ----------------------------------------- | ------------------------------- | ------------------------------------- |
+| `amount`    | `{ amount: number; currency: string }`    | required                        | Minor units                           |
+| `compareAt` | `Money \| null`                           |                                 | Original price, struck through        |
+| `locale`    | `string`                                  | `'en'`                          | e.g. `'en-MY'`, `'ms-MY'`, `'ja-JP'`  |
+| `size`      | `'sm' \| 'md' \| 'lg'`                    | `'md'`                          |                                       |
+| `labels`    | `{ current?: string; original?: string }` | `Sale price` / `Original price` | Screen-reader labels, for translation |
+
+Need the text without the component? `formatMoney(money, locale)` returns the same string.
+
+## Styling
+
+Classes: `fl-price`, `fl-price__current`, `fl-price__was`. A sale sets `data-sale`, which turns
+the current price `--fl-color-accent-text`.

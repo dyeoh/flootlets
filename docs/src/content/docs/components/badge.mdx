@@ -1,0 +1,21 @@
+---
+title: Badge
+description: Short labels like New, Sale or Sold out.
+---
+
+import Example from '../../../components/Example.astro';
+import BadgeTones from '../../../examples/BadgeTones';
+import src from '../../../examples/BadgeTones.tsx?raw';
+
+<Example code={src}>
+  <BadgeTones />
+</Example>
+
+The text always carries the meaning ("Sold out"); colour only reinforces it, so the badge still
+works for colour-blind visitors and in monochrome.
+
+| Prop   | Type                                                          | Default     |
+| ------ | ------------------------------------------------------------- | ----------- |
+| `tone` | `'neutral' \| 'accent' \| 'success' \| 'warning' \| 'danger'` | `'neutral'` |
+
+Class: `fl-badge`; state: `data-tone`.

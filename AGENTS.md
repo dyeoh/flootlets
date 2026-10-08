@@ -91,7 +91,25 @@ on hover that browsers don't add to buttons by default.
 - The two projects have separate config files so their Solid compiler settings
   never mix.
 
-## 5. Doc style
+## 5. Documentation site
+
+`docs/` is an Astro + Starlight site, deployed to GitHub Pages
+(https://dyeoh.github.io/flootlets/) by `.github/workflows/docs.yml` on every push to `main`.
+
+- **Every component gets a page** in `docs/src/content/docs/components/`, in the same commit as
+  the component: live examples, props, accessibility notes and its classes, data attributes and
+  variables.
+- **Examples are real Solid files** in `docs/src/examples/`. A page imports each one twice: once
+  to render it, once with `?raw` to show its code. The code on the page is always the code that
+  runs.
+- **Only interactive examples get `client:*`.** Static ones are server-rendered with no
+  JavaScript, as they would be in a storefront.
+- **Dev vs build:** `astro dev` aliases `flootlets` to `src/` for live editing; `astro build`
+  aliases it to `dist/` (the code the package ships), so every docs build is an end-to-end check
+  that Astro can compile and server-render the published components.
+- Starlight's theme picker sets `data-theme` on `<html>`, which the tokens already follow.
+
+## 6. Doc style
 
 - A short comment block at the top of each component file: what it is and when
   to use it.
@@ -99,7 +117,7 @@ on hover that browsers don't add to buttons by default.
 - Comments explain intent and invariants, not the code line by line.
 - Changes to behaviour or props update the docs page in the same commit.
 
-## 6. Commits
+## 7. Commits
 
 Conventional Commits, the format commitizen produces: run `bun run commit`, or
 write it by hand. A `commit-msg` hook (commitlint) rejects anything else.
@@ -115,4 +133,5 @@ write it by hand. A `commit-msg` hook (commitlint) rejects anything else.
 - **Breaking changes** (renamed tokens, props or classes) get `!` after the
   type/scope and a `BREAKING CHANGE:` footer.
 
-Before committing: `bun run lint && bun run typecheck && bun run test && bun run build`.
+Before committing: `bun run lint && bun run typecheck && bun run test && bun run docs:build`.
+CI runs the same, plus `check:exports` and commitlint on pull requests.

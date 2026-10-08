@@ -1,0 +1,72 @@
+---
+title: Getting started
+description: Install flootlets and render your first components, in Solid or Astro.
+---
+
+flootlets is a small library of accessible, themeable [SolidJS](https://www.solidjs.com/)
+components for shops built on [gnerkulfloot](https://github.com/dyeoh/gnerkulfloot).
+
+- **Plain CSS and design tokens.** Restyle anything by overriding CSS variables. No Tailwind,
+  no CSS-in-JS, no build step for styles.
+- **Never fights your CSS.** Every flootlets rule sits in a `@layer flootlets.*` cascade
+  layer, so your own styles win whatever their specificity.
+- **Server-rendered first.** Works in Astro: static components ship no JavaScript.
+- **Accessible by default**, and checked with axe in tests.
+
+## Install
+
+```sh
+bun add flootlets solid-js     # or: npm install / pnpm add
+```
+
+Import the stylesheet once, at the root of your app or layout:
+
+```ts
+import 'flootlets/styles.css';
+```
+
+## Use it in Solid
+
+```tsx
+import { Button, Price } from 'flootlets';
+
+export function AddToCart() {
+  return (
+    <>
+      <Price amount={{ amount: 2920, currency: 'MYR' }} locale="en-MY" />
+      <Button onClick={() => console.log('added')}>Add to cart</Button>
+    </>
+  );
+}
+```
+
+## Use it in Astro
+
+Add the Solid integration (`npx astro add solid`). flootlets ships its JSX source under the
+`solid` export condition, so Astro compiles it correctly for both the server and the browser.
+
+```astro
+---
+import 'flootlets/styles.css';
+import { Price, Badge } from 'flootlets';
+import AddToCart from '../components/AddToCart';
+---
+
+<!-- Static: rendered to HTML, no JavaScript sent. -->
+<Price amount={{ amount: 2920, currency: 'MYR' }} locale="en-MY" />
+<Badge tone="success">In stock</Badge>
+
+<!-- Interactive: hydrated in the browser as an island. -->
+<AddToCart client:visible />
+```
+
+Only add `client:*` to components that respond to the visitor (clicks, typing). Everything else
+stays plain HTML.
+
+## Money
+
+Prices use the gnerkulfloot API's money shape: an integer `amount` in the currency's smallest
+unit plus an ISO 4217 `currency`. RM 29.20 is `{ amount: 2920, currency: 'MYR' }`; ¥500 is
+`{ amount: 500, currency: 'JPY' }`. Pass the **same `locale`** wherever a price renders: a
+locale taken from the server's or browser's environment would differ between the two and break
+hydration.

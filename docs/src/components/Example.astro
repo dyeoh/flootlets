@@ -1,0 +1,20 @@
+---
+// A live example and the source that produced it. Examples are Solid files in
+// src/examples, imported twice in a page: once to render, once as ?raw text,
+// so the code shown is always exactly the code that runs.
+import { Code } from '@astrojs/starlight/components';
+
+interface Props {
+  code: string;
+  title?: string;
+}
+
+const { code, title } = Astro.props;
+// Hide the boilerplate import line from flootlets; it's the same everywhere.
+const shown = code.replace(/^import .* from 'flootlets';\n\n?/m, '').trim();
+---
+
+<figure class="fl-docs-example not-content">
+  <div class="fl-docs-example__preview"><slot /></div>
+</figure>
+<Code code={shown} lang="tsx" title={title} />

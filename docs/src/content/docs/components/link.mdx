@@ -1,0 +1,21 @@
+---
+title: Link
+description: Inline text links, including safe external links.
+---
+
+import Example from '../../../components/Example.astro';
+import LinkExamples from '../../../examples/LinkExamples';
+import src from '../../../examples/LinkExamples.tsx?raw';
+
+<Example code={src}>
+  <LinkExamples />
+</Example>
+
+With `external`, the link opens in a new tab with `rel="noopener noreferrer"`, and screen readers
+hear "(opens in a new tab)" so it's never a surprise. For links that look like buttons, use
+[`Button` with `href`](/flootlets/components/button/#links-that-look-like-buttons).
+
+| Prop       | Type      |                           |
+| ---------- | --------- | ------------------------- |
+| `href`     | `string`  | required                  |
+| `external` | `boolean` | Open in a new tab, safely |

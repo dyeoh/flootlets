@@ -1,0 +1,30 @@
+---
+title: Spinner & Skeleton
+description: Showing that something is loading.
+---
+
+import Example from '../../../components/Example.astro';
+import LoadingStates from '../../../examples/LoadingStates';
+import src from '../../../examples/LoadingStates.tsx?raw';
+
+<Example code={src}>
+  <LoadingStates />
+</Example>
+
+**Spinner** is announced as a status ("Loading", or your `label`). Inside something that
+already announces its state, like a loading Button, use `decorative` to keep it silent. For
+visitors who prefer reduced motion it pulses instead of spinning.
+
+**Skeleton** is a placeholder shape, hidden from screen readers. Mark the region that's loading
+with `aria-busy="true"` instead.
+
+| Spinner prop | Type                   | Default     |
+| ------------ | ---------------------- | ----------- |
+| `label`      | `string`               | `'Loading'` |
+| `size`       | `'sm' \| 'md' \| 'lg'` | `'md'`      |
+| `decorative` | `boolean`              | `false`     |
+
+| Skeleton prop     | Type                           | Default              |
+| ----------------- | ------------------------------ | -------------------- |
+| `width`, `height` | CSS length                     | full width, one line |
+| `shape`           | `'rect' \| 'text' \| 'circle'` | `'rect'`             |
