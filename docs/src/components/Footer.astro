@@ -1,0 +1,20 @@
+---
+// Starlight's footer, plus the flootlets version these docs (and the registry
+// they serve) were built from. release-please bumps it in package.json.
+import Default from '@astrojs/starlight/components/Footer.astro';
+import pkg from '../../../package.json';
+---
+
+<Default />
+<p class="fl-docs-version">
+  flootlets {pkg.version} ·{' '}
+  <a href="https://github.com/dyeoh/flootlets/blob/main/CHANGELOG.md">Changelog</a>
+</p>
+
+<style>
+  .fl-docs-version {
+    margin-top: 1.5rem;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+  }
+</style>

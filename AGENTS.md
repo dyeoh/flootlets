@@ -191,9 +191,25 @@ write it by hand. A `commit-msg` hook (commitlint) rejects anything else.
 ```
 
 - **Types:** `feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`.
-- **Scopes:** `theme`, `base`, `build`, `docs`, `ci`, or the component (`button`, `price`, `dialog`…).
-- **Breaking changes** (renamed tokens, props or classes) get `!` after the
+- **Scopes:** `theme`, `registry`, `build`, `docs`, `ci`, or the component (`button`, `price`, `dialog`…).
+- **Breaking changes** (renamed variables, props or classes) get `!` after the
   type/scope and a `BREAKING CHANGE:` footer.
+- **Body lines never start with `word:`**: commitlint and release-please read
+  that as the start of a footer, and the rest of the body is misread.
 
 Before committing: `bun run lint && bun run typecheck && bun run test && bun run docs:build`.
-CI runs the same, plus `check:exports` and commitlint on pull requests.
+CI runs the same, plus `check:exports`, the registry smoke test and commitlint on pull requests.
+
+## 8. Releases
+
+Versions come from the commits; nobody edits `version` by hand.
+`.github/workflows/release.yml` runs release-please on every push to `main`. It
+keeps a Release PR open with the next version, the `package.json` bump and the
+`CHANGELOG.md` entry. Merging it tags `vX.Y.Z`, creates a GitHub Release and
+publishes to npm through trusted publishing (GitHub OIDC, with provenance).
+
+Before 1.0 (`release-please-config.json`): a breaking change bumps the minor
+version (0.2.0 → 0.3.0), and `feat` and `fix` bump the patch. `docs` changes are
+listed in the changelog; `refactor`, `test`, `build`, `ci` and `chore` are
+not. The version also goes into the docs footer and every registry file's
+header.

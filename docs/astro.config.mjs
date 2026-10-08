@@ -25,6 +25,7 @@ export default defineConfig({
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/dyeoh/flootlets' }],
       editLink: { baseUrl: 'https://github.com/dyeoh/flootlets/edit/main/docs/' },
       customCss: ['./src/styles/tailwind.css', './src/styles/docs.css'],
+      components: { Footer: './src/components/Footer.astro' },
       sidebar: [
         {
           label: 'Start here',

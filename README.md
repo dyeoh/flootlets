@@ -118,6 +118,9 @@ bun run docs:build   # builds the library and the registry, then the docs from w
 bun run registry:smoke  # installs every registry item into a fresh app with the shadcn CLI
 ```
 
+Releases are automatic: release-please keeps a Release PR open on `main` with the next version and
+changelog, worked out from the commit messages, and merging it publishes to npm.
+
 Read [AGENTS.md](AGENTS.md) before changing code: it covers the design decisions,
 conventions and the accessibility checklist.
 
