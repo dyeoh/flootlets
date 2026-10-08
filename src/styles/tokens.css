@@ -1,0 +1,222 @@
+/*
+ * Design tokens. Primitives are raw palette values; components only ever use
+ * the semantic tokens (--fl-color-text, --fl-color-accent…), which switch
+ * between light and dark.
+ *
+ * Theme selection:
+ *   - default: follows the visitor's system setting (prefers-color-scheme)
+ *   - data-theme="light" | "dark" on <html> (or any element) forces one
+ *
+ * The two dark blocks below must stay identical; tests/tokens.test.ts checks it.
+ * Every text/background pair is contrast-checked against WCAG AA in the same test.
+ */
+
+:root {
+  /* Palette: ink, paper and the brush red. */
+  --fl-ink: #050706;
+  --fl-paper: #ffffff;
+  --fl-red-50: #fbeaec;
+  --fl-red-200: #f2a7b0;
+  --fl-red-300: #df5363; /* red that stays readable as text on every dark surface */
+  --fl-red-500: #a3202e;
+  --fl-red-600: #971c2a; /* the brush red */
+  --fl-red-700: #831826;
+  --fl-red-950: #2a090e;
+  --fl-grey-50: #f6f6f6;
+  --fl-grey-100: #ececec;
+  --fl-grey-200: #d9d9d9;
+  --fl-grey-400: #8a8a8a;
+  --fl-grey-500: #767676;
+  --fl-grey-600: #5c5c5c;
+  --fl-grey-700: #3f3f3f;
+  --fl-grey-800: #262727;
+  --fl-grey-900: #151716;
+  --fl-grey-950: #0c0e0d;
+  --fl-green-50: #e7f6ec;
+  --fl-green-300: #5ccf86;
+  --fl-green-700: #12703a;
+  --fl-green-950: #0b2416;
+  --fl-amber-50: #fdf3e2;
+  --fl-amber-300: #f5b54a;
+  --fl-amber-800: #8a4b06;
+  --fl-amber-950: #2b1a04;
+
+  /* Spacing: 0.25rem steps. */
+  --fl-space-0: 0;
+  --fl-space-1: 0.25rem;
+  --fl-space-2: 0.5rem;
+  --fl-space-3: 0.75rem;
+  --fl-space-4: 1rem;
+  --fl-space-5: 1.25rem;
+  --fl-space-6: 1.5rem;
+  --fl-space-8: 2rem;
+  --fl-space-10: 2.5rem;
+  --fl-space-12: 3rem;
+  --fl-space-16: 4rem;
+
+  /* Radii. */
+  --fl-radius-sm: 5px;
+  --fl-radius-md: 10px;
+  --fl-radius-lg: 20px;
+  --fl-radius-pill: 999px;
+
+  /* Type. System fonts: fast, and right for every language and platform. */
+  --fl-font-body:
+    system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', 'Helvetica Neue', Arial, sans-serif;
+  --fl-font-heading: var(--fl-font-body);
+  --fl-font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --fl-text-xs: 0.75rem;
+  --fl-text-sm: 0.875rem;
+  --fl-text-base: 1rem;
+  --fl-text-lg: 1.125rem;
+  --fl-text-xl: 1.25rem;
+  --fl-text-2xl: 1.5rem;
+  --fl-text-3xl: 1.875rem;
+  --fl-text-4xl: 2.25rem;
+  --fl-text-5xl: 3rem;
+  --fl-leading-tight: 1.2;
+  --fl-leading-normal: 1.5;
+  --fl-weight-normal: 400;
+  --fl-weight-medium: 500;
+  --fl-weight-bold: 700;
+
+  /* Controls: medium is 44px, the minimum comfortable touch target. */
+  --fl-control-sm: 2rem;
+  --fl-control-md: 2.75rem;
+  --fl-control-lg: 3.25rem;
+
+  /* Motion. Zeroed for people who ask for reduced motion (below). */
+  --fl-duration-fast: 120ms;
+  --fl-duration-normal: 200ms;
+  --fl-duration-slow: 320ms;
+  --fl-ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Stacking, in a sane range. */
+  --fl-z-dropdown: 1000;
+  --fl-z-overlay: 1100;
+  --fl-z-toast: 1200;
+
+  /* ── Light theme (default) ───────────────────────────────────────── */
+  color-scheme: light;
+  --fl-color-bg: var(--fl-paper);
+  --fl-color-surface: var(--fl-grey-50);
+  --fl-color-surface-raised: var(--fl-paper);
+  --fl-color-border: var(--fl-grey-200);
+  --fl-color-border-strong: var(--fl-grey-500);
+  --fl-color-text: var(--fl-ink);
+  --fl-color-text-muted: var(--fl-grey-600);
+  --fl-color-accent: var(--fl-red-600);
+  --fl-color-accent-hover: var(--fl-red-700);
+  --fl-color-on-accent: var(--fl-paper);
+  --fl-color-accent-text: var(--fl-red-600);
+  --fl-color-focus: var(--fl-red-600);
+  --fl-color-danger-text: var(--fl-red-700);
+  --fl-color-danger-bg: var(--fl-red-50);
+  --fl-color-success-text: var(--fl-green-700);
+  --fl-color-success-bg: var(--fl-green-50);
+  --fl-color-warning-text: var(--fl-amber-800);
+  --fl-color-warning-bg: var(--fl-amber-50);
+  --fl-color-neutral-text: var(--fl-grey-700);
+  --fl-color-neutral-bg: var(--fl-grey-100);
+  --fl-color-overlay: rgb(5 7 6 / 0.55);
+  --fl-shadow-sm: 0 1px 2px rgb(5 7 6 / 0.08);
+  --fl-shadow-md: 0 4px 8px rgb(5 7 6 / 0.06), 0 2px 4px rgb(5 7 6 / 0.06);
+  --fl-shadow-lg: 0 10px 20px rgb(5 7 6 / 0.07), 0 0 10px rgb(5 7 6 / 0.1);
+}
+
+/* ── Dark theme, from the system setting ───────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --fl-color-bg: var(--fl-ink);
+    --fl-color-surface: var(--fl-grey-950);
+    --fl-color-surface-raised: var(--fl-grey-900);
+    --fl-color-border: var(--fl-grey-800);
+    --fl-color-border-strong: var(--fl-grey-400);
+    --fl-color-text: var(--fl-paper);
+    --fl-color-text-muted: var(--fl-grey-400);
+    --fl-color-accent: var(--fl-red-600);
+    --fl-color-accent-hover: var(--fl-red-500);
+    --fl-color-on-accent: var(--fl-paper);
+    --fl-color-accent-text: var(--fl-red-300);
+    --fl-color-focus: var(--fl-red-300);
+    --fl-color-danger-text: var(--fl-red-200);
+    --fl-color-danger-bg: var(--fl-red-950);
+    --fl-color-success-text: var(--fl-green-300);
+    --fl-color-success-bg: var(--fl-green-950);
+    --fl-color-warning-text: var(--fl-amber-300);
+    --fl-color-warning-bg: var(--fl-amber-950);
+    --fl-color-neutral-text: var(--fl-grey-100);
+    --fl-color-neutral-bg: var(--fl-grey-800);
+    --fl-color-overlay: rgb(0 0 0 / 0.7);
+    --fl-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+    --fl-shadow-md: 0 4px 8px rgb(0 0 0 / 0.45), 0 2px 4px rgb(0 0 0 / 0.4);
+    --fl-shadow-lg: 0 10px 20px rgb(0 0 0 / 0.55), 0 0 10px rgb(0 0 0 / 0.4);
+  }
+}
+
+/* ── Dark theme, forced with data-theme="dark" ─────────────────────── */
+[data-theme='dark'] {
+  color-scheme: dark;
+  --fl-color-bg: var(--fl-ink);
+  --fl-color-surface: var(--fl-grey-950);
+  --fl-color-surface-raised: var(--fl-grey-900);
+  --fl-color-border: var(--fl-grey-800);
+  --fl-color-border-strong: var(--fl-grey-400);
+  --fl-color-text: var(--fl-paper);
+  --fl-color-text-muted: var(--fl-grey-400);
+  --fl-color-accent: var(--fl-red-600);
+  --fl-color-accent-hover: var(--fl-red-500);
+  --fl-color-on-accent: var(--fl-paper);
+  --fl-color-accent-text: var(--fl-red-300);
+  --fl-color-focus: var(--fl-red-300);
+  --fl-color-danger-text: var(--fl-red-200);
+  --fl-color-danger-bg: var(--fl-red-950);
+  --fl-color-success-text: var(--fl-green-300);
+  --fl-color-success-bg: var(--fl-green-950);
+  --fl-color-warning-text: var(--fl-amber-300);
+  --fl-color-warning-bg: var(--fl-amber-950);
+  --fl-color-neutral-text: var(--fl-grey-100);
+  --fl-color-neutral-bg: var(--fl-grey-800);
+  --fl-color-overlay: rgb(0 0 0 / 0.7);
+  --fl-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+  --fl-shadow-md: 0 4px 8px rgb(0 0 0 / 0.45), 0 2px 4px rgb(0 0 0 / 0.4);
+  --fl-shadow-lg: 0 10px 20px rgb(0 0 0 / 0.55), 0 0 10px rgb(0 0 0 / 0.4);
+}
+
+/* data-theme="light" inside a dark page (or under a dark system setting). */
+[data-theme='light'] {
+  color-scheme: light;
+  --fl-color-bg: var(--fl-paper);
+  --fl-color-surface: var(--fl-grey-50);
+  --fl-color-surface-raised: var(--fl-paper);
+  --fl-color-border: var(--fl-grey-200);
+  --fl-color-border-strong: var(--fl-grey-500);
+  --fl-color-text: var(--fl-ink);
+  --fl-color-text-muted: var(--fl-grey-600);
+  --fl-color-accent: var(--fl-red-600);
+  --fl-color-accent-hover: var(--fl-red-700);
+  --fl-color-on-accent: var(--fl-paper);
+  --fl-color-accent-text: var(--fl-red-600);
+  --fl-color-focus: var(--fl-red-600);
+  --fl-color-danger-text: var(--fl-red-700);
+  --fl-color-danger-bg: var(--fl-red-50);
+  --fl-color-success-text: var(--fl-green-700);
+  --fl-color-success-bg: var(--fl-green-50);
+  --fl-color-warning-text: var(--fl-amber-800);
+  --fl-color-warning-bg: var(--fl-amber-50);
+  --fl-color-neutral-text: var(--fl-grey-700);
+  --fl-color-neutral-bg: var(--fl-grey-100);
+  --fl-color-overlay: rgb(5 7 6 / 0.55);
+  --fl-shadow-sm: 0 1px 2px rgb(5 7 6 / 0.08);
+  --fl-shadow-md: 0 4px 8px rgb(5 7 6 / 0.06), 0 2px 4px rgb(5 7 6 / 0.06);
+  --fl-shadow-lg: 0 10px 20px rgb(5 7 6 / 0.07), 0 0 10px rgb(5 7 6 / 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --fl-duration-fast: 0ms;
+    --fl-duration-normal: 0ms;
+    --fl-duration-slow: 0ms;
+  }
+}

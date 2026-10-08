@@ -1,6 +1,9 @@
 /*
  * flootlets stylesheet entry. Every rule lives in a flootlets.* cascade layer,
  * so an app's own (unlayered) CSS always wins without specificity fights.
- * Component stylesheets are added at the bottom in the components layer.
+ * Add each component's stylesheet at the bottom, in the components layer.
  */
 @layer flootlets.reset, flootlets.tokens, flootlets.base, flootlets.components;
+
+@import './tokens.css' layer(flootlets.tokens);
+@import './base.css' layer(flootlets.base);
