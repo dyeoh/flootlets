@@ -1,0 +1,427 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "flootlets",
+  "homepage": "https://dyeoh.github.io/flootlets/",
+  "items": [
+    {
+      "name": "theme",
+      "type": "registry:theme",
+      "title": "flootlets theme",
+      "description": "shadcn/ui's neutral theme with success and warning, adjusted to meet WCAG AA, plus the base rules and animations the components use.",
+      "files": [
+        {
+          "path": "src/styles/theme.css",
+          "type": "registry:theme"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/theming/"
+      }
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "cn()",
+      "description": "Joins classes and resolves Tailwind conflicts (clsx + tailwind-merge), as in shadcn/ui.",
+      "files": [
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "icons",
+      "type": "registry:lib",
+      "title": "Icons",
+      "description": "The few lucide-style icons the components use.",
+      "files": [
+        {
+          "path": "src/lib/icons.tsx",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "classes",
+      "type": "registry:lib",
+      "title": "Shared classes",
+      "description": "Class strings shared between components, like the close button.",
+      "files": [
+        {
+          "path": "src/lib/classes.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "money",
+      "type": "registry:lib",
+      "title": "Money",
+      "description": "formatMoney() for the gnerkulfloot API's { amount, currency } in minor units.",
+      "files": [
+        {
+          "path": "src/lib/money.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "space",
+      "type": "registry:lib",
+      "title": "Spacing",
+      "description": "Steps on Tailwind's spacing scale, for layout gaps.",
+      "files": [
+        {
+          "path": "src/lib/space.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "An inline message about the page or a form; errors are announced at once.",
+      "files": [
+        {
+          "path": "src/components/Alert/Alert.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/alert/"
+      }
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "A short label such as New, Sale or Sold out.",
+      "files": [
+        {
+          "path": "src/components/Badge/Badge.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/badge/"
+      }
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Actions, and links that look like buttons, with a loading state.",
+      "files": [
+        {
+          "path": "src/components/Button/Button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/button/"
+      }
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Carousel",
+      "description": "A scroll-snap row of items that pages left and right, with arrows and dots.",
+      "files": [
+        {
+          "path": "src/components/Carousel/Carousel.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/carousel/"
+      }
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "A labelled yes/no choice, built on Kobalte.",
+      "files": [
+        {
+          "path": "src/components/Checkbox/Checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/choices/"
+      }
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "A modal window for confirmations and focused tasks, built on Kobalte.",
+      "files": [
+        {
+          "path": "src/components/Dialog/Dialog.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/dialog/"
+      }
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "EmptyState",
+      "description": "What to show when there is nothing to show yet, with a way forward.",
+      "files": [
+        {
+          "path": "src/components/EmptyState/EmptyState.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/empty-state/"
+      }
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "description": "Props and classes shared by the form components.",
+      "files": [
+        {
+          "path": "src/components/Field/field.ts",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/text-field/"
+      }
+    },
+    {
+      "name": "layout",
+      "type": "registry:ui",
+      "title": "Stack, Cluster & Grid",
+      "description": "Layout helpers with gaps on the spacing scale.",
+      "files": [
+        {
+          "path": "src/components/Layout/Layout.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/layout/"
+      }
+    },
+    {
+      "name": "link",
+      "type": "registry:ui",
+      "title": "Link",
+      "description": "An inline text link; external links open safely in a new tab.",
+      "files": [
+        {
+          "path": "src/components/Link/Link.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/link/"
+      }
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "Page links or buttons, numbered or previous/next.",
+      "files": [
+        {
+          "path": "src/components/Pagination/Pagination.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/pagination/"
+      }
+    },
+    {
+      "name": "price",
+      "type": "registry:ui",
+      "title": "Price",
+      "description": "Money in minor units, formatted per currency, with sale prices.",
+      "files": [
+        {
+          "path": "src/components/Price/Price.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/price/"
+      }
+    },
+    {
+      "name": "product-card",
+      "type": "registry:ui",
+      "title": "ProductCard",
+      "description": "A product in a grid or carousel, clickable as a whole.",
+      "files": [
+        {
+          "path": "src/components/ProductCard/ProductCard.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/product-card/"
+      }
+    },
+    {
+      "name": "product-image",
+      "type": "registry:ui",
+      "title": "ProductImage",
+      "description": "A responsive product photo with a placeholder if it fails.",
+      "files": [
+        {
+          "path": "src/components/ProductImage/ProductImage.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/product-card/"
+      }
+    },
+    {
+      "name": "quantity-stepper",
+      "type": "registry:ui",
+      "title": "QuantityStepper",
+      "description": "Choose how many, within the stock available, built on Kobalte.",
+      "files": [
+        {
+          "path": "src/components/QuantityStepper/QuantityStepper.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/quantity-stepper/"
+      }
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "RadioGroup",
+      "description": "Pick one of a few visible options, built on Kobalte.",
+      "files": [
+        {
+          "path": "src/components/RadioGroup/RadioGroup.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/choices/"
+      }
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Pick one option from a list, built on Kobalte.",
+      "files": [
+        {
+          "path": "src/components/Select/Select.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/select/"
+      }
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "A placeholder shape while content loads.",
+      "files": [
+        {
+          "path": "src/components/Skeleton/Skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/loading/"
+      }
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "Shows that something is loading, announced as a status.",
+      "files": [
+        {
+          "path": "src/components/Spinner/Spinner.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/loading/"
+      }
+    },
+    {
+      "name": "stock-badge",
+      "type": "registry:ui",
+      "title": "StockBadge",
+      "description": "In stock or Sold out, from the API's in_stock field.",
+      "files": [
+        {
+          "path": "src/components/StockBadge/StockBadge.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/product-card/"
+      }
+    },
+    {
+      "name": "text-field",
+      "type": "registry:ui",
+      "title": "TextField & TextArea",
+      "description": "Labelled text inputs with help text and errors, built on Kobalte.",
+      "files": [
+        {
+          "path": "src/components/TextField/TextField.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/text-field/"
+      }
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "Short, temporary messages like Added to cart, built on Kobalte.",
+      "files": [
+        {
+          "path": "src/components/Toast/Toast.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/toast/"
+      }
+    },
+    {
+      "name": "visually-hidden",
+      "type": "registry:ui",
+      "title": "VisuallyHidden",
+      "description": "Text for screen readers only.",
+      "files": [
+        {
+          "path": "src/components/VisuallyHidden/VisuallyHidden.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/visually-hidden/"
+      }
+    }
+  ]
+}

@@ -6,6 +6,9 @@ description: Inline messages, like an out-of-stock error from checkout.
 import Example from '../../../components/Example.astro';
 import Ex from '../../../examples/AlertExamples';
 import src from '../../../examples/AlertExamples.tsx?raw';
+import Install from '../../../components/Install.astro';
+
+<Install items={['alert']} />
 
 <Example code={src}>
   <Ex client:visible />

@@ -27,6 +27,22 @@ jobs:
       - run: bun run test
       - run: bun run build
       - run: bun run check:exports
+      - run: bun run registry:build
       # The docs site server-renders every component from dist/, the same way
       # an Astro storefront would; a broken package fails here.
       - run: bun run --cwd docs build
+
+  registry-smoke:
+    # Installs every registry item into a fresh Astro + Solid + Tailwind app
+    # with the shadcn CLI, then typechecks and builds it.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.x
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: bun install --frozen-lockfile
+      - run: bun run registry:smoke

@@ -6,6 +6,9 @@ description: Yes/no choices, and picking one of a few visible options.
 import Example from '../../../components/Example.astro';
 import Ex from '../../../examples/ChoiceExamples';
 import src from '../../../examples/ChoiceExamples.tsx?raw';
+import Install from '../../../components/Install.astro';
+
+<Install items={['checkbox', 'radio-group']} />
 
 <Example code={src}>
   <Ex client:visible />

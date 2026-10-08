@@ -1,0 +1,21 @@
+---
+// Both ways to get a component: the npm package, or its code copied in with
+// the shadcn CLI from the registry this site serves at /r/.
+import { Code } from '@astrojs/starlight/components';
+
+interface Props {
+  /** Registry item names, e.g. ['checkbox', 'radio-group']. */
+  items: string[];
+}
+
+const { items } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const registry = new URL(`${base}/r/`, Astro.site);
+const add = `npx shadcn@latest add ${items.map((name) => new URL(`${name}.json`, registry)).join(' ')}`;
+---
+
+<Code code="bun add flootlets" lang="sh" title="npm package: import it from 'flootlets'" />
+<Code code={add} lang="sh" title="Or copy it in with the shadcn CLI: import it from '@/components/ui/…'" />
+<p>
+  Both need Tailwind CSS v4; see <a href={`${base}/installation/`}>Installation</a> for the setup.
+</p>

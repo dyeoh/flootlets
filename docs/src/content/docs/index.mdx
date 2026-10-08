@@ -16,14 +16,15 @@ components for shops built on [gnerkulfloot](https://github.com/dyeoh/gnerkulflo
 
 ## Install
 
-flootlets needs Tailwind CSS v4 in your app (in Astro: `npx astro add tailwind`).
+flootlets needs Tailwind CSS v4 in your app (in Astro: `npx astro add tailwind`). Install the
+package:
 
 ```sh
 bun add flootlets solid-js     # or: npm install / pnpm add
 ```
 
-In your main CSS file, import the flootlets theme after Tailwind, and point Tailwind at the
-package so it generates the classes the components use:
+and in your main CSS file, import the theme after Tailwind and let Tailwind see the components'
+classes:
 
 ```css
 @import 'tailwindcss';
@@ -31,8 +32,8 @@ package so it generates the classes the components use:
 @source '../node_modules/flootlets/dist';
 ```
 
-The `@source` path is relative to that CSS file; adjust it to reach your `node_modules`. See
-[Theming](/flootlets/theming/) to change the colours.
+Or copy the components into your app with the shadcn CLI and own the code. See
+[Installation](/flootlets/installation/) for both.
 
 ## Use it in Solid
 

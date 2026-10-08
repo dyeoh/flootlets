@@ -14,5 +14,7 @@
     "noEmit": true,
     "types": ["vite/client", "@testing-library/jest-dom/vitest"]
   },
-  "include": ["src", "tests", "scripts", "*.config.ts"]
+  "include": ["src", "tests", "scripts", "*.config.ts"],
+  // The smoke-test app has its own tsconfig and only typechecks after the registry is installed.
+  "exclude": ["tests/registry-smoke"]
 }

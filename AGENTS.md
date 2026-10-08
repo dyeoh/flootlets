@@ -66,6 +66,25 @@ well, so components follow it: anyone who knows shadcn can restyle flootlets.
   so `bg-${variant}` never works; `tests/classes.test.ts` fails on any class
   that generates no CSS.
 
+### shadcn registry, from the same source
+
+Besides the npm package, flootlets is a shadcn registry: apps can copy a
+component's code in with `npx shadcn add <url>` and own it.
+
+- `registry.json` (repo root) lists the items: name, type, title, description,
+  source files. `scripts/build-registry.ts` builds `docs/public/r/*.json`,
+  served from Pages. It rewrites relative imports to the paths the shadcn CLI
+  maps to the app's aliases (`@/lib/utils`, `@/registry/flootlets/ui/x`), works
+  out npm and registry dependencies from the imports, adds a
+  `// flootlets <version>, <docs>` header after the imports (the CLI drops
+  comments before them), and turns `theme.css` into a `registry:theme` item.
+- **Imports inside `src/` stay relative** (`../../lib/utils`, `../Button/Button`):
+  the build relies on it. `tests/registry.test.ts` checks every source file is
+  an item and every dependency resolves.
+- `bun run registry:smoke` installs every item into a throwaway Astro + Solid +
+  Tailwind app (`tests/registry-smoke/`) with the real, pinned shadcn CLI, then
+  typechecks and builds it. CI runs it.
+
 ### Accessibility primitives
 
 Interactive components with real keyboard and focus behaviour (select, dialog,
@@ -79,7 +98,7 @@ on hover that browsers don't add to buttons by default (in theme.css).
 
 - **One folder per component:** `src/components/Button/` holds `Button.tsx`
   (component and its `buttonVariants`) and `Button.test.tsx`. Export both from
-  `src/index.ts`.
+  `src/index.ts`, and add it to `registry.json`.
 - **Parts** carry `data-slot="<component>"` / `"<component>-<part>"`; variants and
   state are data attributes (`data-variant`, `data-size`, `data-loading`).
 - **Theme variables** use shadcn/ui's names (`--primary`, `--muted-foreground`,
@@ -138,8 +157,8 @@ on hover that browsers don't add to buttons by default (in theme.css).
 (https://dyeoh.github.io/flootlets/) by `.github/workflows/docs.yml` on every push to `main`.
 
 - **Every component gets a page** in `docs/src/content/docs/components/`, in the same commit as
-  the component: live examples, props, accessibility notes and its variants, `data-slot` parts and
-  data attributes.
+  the component: both install commands (`<Install items={[…]} />`), live examples, props,
+  accessibility notes and its variants, `data-slot` parts and data attributes.
 - **Examples are real Solid files** in `docs/src/examples/`. A page imports each one twice: once
   to render it, once with `?raw` to show its code. The code on the page is always the code that
   runs.

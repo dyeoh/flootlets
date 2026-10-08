@@ -6,6 +6,8 @@ Accessible, themeable [SolidJS](https://www.solidjs.com/) components for shops b
 - **Tailwind CSS v4 and shadcn/ui conventions.** Components are styled with Tailwind classes
   (`cva` + `cn()`), shadcn's variant names and its theme variables (`--primary`,
   `--muted-foreground`, `--radius`…), so any shadcn or tweakcn theme drops in.
+- **Install or copy in.** Use the npm package and get updates, or copy any component's code
+  into your app with `npx shadcn add` and own it, like shadcn/ui.
 - **Your classes win.** The `class` you pass is merged last with tailwind-merge, so
   `class="rounded-full"` replaces the component's radius instead of fighting it.
 - **Server-rendered first.** Works in [Astro](https://astro.build/) and other Solid SSR setups:
@@ -86,6 +88,13 @@ classes (the `@source` path is relative to this file):
 @source '../node_modules/flootlets/dist';
 ```
 
+Or copy components into your app with the shadcn CLI (it needs a `components.json`; see
+[Installation](https://dyeoh.github.io/flootlets/installation/)):
+
+```sh
+npx shadcn@latest add https://dyeoh.github.io/flootlets/r/button.json
+```
+
 ## Troubleshooting
 
 **Astro: "Client-only API called on the server side".** Astro must compile Solid libraries for
@@ -105,7 +114,8 @@ bun run typecheck
 bun run build        # dist/: browser bundle, JSX source for Solid apps, types, theme.css
 bun run commit       # write a commit message interactively (commitizen)
 bun run docs:dev     # the docs site at http://localhost:4321/flootlets/, using live source
-bun run docs:build   # builds the library, then the docs from what the package ships
+bun run docs:build   # builds the library and the registry, then the docs from what the package ships
+bun run registry:smoke  # installs every registry item into a fresh app with the shadcn CLI
 ```
 
 Read [AGENTS.md](AGENTS.md) before changing code: it covers the design decisions,

@@ -1,0 +1,93 @@
+---
+title: Installation
+description: Install flootlets as an npm package, or copy the components into your app with the shadcn CLI.
+---
+
+import { Code } from '@astrojs/starlight/components';
+import registryJson from '../../../../tests/registry-smoke/components.json?raw';
+
+flootlets comes two ways, from the same source:
+
+- **The npm package.** You get fixes and new components by updating it. Restyle with `class` and
+  the theme variables.
+- **Copied in with the shadcn CLI.** The component's code goes into your app, like shadcn/ui's,
+  and from then on it's yours to change. Updates are yours to pull in too.
+
+Both need Tailwind CSS v4 (in Astro: `npx astro add tailwind`) and a Solid app or Astro with
+`@astrojs/solid-js`.
+
+## npm package
+
+```sh
+bun add flootlets solid-js     # or: npm install / pnpm add
+```
+
+In your main CSS file, import the flootlets theme after Tailwind, and point Tailwind at the
+package so it generates the classes the components use:
+
+```css
+@import 'tailwindcss';
+@import 'flootlets/theme.css';
+@source '../node_modules/flootlets/dist';
+```
+
+The `@source` path is relative to that CSS file; adjust it to reach your `node_modules`. Then
+import components from `flootlets`:
+
+```tsx
+import { Button } from 'flootlets';
+```
+
+## Copy in with the shadcn CLI
+
+The shadcn CLI isn't only for React: with a `components.json` it copies any registry's files into
+your app and rewrites their imports to your paths. Add one at the root of your app, pointing
+`tailwind.css` at your main CSS file:
+
+<Code code={registryJson} lang="json" title="components.json" />
+
+and the `@/` alias in `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "@/*": ["./src/*"] }
+  }
+}
+```
+
+Then add components by URL. Each component page has its command; for example:
+
+```sh
+npx shadcn@latest add https://dyeoh.github.io/flootlets/r/button.json
+```
+
+The CLI adds `button.tsx` (and `spinner.tsx`, which it uses) to `src/components/ui`, `cn()` to
+`src/lib/utils.ts`, installs `class-variance-authority`, `clsx` and `tailwind-merge`, and writes
+the flootlets theme into your CSS. Import from your own copy:
+
+```tsx
+import { Button } from '@/components/ui/button';
+```
+
+Every copied file says where it came from, after its imports:
+`// flootlets 0.2.0, https://dyeoh.github.io/flootlets/components/button/`. Compare it with the
+[changelog](https://github.com/dyeoh/flootlets/blob/main/CHANGELOG.md) to see what you'd get by
+adding it again (with `--overwrite`, which replaces your changes).
+
+The whole registry is listed at
+[`/r/registry.json`](https://dyeoh.github.io/flootlets/r/registry.json). Just the theme:
+`npx shadcn@latest add https://dyeoh.github.io/flootlets/r/theme.json`.
+
+### Dark mode with the CLI
+
+The CLI sets up dark mode the shadcn way: a `.dark` class on `<html>`. flootlets' npm theme also
+follows the system setting and `data-theme="dark"`; to get that in a copied setup, see
+[Light and dark](/flootlets/theming/#light-and-dark).
+
+## Which to choose
+
+Use the **npm package** for a shop that should get fixes and accessibility improvements without
+merging them by hand. **Copy in** the components you want to change deeply, or all of them for a
+shop with its own design. The two mix: copy in one component and use the rest from npm.

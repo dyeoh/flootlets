@@ -4,3 +4,5 @@ docs/dist
 docs/.astro
 .DS_Store
 *.tgz
+# Built from registry.json by `bun run registry:build`
+docs/public/r

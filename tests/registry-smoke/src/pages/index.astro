@@ -1,0 +1,16 @@
+---
+import '@/styles/global.css';
+import { Button } from '@/components/ui/button';
+import Shop from '@/components/Shop';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>flootlets registry smoke test</title>
+  </head>
+  <body>
+    <Button variant="outline">Add to cart</Button>
+    <Shop client:load />
+  </body>
+</html>

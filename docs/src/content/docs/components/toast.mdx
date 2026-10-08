@@ -6,6 +6,9 @@ description: Short, temporary messages like "Added to cart".
 import Example from '../../../components/Example.astro';
 import Ex from '../../../examples/ToastExample';
 import src from '../../../examples/ToastExample.tsx?raw';
+import Install from '../../../components/Install.astro';
+
+<Install items={['toast']} />
 
 <Example code={src}>
   <Ex client:visible />

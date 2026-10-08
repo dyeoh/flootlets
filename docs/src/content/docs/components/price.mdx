@@ -6,6 +6,9 @@ description: Money from the gnerkulfloot API, with sale prices.
 import Example from '../../../components/Example.astro';
 import PriceExamples from '../../../examples/PriceExamples';
 import src from '../../../examples/PriceExamples.tsx?raw';
+import Install from '../../../components/Install.astro';
+
+<Install items={['price']} />
 
 Price takes money as the gnerkulfloot API sends it, `{ amount, currency }` with `amount` in the
 currency's smallest unit, and formats it with the browser's built-in `Intl.NumberFormat`. Each

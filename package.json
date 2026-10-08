@@ -38,9 +38,11 @@
     "commit": "cz",
     "prepare": "simple-git-hooks",
     "docs:dev": "bun run --cwd docs dev",
-    "docs:build": "bun run build && bun run --cwd docs build",
+    "docs:build": "bun run build && bun run registry:build && bun run --cwd docs build",
     "check:exports": "bun scripts/check-exports.ts",
-    "check:theme": "bun scripts/check-theme.ts"
+    "check:theme": "bun scripts/check-theme.ts",
+    "registry:build": "bun scripts/build-registry.ts",
+    "registry:smoke": "bun scripts/registry-smoke.ts"
   },
   "peerDependencies": {
     "solid-js": "^1.9.0",

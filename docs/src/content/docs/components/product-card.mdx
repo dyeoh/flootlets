@@ -6,6 +6,9 @@ description: Products in grids and carousels.
 import Example from '../../../components/Example.astro';
 import Ex from '../../../examples/ProductCardExample';
 import src from '../../../examples/ProductCardExample.tsx?raw';
+import Install from '../../../components/Install.astro';
+
+<Install items={['product-card', 'product-image', 'stock-badge']} />
 
 <Example code={src}>
   <Ex client:visible />

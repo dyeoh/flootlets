@@ -6,6 +6,9 @@ description: Showing that something is loading.
 import Example from '../../../components/Example.astro';
 import LoadingStates from '../../../examples/LoadingStates';
 import src from '../../../examples/LoadingStates.tsx?raw';
+import Install from '../../../components/Install.astro';
+
+<Install items={['spinner', 'skeleton']} />
 
 <Example code={src}>
   <LoadingStates />

@@ -30,6 +30,7 @@ export default defineConfig({
           label: 'Start here',
           items: [
             { label: 'Getting started', slug: 'index' },
+            { label: 'Installation', slug: 'installation' },
             { label: 'Theming', slug: 'theming' },
             { label: 'Theme variables', slug: 'tokens' },
             { label: 'Accessibility', slug: 'accessibility' },
