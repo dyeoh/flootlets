@@ -206,7 +206,10 @@ Versions come from the commits; nobody edits `version` by hand.
 `.github/workflows/release.yml` runs release-please on every push to `main`. It
 keeps a Release PR open with the next version, the `package.json` bump and the
 `CHANGELOG.md` entry. Merging it tags `vX.Y.Z`, creates a GitHub Release and
-publishes to npm through trusted publishing (GitHub OIDC, with provenance).
+publishes to npm through trusted publishing (GitHub OIDC, with provenance; the
+trusted publisher on npmjs.com needs direct publish allowed, not just stage).
+If publishing fails, fix it and run the Release workflow by hand (Run
+workflow) to publish the version on `main`.
 
 Before 1.0 (`release-please-config.json`): a breaking change bumps the minor
 version (0.2.0 → 0.3.0), and `feat` and `fix` bump the patch. `docs` changes are
