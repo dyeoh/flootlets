@@ -93,14 +93,21 @@ function Root(props: CarouselProps) {
   let container: HTMLDivElement | undefined;
   const [containerWidth, setContainerWidth] = createSignal(0);
   const [scrollWidth, setScrollWidth] = createSignal(0);
+  const [gap, setGap] = createSignal(0);
   const [selectedPage, setSelectedPage] = createSignal(0);
 
+  // One page of scrolling: a screenful plus the gap before the next item. Using
+  // the width alone counts a phantom last page whenever the items fill whole
+  // pages (2 photos, 1 per page: 2 widths + 1 gap > 2 widths).
+  const stride = () => containerWidth() + gap();
+
   // Distinct scroll positions that really exist; falls back to the item count
-  // until the track has layout (jsdom and server rendering never do).
+  // until the track has layout (jsdom and server rendering never do). The
+  // 1px allowance absorbs sub-pixel widths.
   const pageCount = () => {
     const width = containerWidth();
     if (width <= 0) return Math.max(1, local.itemCount);
-    return Math.max(1, Math.ceil(scrollWidth() / width));
+    return Math.max(1, 1 + Math.ceil((scrollWidth() - width - 1) / stride()));
   };
 
   // The real scroll position is the source of truth. Within 1px of the end
@@ -112,7 +119,7 @@ function Root(props: CarouselProps) {
       setSelectedPage(pageCount() - 1);
       return;
     }
-    const rawPage = Math.round(Math.abs(container.scrollLeft) / container.clientWidth);
+    const rawPage = Math.round(Math.abs(container.scrollLeft) / stride());
     setSelectedPage(Math.min(Math.max(rawPage, 0), pageCount() - 1));
   };
 
@@ -146,6 +153,7 @@ function Root(props: CarouselProps) {
     if (!container) return;
     setContainerWidth(container.clientWidth);
     setScrollWidth(container.scrollWidth);
+    setGap(parseFloat(getComputedStyle(container).columnGap) || 0);
     if (!isProgrammaticScroll) updateSelectedPageFromScroll();
   };
 
@@ -175,7 +183,7 @@ function Root(props: CarouselProps) {
     const clamped = Math.min(Math.max(page, 0), pageCount() - 1);
     const maxScrollLeft = Math.max(0, container.scrollWidth - container.clientWidth);
     const direction = getComputedStyle(container).direction === 'rtl' ? -1 : 1;
-    const target = Math.min(clamped * container.clientWidth, maxScrollLeft) * direction;
+    const target = Math.min(clamped * stride(), maxScrollLeft) * direction;
     isProgrammaticScroll = true;
     armSettleFallback();
     container.scrollTo({ left: target, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });

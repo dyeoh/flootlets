@@ -251,6 +251,22 @@ describe('Carousel', () => {
     expect(dots()).toHaveLength(3);
   });
 
+  test('the gap between items is part of a page: no phantom last page', async () => {
+    const layout = simulateLayout();
+    render(carousel);
+    track().style.columnGap = '12px';
+    layout.attach(track());
+    // 5 items, 1 per 400px screen, 12px apart: 5 pages, though 2048 / 400 > 5.
+    Object.assign(layout.geometry, { clientWidth: 400, scrollWidth: 5 * 400 + 4 * 12 });
+    layout.resize();
+    expect(dots()).toHaveLength(5);
+    await userEvent.click(screen.getByRole('button', { name: 'Next' }));
+    expect(layout.geometry.scrollLeft).toBe(412);
+    layout.geometry.scrollLeft = 3 * 412;
+    track().dispatchEvent(new Event('scroll'));
+    await waitFor(() => expect(currentDot()).toBe(4));
+  });
+
   test('swiping to the very end selects the last page, even when it is short', async () => {
     const layout = simulateLayout();
     render(carousel);
