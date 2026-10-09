@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/dyeoh/flootlets/compare/v0.2.0...v0.2.1) (2026-10-09)
+
+
+### Documentation
+
+* describe flootlets as a general solid component library ([87abfcc](https://github.com/dyeoh/flootlets/commit/87abfcce303d5db729d1e526c47c3c81aff59db3))
+
 ## [0.2.0](https://github.com/dyeoh/flootlets/compare/v0.1.0...v0.2.0) (2026-10-09)
 
 
