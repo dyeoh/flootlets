@@ -3,3 +3,6 @@ docs/dist
 docs/.astro
 bun.lock
 *.astro
+# Written by release-please
+CHANGELOG.md
+.release-please-manifest.json
