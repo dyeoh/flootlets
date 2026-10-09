@@ -58,7 +58,7 @@
       "name": "money",
       "type": "registry:lib",
       "title": "Money",
-      "description": "formatMoney() for the gnerkulfloot API's { amount, currency } in minor units.",
+      "description": "formatMoney() for { amount, currency } money in minor units.",
       "files": [
         {
           "path": "src/lib/money.ts",

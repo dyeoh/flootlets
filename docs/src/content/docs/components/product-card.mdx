@@ -24,14 +24,14 @@ The card's photo has an empty `alt` by default, since the title right next to it
 the product and saying it twice is noise for screen-reader users. Product pages should use
 `ProductImage` with a real description instead.
 
-**ProductImage** takes the `urls` from the gnerkulfloot API (a 400px `thumb` and a 1600px
-`large` WebP) and lets the browser pick the smallest that looks sharp. Pass the original
-`width`/`height` from the API, so the space is reserved and the page doesn't jump while it loads.
+**ProductImage** takes an image's two sizes, `urls: { thumb, large }` (from the gnerkulfloot API: a
+400px `thumb` and a 1600px `large` WebP), and lets the browser pick the smallest that looks sharp. Pass the original
+`width`/`height`, so the space is reserved and the page doesn't jump while it loads.
 Use `priority` for the main photo at the top of a product page; everything else loads lazily.
 
-**StockBadge** turns the API's `in_stock` into "In stock" or "Sold out".
+**StockBadge** turns an `in_stock` boolean into "In stock" or "Sold out".
 
-## Mapping API data
+## Mapping gnerkulfloot API data
 
 The product list (`GET /v1/products`) returns only the thumbnail URL. gnerkulfloot always stores
 both sizes side by side (`…/thumb.webp` and `…/large.webp`), so derive the large one. Don't pass

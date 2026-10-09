@@ -1,13 +1,13 @@
 /*
- * ProductImage: a product photo from the gnerkulfloot API, which serves each
- * image as a 400px "thumb" and a 1600px "large" WebP. The browser picks the
+ * ProductImage: a product photo served in two sizes, a small "thumb" and a
+ * "large" (gnerkulfloot's API serves 400px and 1600px WebPs). The browser picks the
  * smallest that looks sharp (srcset/sizes); width/height reserve the space so
  * the page doesn't jump while it loads; a broken image shows a placeholder.
  */
 import { createSignal, type JSX, Show, splitProps } from 'solid-js';
 import { cn } from '../../lib/utils';
 
-/** The `urls` object on images in gnerkulfloot API responses. */
+/** An image's two sizes (the `urls` object in gnerkulfloot API responses). */
 export interface ImageUrls {
   thumb: string;
   large: string;

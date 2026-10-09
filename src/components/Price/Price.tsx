@@ -1,6 +1,6 @@
 /*
- * Price: displays money from the gnerkulfloot API ({ amount, currency } in
- * minor units), with an optional struck-through "was" price for sales.
+ * Price: displays money as { amount, currency } in minor units (the shape
+ * most payment APIs, gnerkulfloot's included, return), with an optional struck-through "was" price for sales.
  *
  * Pass the same `locale` everywhere the price renders (server and browser);
  * see formatMoney.

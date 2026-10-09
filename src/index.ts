@@ -1,6 +1,6 @@
 /**
- * flootlets: accessible, themeable SolidJS components for gnerkulfloot shops,
- * styled with Tailwind CSS v4 and shadcn/ui's conventions. Import components
+ * flootlets: accessible, themeable SolidJS components for Astro, Solid SSR
+ * and static sites, styled with Tailwind CSS v4 and shadcn/ui's conventions. Import components
  * from here, and "flootlets/theme.css" once after Tailwind in your CSS.
  */
 export { Alert, type AlertProps, alertVariants } from './components/Alert/Alert';

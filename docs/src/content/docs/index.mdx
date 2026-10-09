@@ -4,14 +4,16 @@ description: Install flootlets and render your first components, in Solid or Ast
 ---
 
 flootlets is a small library of accessible, themeable [SolidJS](https://www.solidjs.com/)
-components for shops built on [gnerkulfloot](https://github.com/dyeoh/gnerkulfloot).
+components for Astro, Solid SSR and static sites: the essential building blocks, plus product,
+price and cart pieces for shops.
 
 - **Tailwind CSS v4 and shadcn/ui conventions.** Components are styled with Tailwind classes,
   shadcn's variant names and theme variables, so any shadcn theme works and anything can be
   restyled with a `class`.
 - **Your classes win.** The `class` you pass is merged last with tailwind-merge, so
   `class="rounded-full"` replaces the component's radius instead of fighting it.
-- **Server-rendered first.** Works in Astro: static components ship no JavaScript.
+- **Server-rendered first.** Works in Astro, SolidStart and static builds: static components
+  ship no JavaScript.
 - **Accessible by default**, and checked with axe in tests.
 
 ## Install
@@ -75,8 +77,8 @@ stays plain HTML.
 
 ## Money
 
-Prices use the gnerkulfloot API's money shape: an integer `amount` in the currency's smallest
-unit plus an ISO 4217 `currency`. RM 29.20 is `{ amount: 2920, currency: 'MYR' }`; ¥500 is
+Prices are an integer `amount` in the currency's smallest unit plus an ISO 4217 `currency`, the
+shape most payment and commerce APIs use (gnerkulfloot's included). RM 29.20 is `{ amount: 2920, currency: 'MYR' }`; ¥500 is
 `{ amount: 500, currency: 'JPY' }`. Pass the **same `locale`** wherever a price renders: a
 locale taken from the server's or browser's environment would differ between the two and break
 hydration.

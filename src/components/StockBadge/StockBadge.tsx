@@ -1,6 +1,6 @@
 /*
- * StockBadge: "In stock" or "Sold out", from the `in_stock` field the
- * gnerkulfloot storefront API returns (exact counts stay private).
+ * StockBadge: "In stock" or "Sold out" from a boolean, such as the `in_stock`
+ * field gnerkulfloot's storefront API returns (exact counts stay private).
  */
 import { splitProps } from 'solid-js';
 import { Badge, type BadgeProps } from '../Badge/Badge';

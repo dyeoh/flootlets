@@ -21,7 +21,8 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'flootlets',
-      description: 'Accessible, themeable SolidJS components for gnerkulfloot shops.',
+      description:
+        'Accessible, themeable SolidJS components for Astro, Solid SSR and static sites.',
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/dyeoh/flootlets' }],
       editLink: { baseUrl: 'https://github.com/dyeoh/flootlets/edit/main/docs/' },
       customCss: ['./src/styles/tailwind.css', './src/styles/docs.css'],

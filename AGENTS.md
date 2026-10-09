@@ -103,7 +103,7 @@ on hover that browsers don't add to buttons by default (in theme.css).
   state are data attributes (`data-variant`, `data-size`, `data-loading`).
 - **Theme variables** use shadcn/ui's names (`--primary`, `--muted-foreground`,
   `--radius`), in `src/styles/theme.css`. The values are shadcn's neutral theme,
-  nudged where it misses WCAG AA; restyling for a real shop happens there.
+  nudged where it misses WCAG AA; restyling for a real site happens there.
 - **Icons** are the components in `src/lib/icons.tsx` (lucide's shapes), sized
   with `size-*` or the parent's `[&_svg]` rules.
 - **Props:** forward unknown props to the root element (`splitProps`), accept

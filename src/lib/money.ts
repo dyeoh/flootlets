@@ -1,5 +1,5 @@
 /**
- * Money as the gnerkulfloot API sends it: an integer amount in the currency's
+ * Money as most payment APIs send it: an integer amount in the currency's
  * minor units (sen, cents; whole yen for JPY) plus an ISO 4217 code.
  * RM29.20 is { amount: 2920, currency: 'MYR' }.
  */
