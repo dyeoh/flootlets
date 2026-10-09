@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.2](https://github.com/dyeoh/flootlets/compare/v0.2.1...v0.2.2) (2026-10-09)
+
+
+### Bug Fixes
+
+* **carousel:** count the gap between items as part of a page ([73b9fb2](https://github.com/dyeoh/flootlets/commit/73b9fb27cc3be594a924092e51384a0aff1000ed))
+* **quantity-stepper:** call onChange only when the value changes ([e15e58e](https://github.com/dyeoh/flootlets/commit/e15e58ee00b43466b184e9fa8fbea325dec91cdd))
+
 ## [0.2.1](https://github.com/dyeoh/flootlets/compare/v0.2.0...v0.2.1) (2026-10-09)
 
 
