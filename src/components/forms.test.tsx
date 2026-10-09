@@ -165,6 +165,19 @@ describe('QuantityStepper', () => {
     expect(minus).toBeDisabled(); // min defaults to 1
   });
 
+  test('onChange reports real changes only, never the starting value', async () => {
+    const change = vi.fn();
+    render(() => (
+      <>
+        <QuantityStepper label="Controlled" value={2} onChange={change} />
+        <QuantityStepper label="Uncontrolled" defaultValue={3} onChange={change} />
+      </>
+    ));
+    expect(change).not.toHaveBeenCalled();
+    await userEvent.click(screen.getByRole('button', { name: 'Increase uncontrolled' }));
+    expect(change).toHaveBeenCalledExactlyOnceWith(4);
+  });
+
   test('announces changes made with the buttons', async () => {
     render(() => <QuantityStepper label="Quantity" defaultValue={1} />);
     await userEvent.click(screen.getByRole('button', { name: 'Increase quantity' }));

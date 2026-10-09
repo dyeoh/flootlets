@@ -28,7 +28,7 @@ checks stock when the order is placed.
 | Prop                                                   | Type                                            |                                                                                  |
 | ------------------------------------------------------ | ----------------------------------------------- | -------------------------------------------------------------------------------- |
 | `label`                                                | `string`                                        | Required, e.g. "Quantity". Use `hideLabel` in a compact cart row                 |
-| `value` / `defaultValue` / `onChange`                  | `number` / `number` / `(value: number) => void` |                                                                                  |
+| `value` / `defaultValue` / `onChange`                  | `number` / `number` / `(value: number) => void` | `onChange` runs only when the value really changes, never on first render        |
 | `min`, `max`, `step`                                   | `number`                                        | Defaults 1, none, 1                                                              |
 | `size`                                                 | `'sm' \| 'default'`                             |                                                                                  |
 | `labels`                                               | `{ decrement?: string; increment?: string }`    | Button labels for translation. Default "Decrease quantity" / "Increase quantity" |

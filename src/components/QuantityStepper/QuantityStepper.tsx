@@ -55,8 +55,14 @@ export function QuantityStepper(props: QuantityStepperProps) {
   const [announcement, setAnnouncement] = createSignal('');
   let input: HTMLInputElement | undefined;
 
+  // Kobalte also reports the value it starts with (and re-reports it), so only
+  // a real change reaches onChange: a caller that writes it back on every call
+  // (a cart re-rendering its rows) would otherwise loop.
+  // eslint-disable-next-line solid/reactivity -- the starting value, read once
+  let current = local.value ?? local.defaultValue ?? local.min ?? 1;
   const change = (value: number) => {
-    if (Number.isNaN(value)) return;
+    if (Number.isNaN(value) || value === (local.value ?? current)) return;
+    current = value;
     local.onChange?.(value);
     // Typing in the focused spinbutton is already announced; button presses aren't.
     if (typeof document !== 'undefined' && document.activeElement !== input) {
