@@ -60,6 +60,17 @@ describe('Dialog', () => {
     expect(trigger).toHaveFocus();
   });
 
+  test("opening from its trigger doesn't create computations outside a root", async () => {
+    // Kobalte passes the trigger's `disabled` as a getter; reading it from the
+    // Button's click handler used to create an unowned computation each click.
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(() => <Dialog title="Mark paid?" trigger={{ children: 'Mark as paid' }} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Mark as paid' }));
+    await screen.findByRole('dialog', { name: 'Mark paid?' });
+    expect(warn).not.toHaveBeenCalledWith(expect.stringContaining('outside a `createRoot`'));
+    warn.mockRestore();
+  });
+
   test('can be controlled without a trigger and closed with its close button', async () => {
     const [open, setOpen] = createSignal(true);
     render(() => (
