@@ -1,6 +1,6 @@
 {
   "name": "flootlets",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Accessible, themeable SolidJS components for Astro, Solid SSR and static sites",
   "keywords": [
     "solid",
