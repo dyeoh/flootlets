@@ -7,7 +7,7 @@
  * stable, blocks clicks and sets aria-busy; there's always a focus ring.
  */
 import { cva, type VariantProps } from 'class-variance-authority';
-import { type JSX, Show, splitProps } from 'solid-js';
+import { createMemo, type JSX, Show, splitProps } from 'solid-js';
 import { cn } from '../../lib/utils';
 import { Spinner } from '../Spinner/Spinner';
 
@@ -61,7 +61,10 @@ export function Button(props: ButtonProps) {
     'href',
   ]);
 
-  const inert = () => Boolean(local.loading || local.disabled);
+  // A memo, not a plain function: the click guard reads it outside any reactive
+  // root, and `disabled` may be a getter that creates a computation when read
+  // (Kobalte passes one when this Button is a dialog's trigger).
+  const inert = createMemo(() => Boolean(local.loading || local.disabled));
   const attrs = () => ({
     'data-slot': 'button',
     'data-variant': local.variant ?? 'default',
