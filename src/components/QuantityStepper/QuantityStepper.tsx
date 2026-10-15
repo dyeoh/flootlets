@@ -4,7 +4,9 @@
  * Up/Down, Home/End), −/+ disable themselves at the limits, and you can type
  * a number. Fixes from earlier projects: the input is labelled, `max` is
  * respected, and button presses are announced (focus is on the button then,
- * so the spinbutton's own announcement wouldn't be heard).
+ * so the spinbutton's own announcement wouldn't be heard). Disabled, the whole
+ * stepper dims, number included, and shows the not-allowed cursor. The field
+ * is only as wide as its content, so its box lines up with the stepper.
  */
 import * as KNumberField from '@kobalte/core/number-field';
 import { createSignal, Show, splitProps } from 'solid-js';
@@ -18,6 +20,11 @@ import {
   labelClass,
   validationState,
 } from '../Field/field';
+
+// −/+ dim at a limit, but not again when the whole field is disabled and
+// already dimmed. They keep pointer events, so the disabled cursor shows.
+const triggerClass =
+  'grid size-9 place-items-center rounded-md text-foreground transition-colors group-data-[size=sm]/stepper:size-8 enabled:hover:bg-accent enabled:hover:text-accent-foreground not-in-data-disabled:disabled:opacity-50';
 
 export interface QuantityStepperProps extends FieldProps {
   value?: number;
@@ -73,7 +80,7 @@ export function QuantityStepper(props: QuantityStepperProps) {
   return (
     <KNumberField.Root
       data-slot="quantity-stepper"
-      class={cn(fieldClass, 'group/stepper', local.class)}
+      class={cn(fieldClass, 'group/stepper w-fit max-w-full', local.class)}
       data-size={local.size ?? 'default'}
       data-required={local.required ? '' : undefined}
       // `value` is Kobalte's controlled prop (rawValue only reports); a default
@@ -91,9 +98,9 @@ export function QuantityStepper(props: QuantityStepperProps) {
       validationState={validationState(local.error)}
     >
       <KNumberField.Label class={labelClass(local.hideLabel)}>{local.label}</KNumberField.Label>
-      <div class="inline-flex w-fit items-stretch rounded-md border border-input bg-transparent shadow-xs focus-within:border-ring group-data-invalid/stepper:border-2 group-data-invalid/stepper:border-destructive dark:bg-input/30">
+      <div class="inline-flex w-fit items-stretch rounded-md border border-input bg-transparent shadow-xs focus-within:border-ring group-data-disabled/stepper:opacity-50 group-data-invalid/stepper:border-2 group-data-invalid/stepper:border-destructive dark:bg-input/30">
         <KNumberField.DecrementTrigger
-          class="grid size-9 place-items-center rounded-md text-foreground transition-colors group-data-[size=sm]/stepper:size-8 hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50"
+          class={triggerClass}
           aria-label={local.labels?.decrement ?? `Decrease ${local.label.toLowerCase()}`}
         >
           <MinusIcon class="size-4" />
@@ -104,7 +111,7 @@ export function QuantityStepper(props: QuantityStepperProps) {
           ref={input}
         />
         <KNumberField.IncrementTrigger
-          class="grid size-9 place-items-center rounded-md text-foreground transition-colors group-data-[size=sm]/stepper:size-8 hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50"
+          class={triggerClass}
           aria-label={local.labels?.increment ?? `Increase ${local.label.toLowerCase()}`}
         >
           <PlusIcon class="size-4" />
