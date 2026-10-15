@@ -6,6 +6,8 @@ description: Choose how many, within the stock available.
 import Example from '../../../components/Example.astro';
 import Ex from '../../../examples/StepperExample';
 import src from '../../../examples/StepperExample.tsx?raw';
+import StepperDisabled from '../../../examples/StepperDisabled';
+import disabledSrc from '../../../examples/StepperDisabled.tsx?raw';
 import Install from '../../../components/Install.astro';
 
 <Install items={['quantity-stepper']} />
@@ -22,6 +24,18 @@ off at `min` and `max`. When − or + is pressed, the new quantity is announced 
 `min` defaults to **1**: taking an item out of the cart should be a separate, clearly labelled
 "Remove" button, not a quantity of 0. Set `max` to the stock left; the gnerkulfloot API still
 checks stock when the order is placed.
+
+The field is only as wide as its content (the stepper, or a longer label or description), so it
+lines up with the stepper instead of stretching across a column. Pass `class="w-full"` to stretch it.
+
+## Disabled
+
+With `disabled`, e.g. when the item is sold out, the whole stepper dims, the number with it, and
+shows the not-allowed cursor, and nothing steps.
+
+<Example code={disabledSrc}>
+  <StepperDisabled />
+</Example>
 
 ## Props
 

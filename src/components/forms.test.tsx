@@ -193,6 +193,40 @@ describe('QuantityStepper', () => {
     expect(input).toHaveValue('3');
   });
 
+  test('disabled: nothing steps, and the whole stepper dims once', async () => {
+    const change = vi.fn();
+    render(() => <QuantityStepper label="Quantity" defaultValue={2} disabled onChange={change} />);
+    const input = screen.getByRole('spinbutton', { name: 'Quantity' });
+    const plus = screen.getByRole('button', { name: 'Increase quantity' });
+    const minus = screen.getByRole('button', { name: 'Decrease quantity' });
+    const root = input.closest('[data-slot="quantity-stepper"]')!;
+    expect(root).toHaveAttribute('data-disabled');
+    expect(input).toBeDisabled();
+    expect(plus).toBeDisabled();
+    expect(minus).toBeDisabled();
+    await userEvent.click(plus);
+    expect(input).toHaveValue('2');
+    expect(change).not.toHaveBeenCalled();
+    // The bordered stepper dims (number included); −/+ don't dim again inside it.
+    expect(plus.parentElement).toHaveClass('group-data-disabled/stepper:opacity-50');
+    expect(plus).toHaveClass('not-in-data-disabled:disabled:opacity-50');
+    expect(plus).not.toHaveClass('disabled:pointer-events-none'); // keeps the not-allowed cursor
+  });
+
+  test('the field is only as wide as its content, unless the caller says otherwise', () => {
+    render(() => (
+      <>
+        <QuantityStepper label="Fitted" />
+        <QuantityStepper label="Full" class="w-full" />
+      </>
+    ));
+    const root = (name: string) =>
+      screen.getByRole('spinbutton', { name }).closest('[data-slot="quantity-stepper"]')!;
+    expect(root('Fitted')).toHaveClass('w-fit');
+    expect(root('Full')).toHaveClass('w-full');
+    expect(root('Full')).not.toHaveClass('w-fit');
+  });
+
   test('controlled value, translations and form submission', async () => {
     const [qty, setQty] = createSignal(2);
     const { container } = render(() => (
