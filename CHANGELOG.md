@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.3](https://github.com/dyeoh/flootlets/compare/v0.2.2...v0.2.3) (2026-10-15)
+
+
+### Bug Fixes
+
+* **button:** don't create computations when clicked as a dialog trigger ([70a951b](https://github.com/dyeoh/flootlets/commit/70a951b8eeb70d09847f3ac8ccedbc485874a372))
+* **quantity-stepper:** dim the number when disabled and size the field to the stepper ([d9ca469](https://github.com/dyeoh/flootlets/commit/d9ca46928df43b0aabc3ba1ca1016c88e6def3fe))
+
 ## [0.2.2](https://github.com/dyeoh/flootlets/compare/v0.2.1...v0.2.2) (2026-10-09)
 
 
