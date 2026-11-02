@@ -229,6 +229,21 @@
       }
     },
     {
+      "name": "marquee",
+      "type": "registry:ui",
+      "title": "Marquee",
+      "description": "A continuous scrolling strip of content.",
+      "files": [
+        {
+          "path": "src/components/Marquee/Marquee.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "meta": {
+        "docs": "https://dyeoh.github.io/flootlets/components/marquee/"
+      }
+    },
+    {
       "name": "pagination",
       "type": "registry:ui",
       "title": "Pagination",
