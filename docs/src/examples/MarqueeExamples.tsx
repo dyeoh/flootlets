@@ -3,13 +3,19 @@ import { Marquee } from 'flootlets';
 /** Horizontal logo strip with edge fade, pauses on hover. */
 export function MarqueeHorizontal() {
   return (
-    <Marquee variant="fade" pauseOnHover speed={30} gap="3rem">
-      <span class="text-muted-foreground text-sm font-medium">KIRIN ICHIBAN</span>
-      <span class="text-muted-foreground text-sm font-medium">GUINNESS</span>
-      <span class="text-muted-foreground text-sm font-medium">STONE &amp; WOOD</span>
-      <span class="text-muted-foreground text-sm font-medium">STEINLAGER</span>
-      <span class="text-muted-foreground text-sm font-medium">FOUR PILLARS</span>
-      <span class="text-muted-foreground text-sm font-medium">SPEIGHT'S</span>
+    <Marquee
+      variant="fade"
+      pauseOnHover
+      speed={30}
+      gap="3rem"
+      class="text-muted-foreground text-sm font-bold"
+    >
+      <span>KIRIN ICHIBAN</span>
+      <span>GUINNESS</span>
+      <span>STONE &amp; WOOD</span>
+      <span>STEINLAGER</span>
+      <span>FOUR PILLARS</span>
+      <span>SPEIGHT'S</span>
     </Marquee>
   );
 }
@@ -17,10 +23,10 @@ export function MarqueeHorizontal() {
 /** Horizontal strip scrolling in reverse. */
 export function MarqueeReverse() {
   return (
-    <Marquee reverse speed={50} gap="2rem">
-      <span class="text-sm">🎉 Grand opening sale</span>
-      <span class="text-sm">🚚 Free shipping on orders over MYR 100</span>
-      <span class="text-sm">🔥 New arrivals every week</span>
+    <Marquee reverse speed={50} gap="2rem" class="text-sm">
+      <span>🎉 Grand opening sale</span>
+      <span>🚚 Free shipping on orders over MYR 100</span>
+      <span>🔥 New arrivals every week</span>
     </Marquee>
   );
 }
@@ -28,10 +34,16 @@ export function MarqueeReverse() {
 /** Vertical announcement ticker: a vertical marquee needs a height. */
 export function MarqueeVertical() {
   return (
-    <Marquee orientation="vertical" variant="fade" speed={20} gap="1rem" class="h-24">
-      <p class="text-sm text-foreground">🆕 Kuih Lapis just landed</p>
-      <p class="text-sm text-foreground">📦 Orders ship within 24 hours</p>
-      <p class="text-sm text-foreground">⭐ Rated 4.9 by 2,000+ customers</p>
+    <Marquee
+      orientation="vertical"
+      variant="fade"
+      speed={20}
+      gap="1rem"
+      class="h-24 text-sm text-foreground"
+    >
+      <p>🆕 Kuih Lapis just landed</p>
+      <p>📦 Orders ship within 24 hours</p>
+      <p>⭐ Rated 4.9 by 2,000+ customers</p>
     </Marquee>
   );
 }
