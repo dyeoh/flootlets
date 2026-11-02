@@ -32,6 +32,7 @@ export {
   stackVariants,
 } from './components/Layout/Layout';
 export { Link, type LinkProps } from './components/Link/Link';
+export { Marquee, type MarqueeProps, marqueeVariants } from './components/Marquee/Marquee';
 export { Pagination, type PaginationProps, pageWindow } from './components/Pagination/Pagination';
 export { Price, type PriceProps, priceVariants } from './components/Price/Price';
 export {

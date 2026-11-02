@@ -1,0 +1,52 @@
+---
+title: Marquee
+description: A continuously scrolling strip of content.
+---
+
+import Ex from '../../../examples/MarqueeExamples';
+import Example from '../../../components/Example.astro';
+import Install from '../../../components/Install.astro';
+import src from '../../../examples/MarqueeExamples.tsx?raw';
+
+<Install items={['marquee']} />
+
+<Example code={src}>
+  <Ex client:visible />
+</Example>
+
+## Props
+
+| Prop           | Type                         | Default        | Description                                                                                                                          |
+| -------------- | ---------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `children`     | `JSX.Element`                | —              | The content to scroll. Rendered `repeat` times for a seamless loop.                                                                  |
+| `orientation`  | `'horizontal' \| 'vertical'` | `'horizontal'` | Layout axis of the scrolling strip.                                                                                                  |
+| `variant`      | `'default' \| 'fade'`        | `'default'`    | `fade` adds a gradient mask on the leading and trailing edges.                                                                       |
+| `reverse`      | `boolean`                    | `false`        | Flip scroll direction: right instead of left, down instead of up.                                                                    |
+| `speed`        | `number`                     | `40`           | Scroll speed in pixels per second. The content is measured in the browser; until then (and in the server render) one loop takes 20s. |
+| `pauseOnHover` | `boolean`                    | `false`        | Pause the animation when the pointer hovers over the strip.                                                                          |
+| `gap`          | `string`                     | `'1rem'`       | Space between items, and between the content and its next copy, as a CSS length.                                                     |
+| `repeat`       | `number`                     | `2`            | How many times to duplicate children. Minimum 2.                                                                                     |
+| `class`        | `string`                     | —              | Merged last, so it overrides component classes.                                                                                      |
+
+A vertical marquee scrolls inside its own box, so it needs a height: give it one with
+`class` (`class="h-24"`) or put it in a sized parent.
+
+## Accessibility
+
+- The duplicate content copies are marked `aria-hidden="true"` so screen readers only
+  announce the content once.
+- The animation pauses automatically when the user prefers reduced motion
+  (`prefers-reduced-motion: reduce`).
+- Set `pauseOnHover` to let pointer users pause and read the content.
+
+## Data attributes
+
+| Attribute                   | Element             | Values                   |
+| --------------------------- | ------------------- | ------------------------ |
+| `data-slot="marquee"`       | Root                | —                        |
+| `data-slot="marquee-track"` | Each animated track | —                        |
+| `data-orientation`          | Root                | `horizontal`, `vertical` |
+| `data-variant`              | Root                | `default`, `fade`        |
+
+The root also carries two custom properties: `--marquee-gap` (from `gap`) and, once
+measured in the browser, `--marquee-duration` (one loop, from `speed`).

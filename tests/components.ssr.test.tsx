@@ -7,6 +7,7 @@ import {
   Cluster,
   Grid,
   Link,
+  Marquee,
   Price,
   Skeleton,
   Spinner,
@@ -42,6 +43,22 @@ describe('server rendering', () => {
     expect(html).toContain('aria-busy="true"');
     expect(html).toContain('(opens in a new tab)');
     expect(html).toContain('role="status"');
+  });
+
+  test('marquee renders to HTML on the server', () => {
+    const html = renderToString(() => (
+      <Marquee orientation="vertical" variant="fade" pauseOnHover>
+        <span>Free shipping</span>
+      </Marquee>
+    ));
+    expect(html).toContain('data-slot="marquee"');
+    expect(html).toContain('data-slot="marquee-track"');
+    expect(html).toContain('data-orientation="vertical"');
+    expect(html).toContain('Free shipping');
+    // Duplicate tracks for the seamless loop.
+    expect(html).toContain('aria-hidden="true"');
+    // The duration is measured in the browser, so the server HTML never has one.
+    expect(html).not.toContain('--marquee-duration');
   });
 
   test('prices render identically on the server and in the browser', () => {
